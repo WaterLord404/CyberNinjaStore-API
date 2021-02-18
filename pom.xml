@@ -9,10 +9,10 @@
 		<version>2.4.2</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.techshop</groupId>
-	<artifactId>techshop</artifactId>
+	<groupId>com.cyberninja</groupId>
+	<artifactId>cyberninja</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>techshop</name>
+	<name>CyberNinja Store</name>
 	<description>Tienda online techwear</description>
 	<properties>
 		<java.version>11</java.version>
@@ -43,10 +43,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-				<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
 
 		<dependency>
