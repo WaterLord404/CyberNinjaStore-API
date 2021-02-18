@@ -1,4 +1,4 @@
-package com.cyberninja.model.entity.dto;
+package com.cyberninja.model.entity.converter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.cyberninja.model.entity.Product;
+import com.cyberninja.model.entity.dto.ProductDTO;
 
 @Component
 public class ProductDTOConverter {

@@ -55,10 +55,5 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + generateToken(((User)authResult.getPrincipal())));
 		
 	}
-
-	@Override
-	protected String obtainUsername(HttpServletRequest request) {
-		return super.obtainUsername(request);
-	}
 	
 }

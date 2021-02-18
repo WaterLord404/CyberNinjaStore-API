@@ -18,8 +18,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.model.entity.Document;
 import com.cyberninja.model.entity.Product;
+import com.cyberninja.model.entity.converter.DocumentDTOConverter;
 import com.cyberninja.model.entity.dto.DocumentDTO;
-import com.cyberninja.model.entity.dto.DocumentDTOConverter;
 import com.cyberninja.model.repository.DocumentRepository;
 import com.cyberninja.services.DocumentServiceI;
 

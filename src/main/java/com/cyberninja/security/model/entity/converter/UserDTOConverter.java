@@ -1,4 +1,4 @@
-package com.cyberninja.security.model.entity.dto;
+package com.cyberninja.security.model.entity.converter;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -8,7 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.cyberninja.security.model.entity.User;
-import com.cyberninja.security.model.entity.UserRole;
+import com.cyberninja.security.model.entity.dto.UserDTO;
+import com.cyberninja.security.model.entity.enun.UserRole;
 
 @Component
 public class UserDTOConverter {

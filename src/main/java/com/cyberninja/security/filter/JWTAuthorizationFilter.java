@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.cyberninja.security.model.entity.User;
-import com.cyberninja.security.services.UserServiceImpl;
+import com.cyberninja.security.services.impl.UserServiceImpl;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

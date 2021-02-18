@@ -1,8 +1,9 @@
-package com.cyberninja.model.entity.dto;
+package com.cyberninja.model.entity.converter;
 
 import org.springframework.stereotype.Component;
 
 import com.cyberninja.model.entity.Customer;
+import com.cyberninja.model.entity.dto.CustomerDTO;
 
 @Component
 public class CustomerDTOConverter {

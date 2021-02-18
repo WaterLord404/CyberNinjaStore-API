@@ -1,4 +1,4 @@
-package com.cyberninja.security.services;
+package com.cyberninja.security.services.impl;
 
 import static org.springframework.http.HttpStatus.CONFLICT;
 
@@ -13,13 +13,14 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.model.entity.Customer;
 import com.cyberninja.security.model.entity.User;
+import com.cyberninja.security.model.entity.converter.UserDTOConverter;
 import com.cyberninja.security.model.entity.dto.UserDTO;
-import com.cyberninja.security.model.entity.dto.UserDTOConverter;
 import com.cyberninja.security.model.repository.UserRepository;
+import com.cyberninja.security.services.UserServiceI;
 import com.cyberninja.services.CustomerServiceI;
 
 @Service
-public class UserServiceImpl implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService , UserServiceI{
 
 	@Autowired
 	private UserRepository userRepo;
@@ -41,6 +42,7 @@ public class UserServiceImpl implements UserDetailsService {
 	 * @param dto
 	 * @return UserDTO
 	 */
+	@Override
 	public UserDTO createUser(UserDTO dto) {
 		// Verifica que no exista el usuario
 		if (userRepo.findUserByUsername(dto.getUsername()) != null) {

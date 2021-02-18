@@ -1,4 +1,4 @@
-package com.cyberninja.model.entity.dto;
+package com.cyberninja.model.entity.converter;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.model.entity.Document;
+import com.cyberninja.model.entity.dto.DocumentDTO;
 
 @Component
 public class DocumentDTOConverter {

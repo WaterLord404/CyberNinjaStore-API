@@ -28,6 +28,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.cyberninja.model.entity.Customer;
+import com.cyberninja.security.model.entity.enun.UserRole;
 
 @Entity
 @Table(name = "USERS")

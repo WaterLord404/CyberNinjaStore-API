@@ -23,8 +23,8 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import com.cyberninja.security.filter.JWTAuthenticationFilter;
 import com.cyberninja.security.filter.JWTAuthorizationFilter;
-import com.cyberninja.security.model.entity.UserRole;
-import com.cyberninja.security.services.UserServiceImpl;
+import com.cyberninja.security.model.entity.enun.UserRole;
+import com.cyberninja.security.services.impl.UserServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -43,11 +43,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
-    }
-	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 

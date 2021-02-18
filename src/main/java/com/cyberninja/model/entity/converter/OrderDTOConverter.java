@@ -1,10 +1,11 @@
-package com.cyberninja.model.entity.dto;
+package com.cyberninja.model.entity.converter;
 
 import java.time.LocalDate;
 
 import org.springframework.stereotype.Component;
 
 import com.cyberninja.model.entity.Order;
+import com.cyberninja.model.entity.dto.OrderDTO;
 
 @Component
 public class OrderDTOConverter {

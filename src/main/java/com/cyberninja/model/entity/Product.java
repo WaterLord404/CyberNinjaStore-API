@@ -19,6 +19,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.cyberninja.model.entity.enun.ProductCategory;
+import com.cyberninja.model.entity.enun.ProductColour;
+import com.cyberninja.model.entity.enun.ProductSize;
+
 @Entity
 @Table(name = "PRODUCTS")
 public class Product implements Serializable {

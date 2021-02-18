@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.security.model.entity.dto.UserDTO;
-import com.cyberninja.security.services.UserServiceImpl;
+import com.cyberninja.security.services.impl.UserServiceImpl;
 
 @RestController
 @RequestMapping("/user")

@@ -13,8 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.model.entity.Product;
+import com.cyberninja.model.entity.converter.ProductDTOConverter;
 import com.cyberninja.model.entity.dto.ProductDTO;
-import com.cyberninja.model.entity.dto.ProductDTOConverter;
 import com.cyberninja.model.repository.ProductRepository;
 import com.cyberninja.services.DocumentServiceI;
 import com.cyberninja.services.ProductServiceI;

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.cyberninja.model.entity.Order;
 import com.cyberninja.model.entity.Product;
+import com.cyberninja.model.entity.converter.OrderDTOConverter;
 import com.cyberninja.model.entity.dto.OrderDTO;
-import com.cyberninja.model.entity.dto.OrderDTOConverter;
 import com.cyberninja.model.repository.CustomerRepository;
 import com.cyberninja.model.repository.OrderRepository;
 import com.cyberninja.services.OrderServiceI;

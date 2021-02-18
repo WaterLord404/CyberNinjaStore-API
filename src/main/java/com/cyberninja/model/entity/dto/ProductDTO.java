@@ -3,9 +3,9 @@ package com.cyberninja.model.entity.dto;
 import java.util.List;
 import java.util.Set;
 
-import com.cyberninja.model.entity.ProductCategory;
-import com.cyberninja.model.entity.ProductColour;
-import com.cyberninja.model.entity.ProductSize;
+import com.cyberninja.model.entity.enun.ProductCategory;
+import com.cyberninja.model.entity.enun.ProductColour;
+import com.cyberninja.model.entity.enun.ProductSize;
 
 public class ProductDTO {
 
