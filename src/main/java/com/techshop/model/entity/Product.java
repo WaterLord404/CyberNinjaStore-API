@@ -1,6 +1,7 @@
 package com.techshop.model.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -34,13 +36,15 @@ public class Product implements Serializable {
 
 	private Double price;
 
-	private Set<ProductSize> SIZE;
+	private LocalDate createTime;
 
-//	private Image image;
+	private Set<ProductSize> size;
 
-	private Set<ProductColour> COLOUR;
+	private Set<ProductColour> colour;
 
-	private Set<ProductCategory> CATEGORY;
+	private Set<ProductCategory> category;
+
+	private List<Document> documents;
 
 	private List<Order> order;
 
@@ -81,38 +85,56 @@ public class Product implements Serializable {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+	
+	@Column(name = "CREATE_TIME")
+	public LocalDate getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(LocalDate createTime) {
+		this.createTime = createTime;
+	}
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 	@Column(name = "SIZE")
-	public Set<ProductSize> getSIZE() {
-		return SIZE;
+	public Set<ProductSize> getSize() {
+		return size;
 	}
 
-	public void setSIZE(Set<ProductSize> size) {
-		SIZE = size;
+	public void setSize(Set<ProductSize> size) {
+		this.size = size;
 	}
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 	@Column(name = "COLOUR")
-	public Set<ProductColour> getCOLOUR() {
-		return COLOUR;
+	public Set<ProductColour> getColour() {
+		return colour;
 	}
 
-	public void setCOLOUR(Set<ProductColour> colour) {
-		COLOUR = colour;
+	public void setColour(Set<ProductColour> colour) {
+		this.colour = colour;
 	}
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CATEGORY")
-	public Set<ProductCategory> getCATEGORY() {
-		return CATEGORY;
+	public Set<ProductCategory> getCategory() {
+		return category;
 	}
 
-	public void setCATEGORY(Set<ProductCategory> category) {
-		CATEGORY = category;
+	public void setCategory(Set<ProductCategory> category) {
+		this.category = category;
+	}
+
+	@OneToMany(mappedBy = "product", orphanRemoval = true, cascade = CascadeType.ALL)
+	public List<Document> getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(List<Document> documents) {
+		this.documents = documents;
 	}
 
 	@ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)

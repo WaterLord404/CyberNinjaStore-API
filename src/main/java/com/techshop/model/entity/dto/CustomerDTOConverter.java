@@ -7,12 +7,6 @@ import com.techshop.model.entity.Customer;
 @Component
 public class CustomerDTOConverter {
 
-	/**
-	 * Convierte CustomerDTO a Customer
-	 * 
-	 * @param dto
-	 * @return Customer
-	 */
 	public Customer customerDTOToCustomer(CustomerDTO dto) {
 		Customer customer = new Customer();
 
@@ -30,12 +24,6 @@ public class CustomerDTOConverter {
 		return customer;
 	}
 
-	/**
-	 * Convierte Customer a CustomerDTO
-	 * 
-	 * @param customer
-	 * @return CustomerDTO
-	 */
 	public CustomerDTO CustomerToCustomerDTO(Customer customer) {
 		CustomerDTO dto = new CustomerDTO();
 

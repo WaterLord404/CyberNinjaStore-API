@@ -1,4 +1,4 @@
-package com.techshop.security.controller;
+package com.techshop.controller;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
@@ -6,28 +6,27 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.techshop.security.model.entity.dto.UserDTO;
-import com.techshop.security.services.UserServiceImpl;
+import com.techshop.model.entity.dto.OrderDTO;
+import com.techshop.services.OrderServiceI;
 
 @RestController
-@RequestMapping("/user")
-@CrossOrigin(origins = "*")
-public class UserController {
+@RequestMapping(path = "/order")
+public class OrderController {
 
 	@Autowired
-	private UserServiceImpl userService;
+	private OrderServiceI orderService;
 
-	@PostMapping("/sign-up")
-	public ResponseEntity<UserDTO> signUp(@RequestBody UserDTO dto) {
+	@PostMapping(path = "/buy")
+	public ResponseEntity<OrderDTO> purchaseOrder(@RequestBody OrderDTO dto, Authentication auth) {
 		try {
-			return ResponseEntity.ok(userService.createUser(dto));
+			return ResponseEntity.ok(orderService.purchaseOrder(dto, auth));
 			
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus());
@@ -36,10 +35,5 @@ public class UserController {
 		} catch (Exception e) {
 			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
 		}
-	}
-
-	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
-		return ResponseEntity.ok().build();
 	}
 }

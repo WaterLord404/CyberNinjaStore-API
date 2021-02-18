@@ -39,7 +39,7 @@ public class User implements UserDetails {
 	 */
 	private static final long serialVersionUID = 3479851261461661635L;
 
-	private static final int MAX_AUTH_ATTEMPTS = 3;
+	private static final int MAX_AUTH_ATTEMPTS = 5;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,17 +55,17 @@ public class User implements UserDetails {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 	@Column(name = "ROLES")
-	private Set<UserRole> ROLES;
+	private Set<UserRole> roles;
 
 	@CreatedDate
-	@Column(name = "CREATE_DATE")
+	@Column(name = "CREATE_TIME")
 	private LocalDateTime createTime;
 
 	@UpdateTimestamp
-	@Column(name = "UPDATE_DATE")
+	@Column(name = "UPDATE_TIME")
 	private LocalDateTime updateTime;
 
-	@Column(name = "DELETE_DATE")
+	@Column(name = "DELETE_TIME")
 	private LocalDateTime deleteTime;
 
 	@Column(name = "LAST_PASS_CHANGE_DATE")
@@ -89,7 +89,7 @@ public class User implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return ROLES.stream().map(ur -> new SimpleGrantedAuthority("ROLE_" + ur.name())).collect(Collectors.toList());
+		return roles.stream().map(ur -> new SimpleGrantedAuthority("ROLE_" + ur.name())).collect(Collectors.toList());
 	}
 
 	@Override
@@ -130,12 +130,12 @@ public class User implements UserDetails {
 		this.id = id;
 	}
 
-	public Set<UserRole> getROLES() {
-		return ROLES;
+	public Set<UserRole> getRoles() {
+		return roles;
 	}
 
-	public void setROLES(Set<UserRole> roles) {
-		ROLES = roles;
+	public void setRoles(Set<UserRole> roles) {
+		this.roles = roles;
 	}
 
 	public LocalDateTime getCreateTime() {
