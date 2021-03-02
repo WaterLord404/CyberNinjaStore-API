@@ -38,7 +38,15 @@ public class Product implements Serializable {
 
 	private String description;
 
-	private Double price;
+	private Double purchasePrice;
+
+	private Double salePrice;
+
+	private Double priceWoutDiscount;
+
+	private Double totalPrice;
+
+	private Double discount;
 
 	private LocalDate createTime;
 
@@ -72,7 +80,7 @@ public class Product implements Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "DESCRIPTION", nullable = false)
+	@Column(name = "DESCRIPTION", nullable = false, length = 500)
 	public String getDescription() {
 		return description;
 	}
@@ -81,15 +89,51 @@ public class Product implements Serializable {
 		this.description = description;
 	}
 
-	@Column(name = "PRICE", nullable = false)
-	public Double getPrice() {
-		return price;
+	@Column(name = "PURCHASE_PRICE", nullable = false)
+	public Double getPurchasePrice() {
+		return purchasePrice;
 	}
 
-	public void setPrice(Double price) {
-		this.price = price;
+	public void setPurchasePrice(Double purchasePrice) {
+		this.purchasePrice = purchasePrice;
 	}
-	
+
+	@Column(name = "SALE_PRICE", nullable = false)
+	public Double getSalePrice() {
+		return salePrice;
+	}
+
+	public void setSalePrice(Double salePrice) {
+		this.salePrice = salePrice;
+	}
+
+	@Column(name = "PRICE_WOUT_DISCOUNT", nullable = false)
+	public Double getPriceWoutDiscount() {
+		return priceWoutDiscount;
+	}
+
+	public void setPriceWoutDiscount(Double priceWoutDiscount) {
+		this.priceWoutDiscount = priceWoutDiscount;
+	}
+
+	@Column(name = "TOTAL_PRICE", nullable = false)
+	public Double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(Double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	@Column(name = "DISCOUNT")
+	public Double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Double discount) {
+		this.discount = discount;
+	}
+
 	@Column(name = "CREATE_TIME")
 	public LocalDate getCreateTime() {
 		return createTime;

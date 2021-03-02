@@ -6,23 +6,34 @@ import java.util.Set;
 import com.cyberninja.model.entity.enun.ProductCategory;
 import com.cyberninja.model.entity.enun.ProductColour;
 import com.cyberninja.model.entity.enun.ProductSize;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+@JsonInclude(value  = Include.NON_NULL)
 public class ProductDTO {
 
 	private Long id;
-	
+
 	private String name;
 
 	private String description;
 
-	private Double price;
+	private Double purchasePrice;
+
+	private Double salePrice;
+
+	private Double priceWoutDiscount;
+	
+	private Double totalPrice;
+
+	private Double discount;
 
 	private Set<ProductSize> size;
 
 	private Set<ProductColour> colour;
 
 	private Set<ProductCategory> category;
-	
+
 	private List<DocumentDTO> documents;
 
 	public Long getId() {
@@ -49,12 +60,44 @@ public class ProductDTO {
 		this.description = description;
 	}
 
-	public Double getPrice() {
-		return price;
+	public Double getPurchasePrice() {
+		return purchasePrice;
 	}
 
-	public void setPrice(Double price) {
-		this.price = price;
+	public void setPurchasePrice(Double purchasePrice) {
+		this.purchasePrice = purchasePrice;
+	}
+
+	public Double getSalePrice() {
+		return salePrice;
+	}
+
+	public void setSalePrice(Double salePrice) {
+		this.salePrice = salePrice;
+	}
+
+	public Double getPriceWoutDiscount() {
+		return priceWoutDiscount;
+	}
+
+	public void setPriceWoutDiscount(Double priceWoutDiscount) {
+		this.priceWoutDiscount = priceWoutDiscount;
+	}
+
+	public Double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(Double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public Double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Double discount) {
+		this.discount = discount;
 	}
 
 	public Set<ProductSize> getSize() {

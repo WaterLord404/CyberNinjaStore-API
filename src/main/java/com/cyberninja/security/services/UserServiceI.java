@@ -6,4 +6,6 @@ public interface UserServiceI {
 
 	UserDTO createUser(UserDTO dto);
 
+	UserDTO getUser(UserDTO dto);
+
 }

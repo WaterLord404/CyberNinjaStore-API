@@ -12,12 +12,15 @@ import com.cyberninja.model.entity.dto.ProductDTO;
 @Component
 public class ProductDTOConverter {
 
+	
 	public Product productDTOToProduct(ProductDTO dto) {
 		Product product = new Product();
 
 		product.setName(dto.getName());
 		product.setDescription(dto.getDescription());
-		product.setPrice(dto.getPrice());
+		product.setPurchasePrice(dto.getPurchasePrice());
+		product.setSalePrice(dto.getSalePrice());
+		product.setDiscount(dto.getDiscount());
 		product.setSize(dto.getSize());
 		product.setColour(dto.getColour());
 		product.setCategory(dto.getCategory());
@@ -32,7 +35,9 @@ public class ProductDTOConverter {
 		dto.setId(product.getId());
 		dto.setName(product.getName());
 		dto.setDescription(product.getDescription());
-		dto.setPrice(product.getPrice());
+		dto.setTotalPrice(product.getTotalPrice());
+		dto.setPriceWoutDiscount(product.getPriceWoutDiscount());
+		dto.setDiscount(product.getDiscount());
 		dto.setSize(product.getSize());
 		dto.setColour(product.getColour());
 		dto.setCategory(product.getCategory());
@@ -40,6 +45,9 @@ public class ProductDTOConverter {
 		return dto;
 	}
 	
+	/**
+	 * Transforma una lista de Product a ProductDTO
+	 */
 	public List<ProductDTO> productsToProductsDTO(List<Product> products) {
 		List<ProductDTO> dtos = new ArrayList<>();
 		
@@ -49,4 +57,5 @@ public class ProductDTOConverter {
 		
 		return dtos;
 	}
+	
 }

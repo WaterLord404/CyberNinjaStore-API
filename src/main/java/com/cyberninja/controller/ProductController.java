@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,8 +26,10 @@ import org.springframework.web.server.ResponseStatusException;
 import com.cyberninja.model.entity.dto.ProductDTO;
 import com.cyberninja.services.ProductServiceI;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "/product")
 public class ProductController {
 
@@ -41,7 +44,7 @@ public class ProductController {
 	@GetMapping
 	public ResponseEntity<List<ProductDTO>> getProducts() {
 		try {
-			return ResponseEntity.ok(productService.getProductsDTO());
+			return ResponseEntity.ok(productService.getProducts());
 
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus());
@@ -86,7 +89,9 @@ public class ProductController {
 
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus());
-		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
+		} catch (NullPointerException |
+				InvalidDataAccessApiUsageException |
+				UnrecognizedPropertyException e) {
 			throw new ResponseStatusException(BAD_REQUEST);
 		} catch (Exception e) {
 			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);

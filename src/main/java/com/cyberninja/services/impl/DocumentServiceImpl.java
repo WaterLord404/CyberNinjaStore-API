@@ -18,8 +18,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.model.entity.Document;
 import com.cyberninja.model.entity.Product;
-import com.cyberninja.model.entity.converter.DocumentDTOConverter;
-import com.cyberninja.model.entity.dto.DocumentDTO;
 import com.cyberninja.model.repository.DocumentRepository;
 import com.cyberninja.services.DocumentServiceI;
 
@@ -28,21 +26,6 @@ public class DocumentServiceImpl implements DocumentServiceI {
 
 	@Autowired
 	private DocumentRepository documentRepo;
-
-	@Autowired
-	private DocumentDTOConverter documentConverter;
-	
-	@Override
-	public List<DocumentDTO> getDocumentsDTO(List<Document> documents) {
-		List<DocumentDTO> documentsDTO = new ArrayList<>();
-		
-		for (Document document : documents) {
-			// Transforma Document a DocumentDTO y lo añade a la nueva lista creada
-			documentsDTO.add(documentConverter.documentToDocumentDTO(document));
-		}
-		
-		return documentsDTO;
-	}
 	
 	/**
 	 * @param List multipartFile imgs

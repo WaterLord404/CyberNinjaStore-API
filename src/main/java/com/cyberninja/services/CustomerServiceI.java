@@ -3,11 +3,12 @@ package com.cyberninja.services;
 import com.cyberninja.model.entity.Customer;
 import com.cyberninja.model.entity.dto.CustomerDTO;
 import com.cyberninja.security.model.entity.User;
+import com.cyberninja.security.model.entity.dto.UserDTO;
 
 public interface CustomerServiceI {
 
-	public Customer createCustomer(CustomerDTO dto, User user);
+	Customer createCustomer(CustomerDTO dto, User user);
 
-	public CustomerDTO getCustomerDTO(Customer customer);
+	Customer getCustomer(UserDTO userDTO);
 
 }

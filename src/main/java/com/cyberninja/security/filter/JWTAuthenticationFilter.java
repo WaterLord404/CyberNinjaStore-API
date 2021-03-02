@@ -6,6 +6,7 @@ import static com.cyberninja.security.common.SecurityConstants.TOKEN_PREFIX;
 import static com.cyberninja.security.filter.jwt.JWTTokenProvider.generateToken;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -21,25 +22,31 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.cyberninja.security.model.entity.User;
 import com.cyberninja.security.model.entity.dto.UserDTO;
+import com.cyberninja.security.services.UserServiceI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebFilter
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	
+	private UserServiceI userService;
+	
 	private AuthenticationManager authenticationManager;
 	
-	public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, UserServiceI userService) {
         this.authenticationManager = authenticationManager;
+        this.userService = userService;
         setFilterProcessesUrl(LOG_IN);
     }
-
+	
+	private UserDTO user;
+	
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
-		UserDTO user = null;
+		user = null;
 		try {
 			user = new ObjectMapper().readValue(request.getInputStream(), UserDTO.class);
-
+			
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -53,7 +60,15 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			Authentication authResult) throws IOException, ServletException {
 		
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + generateToken(((User)authResult.getPrincipal())));
-		
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String userDTO = objectMapper.writeValueAsString(userService.getUser(user));
+
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        out.print(userDTO);
+        out.flush();
 	}
-	
+
 }

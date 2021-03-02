@@ -8,6 +8,7 @@ import com.cyberninja.model.entity.converter.CustomerDTOConverter;
 import com.cyberninja.model.entity.dto.CustomerDTO;
 import com.cyberninja.model.repository.CustomerRepository;
 import com.cyberninja.security.model.entity.User;
+import com.cyberninja.security.model.entity.dto.UserDTO;
 import com.cyberninja.services.CustomerServiceI;
 
 @Service
@@ -19,6 +20,9 @@ public class CustomerServiceImpl implements CustomerServiceI {
 	@Autowired
 	private CustomerDTOConverter customerConverter;
 
+	/**
+	 * Crea un customer
+	 */
 	@Override
 	public Customer createCustomer(CustomerDTO dto, User user) {
 		Customer customer = customerConverter.customerDTOToCustomer(dto);
@@ -31,8 +35,12 @@ public class CustomerServiceImpl implements CustomerServiceI {
 		return customer;
 	}
 	
+	/**
+	 * Obtiene un customer
+	 */
 	@Override
-	public CustomerDTO getCustomerDTO(Customer customer) {
-		return customerConverter.CustomerToCustomerDTO(customer);
+	public Customer getCustomer(UserDTO dto) {
+		return customerRepo.getCustomerByUserUsername(dto.getUsername());
 	}
+	
 }

@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.security.model.entity.dto.UserDTO;
-import com.cyberninja.security.services.impl.UserServiceImpl;
+import com.cyberninja.security.services.UserServiceI;
 
 @RestController
-@RequestMapping("/user")
 @CrossOrigin(origins = "*")
+@RequestMapping("/user")
 public class UserController {
 
 	@Autowired
-	private UserServiceImpl userService;
+	private UserServiceI userService;
 
 	@PostMapping("/sign-up")
 	public ResponseEntity<UserDTO> signUp(@RequestBody UserDTO dto) {
@@ -38,8 +38,9 @@ public class UserController {
 		}
 	}
 
+	@CrossOrigin(exposedHeaders = "Authorization")
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
+	public ResponseEntity<UserDTO> login(@RequestBody UserDTO userDTO) {
 		return ResponseEntity.ok().build();
 	}
 }

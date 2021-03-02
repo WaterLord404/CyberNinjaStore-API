@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.model.entity.Customer;
+import com.cyberninja.model.entity.converter.CustomerDTOConverter;
 import com.cyberninja.security.model.entity.User;
 import com.cyberninja.security.model.entity.converter.UserDTOConverter;
 import com.cyberninja.security.model.entity.dto.UserDTO;
@@ -31,6 +32,9 @@ public class UserServiceImpl implements UserDetailsService , UserServiceI{
 	@Autowired
 	private CustomerServiceI customerService;
 
+	@Autowired
+	private CustomerDTOConverter customerConverter;
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		return userRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
@@ -48,13 +52,26 @@ public class UserServiceImpl implements UserDetailsService , UserServiceI{
 		if (userRepo.findUserByUsername(dto.getUsername()) != null) {
 			throw new ResponseStatusException(CONFLICT);
 		}
-
+		
 		User user = userConverter.userDTOToUser(dto);
 		Customer customer = customerService.createCustomer(dto.getCustomer(), user);
-		
 		// Entity to DTO
 		dto = userConverter.userToUserDTO(user);
-		dto.setCustomer(customerService.getCustomerDTO(customer));
+		dto.setCustomer(customerConverter.CustomerToCustomerDTO(customer));
+		
+		return dto;
+	}
+	
+	/**
+	 * Devuelve un UserDTO
+	 */
+	@Override
+	public UserDTO getUser(UserDTO dto) {
+		User user = userConverter.userDTOToUser(dto);
+		Customer customer = customerService.getCustomer(dto);
+		// Entity to DTO
+		dto = userConverter.userToUserDTO(user);
+		dto.setCustomer(customerConverter.CustomerToCustomerDTO(customer));
 		
 		return dto;
 	}
