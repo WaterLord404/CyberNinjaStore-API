@@ -145,7 +145,7 @@ public class Product implements Serializable {
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
-	@Column(name = "SIZE")
+	@Column(name = "SIZE", nullable = false)
 	public Set<ProductSize> getSize() {
 		return size;
 	}
@@ -156,7 +156,7 @@ public class Product implements Serializable {
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
-	@Column(name = "COLOUR")
+	@Column(name = "COLOUR", nullable = false)
 	public Set<ProductColour> getColour() {
 		return colour;
 	}
@@ -167,7 +167,7 @@ public class Product implements Serializable {
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
-	@Column(name = "CATEGORY")
+	@Column(name = "CATEGORY", nullable = false)
 	public Set<ProductCategory> getCategory() {
 		return category;
 	}

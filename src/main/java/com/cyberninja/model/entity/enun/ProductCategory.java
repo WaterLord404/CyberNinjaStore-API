@@ -1,5 +1,5 @@
 package com.cyberninja.model.entity.enun;
 
 public enum ProductCategory {
-	SHIRTS, SWEATSHIRT, JACKETS, EQUIPMENTS, PANTS
+	NEW, WOMEN, SHIRTS, ACCESORIES, SWEATSHIRT, JACKETS, EQUIPMENTS, PANTS
 }
