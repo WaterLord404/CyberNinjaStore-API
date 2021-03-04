@@ -80,7 +80,7 @@ public class Product implements Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "DESCRIPTION", nullable = false, length = 500)
+	@Column(name = "DESCRIPTION", nullable = false, length = 1000)
 	public String getDescription() {
 		return description;
 	}
