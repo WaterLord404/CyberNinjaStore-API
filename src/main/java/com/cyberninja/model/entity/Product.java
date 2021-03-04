@@ -15,6 +15,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -80,6 +81,7 @@ public class Product implements Serializable {
 		this.name = name;
 	}
 
+	@Lob 
 	@Column(name = "DESCRIPTION", nullable = false, length = 1000)
 	public String getDescription() {
 		return description;
@@ -125,7 +127,7 @@ public class Product implements Serializable {
 		this.totalPrice = totalPrice;
 	}
 
-	@Column(name = "DISCOUNT")
+	@Column(name = "DISCOUNT", nullable = false)
 	public Double getDiscount() {
 		return discount;
 	}
