@@ -39,7 +39,7 @@ public class OrderServiceImpl implements OrderServiceI{
 		Order order = orderConverter.orderDTOToOrder(dto);
 		// Busca y asigna el customer
 		order.setCustomer(customerRepo.findById(Long.valueOf(auth.getName())).get());
-		
+		// Obtiene los productos seleccionados
 		List<Product> products = productService.findSelectedProducts(dto.getProducts());
 		
 		order.setTotalPrice(calculateTotalPrice(products));
@@ -47,7 +47,7 @@ public class OrderServiceImpl implements OrderServiceI{
 
 		return orderConverter.orderToOrderDTO(orderRepo.save(order));
 	}
-	
+		
 	/**
 	 * Suma el precio de todos los productos
 	 * @param products
@@ -58,7 +58,7 @@ public class OrderServiceImpl implements OrderServiceI{
 		for (Product product : products) {
 			result = result + product.getTotalPrice();
 		}
-		return result;
+		return Math.round(result * 100.0) / 100.0;
 	}
 	
 

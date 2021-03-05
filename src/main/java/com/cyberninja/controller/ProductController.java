@@ -26,6 +26,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.cyberninja.model.entity.dto.ProductDTO;
 import com.cyberninja.services.ProductServiceI;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
 @RestController
@@ -61,10 +62,26 @@ public class ProductController {
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<ProductDTO> getProduct(@PathVariable Long id) {
 		try {
-			return ResponseEntity.ok(productService.getProduct(id));
+			return productService.getProduct(id) != null 
+					? ResponseEntity.ok(productService.getProduct(id))
+					: ResponseEntity.notFound().build();
 
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus());
+		} catch (Exception e) {
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PostMapping(path = "/cart")
+	public ResponseEntity<List<ProductDTO>> getProductCart(@RequestBody List<Long> ids) {
+		try {
+			return ResponseEntity.ok(productService.getProductCart(ids));
+			
+		} catch (ResponseStatusException e) {
+			throw new ResponseStatusException(e.getStatus(), e.getMessage());
+		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
+			throw new ResponseStatusException(BAD_REQUEST);
 		} catch (Exception e) {
 			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
 		}
@@ -74,7 +91,7 @@ public class ProductController {
 	 * Crea un producto con sus documentos
 	 * 
 	 * @param String product
-	 * @param List   MultipartFile images
+	 * @param List MultipartFile images
 	 * @return ProductDTO
 	 */
 	@PostMapping
@@ -91,7 +108,8 @@ public class ProductController {
 			throw new ResponseStatusException(e.getStatus());
 		} catch (NullPointerException |
 				InvalidDataAccessApiUsageException |
-				UnrecognizedPropertyException e) {
+				UnrecognizedPropertyException | 
+				InvalidFormatException e) {
 			throw new ResponseStatusException(BAD_REQUEST);
 		} catch (Exception e) {
 			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);

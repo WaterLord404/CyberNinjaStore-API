@@ -58,22 +58,40 @@ public class ProductServiceImpl implements ProductServiceI {
 
 		return dtos;
 	}
-	
+
 	/**
 	 * Obtiene un producto con sus documentos
 	 * 
 	 * @return ProductDTO
+	 * @throws SQLException
+	 */
+	@Override
+	public ProductDTO getProduct(Long id) {
+		try {
+			Product product = productRepo.findProductById(id);
+			ProductDTO dto = productConverter.productToProductDTO(product);
+			dto.setDocuments(documentConverter.getDocumentsDTO(product.getDocuments()));
+
+			return dto;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	/**
+	 * Obtiene los productos seleccionados del carrito con las imagenes
+	 * @return List ProductDTO
 	 * @throws SQLException 
 	 */
 	@Override
-	public ProductDTO getProduct(Long id) throws SQLException {
-		Product product = productRepo.findById(id)
-						  .orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
-
-		ProductDTO dto = productConverter.productToProductDTO(product);
-		dto.setDocuments(documentConverter.getDocumentsDTO(product.getDocuments()));
-
-		return dto;
+	public List<ProductDTO> getProductCart(List<Long> ids) {
+		List<ProductDTO> products = new ArrayList<>();
+		
+		for (Long id : ids) {
+			products.add(getProduct(id));
+		} 
+		
+		return products;
 	}
 
 	/**
@@ -89,8 +107,9 @@ public class ProductServiceImpl implements ProductServiceI {
 		// Calcular IVA
 		Double price = calculateVat(product.getSalePrice());
 		product.setPriceWoutDiscount(price);
+		
 		// Calcular descuento
-		if (product.getDiscount() != 0) {
+		if (product.getDiscount() > 0 && product.getDiscount() <= 100) {
 			product.setTotalPrice(calculateDiscount(price, product.getDiscount()));
 		} else {
 			product.setTotalPrice(price);
@@ -101,7 +120,7 @@ public class ProductServiceImpl implements ProductServiceI {
 		
 		productRepo.save(product);
 
-		return getProduct(product.getId());
+		return productConverter.productToProductDTO(product);
 	}
 
 	/**
@@ -138,7 +157,7 @@ public class ProductServiceImpl implements ProductServiceI {
 	private Double calculateVat(Double salePrice) {
 		return Math.round((salePrice + (salePrice * IVA)) * 100.0) / 100.0;
 	}
-	
+
 	/**
 	 * Calcula el descuento
 	 * 

@@ -19,7 +19,7 @@ import com.cyberninja.services.OrderServiceI;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(path = "/order")
+@RequestMapping(path = "/cart")
 public class OrderController {
 
 	@Autowired
@@ -29,7 +29,7 @@ public class OrderController {
 	public ResponseEntity<OrderDTO> purchaseOrder(@RequestBody OrderDTO dto, Authentication auth) {
 		try {
 			return ResponseEntity.ok(orderService.purchaseOrder(dto, auth));
-			
+
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus());
 		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
@@ -38,4 +38,5 @@ public class OrderController {
 			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
 		}
 	}
+
 }
