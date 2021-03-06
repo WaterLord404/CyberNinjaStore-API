@@ -62,12 +62,10 @@ public class ProductController {
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<ProductDTO> getProduct(@PathVariable Long id) {
 		try {
-			return productService.getProduct(id) != null 
+			return productService.getProduct(id).isActive() 
 					? ResponseEntity.ok(productService.getProduct(id))
 					: ResponseEntity.notFound().build();
 
-		} catch (ResponseStatusException e) {
-			throw new ResponseStatusException(e.getStatus());
 		} catch (Exception e) {
 			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
 		}

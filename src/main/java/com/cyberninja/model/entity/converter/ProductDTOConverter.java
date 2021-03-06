@@ -24,7 +24,8 @@ public class ProductDTOConverter {
 		product.setColour(dto.getColour());
 		product.setCategory(dto.getCategory());
 		product.setCreateTime(LocalDate.now());
-
+		product.setActive(true);
+		
 		return product;
 	}
 
@@ -40,7 +41,8 @@ public class ProductDTOConverter {
 		dto.setSize(product.getSize());
 		dto.setColour(product.getColour());
 		dto.setCategory(product.getCategory());
-
+		dto.setActive(product.isActive());
+		
 		return dto;
 	}
 

@@ -29,32 +29,34 @@ public class ProductServiceImpl implements ProductServiceI {
 
 	@Autowired
 	private ProductDTOConverter productConverter;
-	
+
 	@Autowired
 	private DocumentServiceI documentService;
 
 	@Autowired
 	private DocumentDTOConverter documentConverter;
-	
+
 	/**
 	 * Obtiene todos los productos con los documentos
 	 * 
-	 * @return List ProductDTO
-	 * @throws SQLException 
+	 * @return List ProductDTO activos
+	 * @throws SQLException
 	 */
 	@Override
 	public List<ProductDTO> getProducts() throws SQLException {
 		List<ProductDTO> dtos = new ArrayList<>(); // Lista de productsDTO a retornar
 
-		for (Product product : productRepo.findAll()) {
-			
+		for (Product product : productRepo.findProductsByActive(true)) {
+
 			ProductDTO productDTO = productConverter.productToProductDTO(product);
 			productDTO.setDocuments(documentConverter.getDocumentsDTO(product.getDocuments()));
 
 			dtos.add(productDTO);
 		}
 
-		if (dtos.isEmpty()) { throw new ResponseStatusException(NOT_FOUND); }
+		if (dtos.isEmpty()) {
+			throw new ResponseStatusException(NOT_FOUND);
+		}
 
 		return dtos;
 	}
@@ -62,35 +64,37 @@ public class ProductServiceImpl implements ProductServiceI {
 	/**
 	 * Obtiene un producto con sus documentos
 	 * 
-	 * @return ProductDTO
+	 * @return ProductDTO activo/inactivo
 	 * @throws SQLException
 	 */
 	@Override
 	public ProductDTO getProduct(Long id) {
-		try {
-			Product product = productRepo.findProductById(id);
-			ProductDTO dto = productConverter.productToProductDTO(product);
-			dto.setDocuments(documentConverter.getDocumentsDTO(product.getDocuments()));
+		Product product = productRepo.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
 
-			return dto;
-		} catch (Exception e) {
-			return null;
-		}
+		ProductDTO dto = productConverter.productToProductDTO(product);
+		dto.setDocuments(documentConverter.getDocumentsDTO(product.getDocuments()));
+
+		return dto;
 	}
-	
+
 	/**
-	 * Obtiene los productos seleccionados del carrito con las imagenes
-	 * @return List ProductDTO
-	 * @throws SQLException 
+	 * Obtiene los productos (activos e inactivos) seleccionados del carrito con las imagenes
+	 * 
+	 * Esto sirve, para eliminar un producto que mantenga el usuario en localstorage
+	 * pero en BD no exista
+	 * 
+	 * @return List ProductDTO activo/inactivo
+	 * @throws SQLException
 	 */
 	@Override
 	public List<ProductDTO> getProductCart(List<Long> ids) {
 		List<ProductDTO> products = new ArrayList<>();
-		
+
 		for (Long id : ids) {
 			products.add(getProduct(id));
-		} 
-		
+		}
+
 		return products;
 	}
 
@@ -98,7 +102,7 @@ public class ProductServiceImpl implements ProductServiceI {
 	 * Crea un producto con sus documentos
 	 * 
 	 * @return ProductDTO
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	@Override
 	public ProductDTO createProduct(ProductDTO dto, List<MultipartFile> images) throws SQLException {
@@ -107,46 +111,53 @@ public class ProductServiceImpl implements ProductServiceI {
 		// Calcular IVA
 		Double price = calculateVat(product.getSalePrice());
 		product.setPriceWoutDiscount(price);
-		
+
 		// Calcular descuento
 		if (product.getDiscount() > 0 && product.getDiscount() <= 100) {
 			product.setTotalPrice(calculateDiscount(price, product.getDiscount()));
-		} else {
+		} else if (product.getDiscount() == 0) {
 			product.setTotalPrice(price);
 		}
-		
+
 		// Añade las imagenes
 		product.setDocuments(documentService.createDocuments(images, product));
-		
+
 		productRepo.save(product);
 
 		return productConverter.productToProductDTO(product);
 	}
 
 	/**
-	 * Busca en la lista de ProductDTO(unicamente los ids enviados) y devuelve los Product
+	 * Busca en la lista de ProductDTO(unicamente los ids enviados) y devuelve los
+	 * Product
 	 */
 	@Override
 	public List<Product> findSelectedProducts(List<ProductDTO> dtos) {
 		List<Product> products = new ArrayList<>();
 
 		for (ProductDTO productDTO : dtos) {
-			products.add(productRepo.findById(productDTO.getId())
-					     .orElseThrow(() -> new ResponseStatusException(NOT_FOUND)));
+			products.add(productRepo.findProductByIdAndActive(productDTO.getId(), true)
+					.orElseThrow(() -> new ResponseStatusException(NOT_FOUND)));
 		}
 
-		if (products.isEmpty()) { throw new ResponseStatusException(BAD_REQUEST); }
-		
+		if (products.isEmpty()) {
+			throw new ResponseStatusException(BAD_REQUEST);
+		}
+
 		return products;
 	}
-	
+
 	/**
-	 * Borra un producto con sus documentos
-	 * @return ProductDTO
+	 * Inactiva un producto
+	 * 
 	 */
 	@Override
 	public void deleteProduct(ProductDTO dto) {
-		productRepo.deleteById(dto.getId());
+		Product product = productRepo.findProductByIdAndActive(dto.getId(), true)
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+
+		product.setActive(false);
+		productRepo.save(product);
 	}
 
 	/**

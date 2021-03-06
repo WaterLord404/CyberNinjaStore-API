@@ -9,7 +9,7 @@ import com.cyberninja.model.entity.enun.ProductSize;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-@JsonInclude(value  = Include.NON_NULL)
+@JsonInclude(value = Include.NON_NULL)
 public class ProductDTO {
 
 	private Long id;
@@ -23,7 +23,7 @@ public class ProductDTO {
 	private Double salePrice;
 
 	private Double priceWoutDiscount;
-	
+
 	private Double totalPrice;
 
 	private Double discount;
@@ -35,6 +35,8 @@ public class ProductDTO {
 	private Set<ProductCategory> category;
 
 	private List<DocumentDTO> documents;
+
+	private boolean active;
 
 	public Long getId() {
 		return id;
@@ -130,6 +132,14 @@ public class ProductDTO {
 
 	public void setDocuments(List<DocumentDTO> documents) {
 		this.documents = documents;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 }

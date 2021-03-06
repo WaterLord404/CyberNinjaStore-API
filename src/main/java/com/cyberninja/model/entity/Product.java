@@ -61,6 +61,8 @@ public class Product implements Serializable {
 
 	private List<Order> order;
 
+	private boolean active;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PRODUCT_ID")
@@ -81,7 +83,7 @@ public class Product implements Serializable {
 		this.name = name;
 	}
 
-	@Lob 
+	@Lob
 	@Column(name = "DESCRIPTION", nullable = false, length = 1000)
 	public String getDescription() {
 		return description;
@@ -194,6 +196,15 @@ public class Product implements Serializable {
 
 	public void setOrder(List<Order> order) {
 		this.order = order;
+	}
+
+	@Column(name = "ACTIVE", nullable = false)
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	public static long getSerialversionuid() {
