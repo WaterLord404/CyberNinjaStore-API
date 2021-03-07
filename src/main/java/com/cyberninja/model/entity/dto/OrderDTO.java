@@ -12,7 +12,7 @@ public class OrderDTO {
 	
 	private Double totalPrice;
 
-	private List<ProductDTO> products;
+	private List<OrderDetailsDTO> orderProducts;
 	
 	public Long getId() {
 		return id;
@@ -30,12 +30,12 @@ public class OrderDTO {
 		this.totalPrice = totalPrice;
 	}
 
-	public List<ProductDTO> getProducts() {
-		return products;
+	public List<OrderDetailsDTO> getOrderProducts() {
+		return orderProducts;
 	}
 
-	public void setProducts(List<ProductDTO> products) {
-		this.products = products;
+	public void setOrderProductDTO(List<OrderDetailsDTO> orderProducts) {
+		this.orderProducts = orderProducts;
 	}
 	
 }

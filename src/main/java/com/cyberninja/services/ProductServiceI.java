@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.cyberninja.model.entity.Product;
 import com.cyberninja.model.entity.dto.ProductDTO;
 
 public interface ProductServiceI {
@@ -17,9 +16,5 @@ public interface ProductServiceI {
 	public ProductDTO createProduct(ProductDTO dto, List<MultipartFile> images) throws SQLException;
 
 	public void deleteProduct(ProductDTO dto);
-
-	public List<Product> findSelectedProducts(List<ProductDTO> dtos);
-
-	public List<ProductDTO> getProductCart(List<Long> ids) throws SQLException;
 
 }

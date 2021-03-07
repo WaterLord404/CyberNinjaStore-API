@@ -16,13 +16,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.cyberninja.model.entity.enun.ProductCategory;
-import com.cyberninja.model.entity.enun.ProductColour;
-import com.cyberninja.model.entity.enun.ProductSize;
+import com.cyberninja.model.entity.enumerated.ProductCategory;
+import com.cyberninja.model.entity.enumerated.ProductColour;
+import com.cyberninja.model.entity.enumerated.ProductSize;
 
 @Entity
 @Table(name = "PRODUCTS")
@@ -59,7 +58,7 @@ public class Product implements Serializable {
 
 	private List<Document> documents;
 
-	private List<Order> order;
+	private List<OrderDetails> ordersDetails;
 
 	private boolean active;
 
@@ -189,13 +188,13 @@ public class Product implements Serializable {
 		this.documents = documents;
 	}
 
-	@ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
-	public List<Order> getOrder() {
-		return order;
+	@OneToMany(mappedBy = "product", orphanRemoval = true, cascade = CascadeType.ALL)
+	public List<OrderDetails> getOrder() {
+		return ordersDetails;
 	}
 
-	public void setOrder(List<Order> order) {
-		this.order = order;
+	public void setOrder(List<OrderDetails> ordersDetails) {
+		this.ordersDetails = ordersDetails;
 	}
 
 	@Column(name = "ACTIVE", nullable = false)

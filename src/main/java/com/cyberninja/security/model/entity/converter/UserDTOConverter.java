@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.cyberninja.security.model.entity.User;
 import com.cyberninja.security.model.entity.dto.UserDTO;
-import com.cyberninja.security.model.entity.enun.UserRole;
+import com.cyberninja.security.model.entity.enumerated.UserRole;
 
 @Component
 public class UserDTOConverter {

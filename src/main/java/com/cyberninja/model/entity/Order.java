@@ -12,9 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -34,7 +33,7 @@ public class Order implements Serializable {
 
 	private Customer customer;
 
-	private List<Product> products;
+	private List<OrderDetails> ordersDetails;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,17 +74,13 @@ public class Order implements Serializable {
 		this.customer = customer;
 	}
 
-	@JoinTable(name = "REL_ORDER_PRODUCT", joinColumns = @JoinColumn(name = "ORDER_ID", nullable = false), 
-									 	   inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID", nullable = false),
-									 	   foreignKey = @ForeignKey(name = "FK_ORDERS__PRODUCT_ID"), 
-									 	   inverseForeignKey = @ForeignKey(name = "FK_PRODUCTS__ORDER_ID"))
-	@ManyToMany(cascade = CascadeType.ALL)
-	public List<Product> getProducts() {
-		return products;
+	@OneToMany(mappedBy = "order", orphanRemoval = true, cascade = CascadeType.ALL)
+	public List<OrderDetails> getOrdersDetails() {
+		return ordersDetails;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setOrdersDetails(List<OrderDetails> ordersDetails) {
+		this.ordersDetails = ordersDetails;
 	}
 
 	public static long getSerialversionuid() {

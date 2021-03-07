@@ -3,9 +3,9 @@ package com.cyberninja.model.entity.dto;
 import java.util.List;
 import java.util.Set;
 
-import com.cyberninja.model.entity.enun.ProductCategory;
-import com.cyberninja.model.entity.enun.ProductColour;
-import com.cyberninja.model.entity.enun.ProductSize;
+import com.cyberninja.model.entity.enumerated.ProductCategory;
+import com.cyberninja.model.entity.enumerated.ProductColour;
+import com.cyberninja.model.entity.enumerated.ProductSize;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 

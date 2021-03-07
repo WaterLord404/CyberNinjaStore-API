@@ -23,7 +23,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import com.cyberninja.security.filter.JWTAuthenticationFilter;
 import com.cyberninja.security.filter.JWTAuthorizationFilter;
-import com.cyberninja.security.model.entity.enun.UserRole;
+import com.cyberninja.security.model.entity.enumerated.UserRole;
 import com.cyberninja.security.services.impl.UserServiceImpl;
 
 @Configuration
@@ -51,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(POST, LOG_IN).permitAll()
 			.antMatchers(GET, "/product").permitAll()
 			.antMatchers(GET, "/product/*").permitAll()
-			.antMatchers(POST, "/product/cart").permitAll()
+			.antMatchers(POST, "/order/cart").hasRole(UserRole.USER.name())
 			.antMatchers(POST, "/product").hasRole(UserRole.ADMIN.name())
 			.antMatchers(DELETE, "/product").hasRole(UserRole.ADMIN.name())
 		.anyRequest()

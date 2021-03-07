@@ -1,11 +1,14 @@
 package com.cyberninja.services;
 
-import org.springframework.security.core.Authentication;
+import java.util.List;
 
-import com.cyberninja.model.entity.dto.OrderDTO;
+import com.cyberninja.model.entity.dto.OrderDetailsDTO;
+import com.cyberninja.model.entity.dto.ProductDTO;
 
 public interface OrderServiceI {
 
-	public OrderDTO purchaseOrder(OrderDTO dto, Authentication auth);
+	public List<OrderDetailsDTO> getProductCart(List<OrderDetailsDTO> ids);
+
+//	public OrderDTO purchaseOrder(OrderDTO dto, Authentication auth);
 	
 }

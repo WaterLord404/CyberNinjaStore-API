@@ -71,20 +71,6 @@ public class ProductController {
 		}
 	}
 
-	@PostMapping(path = "/cart")
-	public ResponseEntity<List<ProductDTO>> getProductCart(@RequestBody List<Long> ids) {
-		try {
-			return ResponseEntity.ok(productService.getProductCart(ids));
-			
-		} catch (ResponseStatusException e) {
-			throw new ResponseStatusException(e.getStatus(), e.getMessage());
-		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
-			throw new ResponseStatusException(BAD_REQUEST);
-		} catch (Exception e) {
-			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
-		}
-	}
-
 	/**
 	 * Crea un producto con sus documentos
 	 * 

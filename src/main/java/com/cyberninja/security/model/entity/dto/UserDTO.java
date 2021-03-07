@@ -3,7 +3,7 @@ package com.cyberninja.security.model.entity.dto;
 import java.util.Set;
 
 import com.cyberninja.model.entity.dto.CustomerDTO;
-import com.cyberninja.security.model.entity.enun.UserRole;
+import com.cyberninja.security.model.entity.enumerated.UserRole;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 

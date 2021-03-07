@@ -1,7 +1,6 @@
 package com.cyberninja.services.impl;
 
 import static com.cyberninja.common.ApplicationConstans.IVA;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.sql.SQLException;
@@ -79,26 +78,6 @@ public class ProductServiceImpl implements ProductServiceI {
 	}
 
 	/**
-	 * Obtiene los productos (activos e inactivos) seleccionados del carrito con las imagenes
-	 * 
-	 * Esto sirve, para eliminar un producto que mantenga el usuario en localstorage
-	 * pero en BD no exista
-	 * 
-	 * @return List ProductDTO activo/inactivo
-	 * @throws SQLException
-	 */
-	@Override
-	public List<ProductDTO> getProductCart(List<Long> ids) {
-		List<ProductDTO> products = new ArrayList<>();
-
-		for (Long id : ids) {
-			products.add(getProduct(id));
-		}
-
-		return products;
-	}
-
-	/**
 	 * Crea un producto con sus documentos
 	 * 
 	 * @return ProductDTO
@@ -125,26 +104,6 @@ public class ProductServiceImpl implements ProductServiceI {
 		productRepo.save(product);
 
 		return productConverter.productToProductDTO(product);
-	}
-
-	/**
-	 * Busca en la lista de ProductDTO(unicamente los ids enviados) y devuelve los
-	 * Product
-	 */
-	@Override
-	public List<Product> findSelectedProducts(List<ProductDTO> dtos) {
-		List<Product> products = new ArrayList<>();
-
-		for (ProductDTO productDTO : dtos) {
-			products.add(productRepo.findProductByIdAndActive(productDTO.getId(), true)
-					.orElseThrow(() -> new ResponseStatusException(NOT_FOUND)));
-		}
-
-		if (products.isEmpty()) {
-			throw new ResponseStatusException(BAD_REQUEST);
-		}
-
-		return products;
 	}
 
 	/**
