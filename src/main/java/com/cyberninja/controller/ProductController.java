@@ -62,8 +62,8 @@ public class ProductController {
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<ProductDTO> getProduct(@PathVariable Long id) {
 		try {
-			return productService.getProduct(id).isActive() 
-					? ResponseEntity.ok(productService.getProduct(id))
+			return productService.getProductDTO(id).isActive() 
+					? ResponseEntity.ok(productService.getProductDTO(id))
 					: ResponseEntity.notFound().build();
 
 		} catch (Exception e) {

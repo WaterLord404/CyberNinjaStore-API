@@ -61,13 +61,13 @@ public class ProductServiceImpl implements ProductServiceI {
 	}
 
 	/**
-	 * Obtiene un producto con sus documentos
+	 * Obtiene un productDTO con sus documentos
 	 * 
 	 * @return ProductDTO activo/inactivo
 	 * @throws SQLException
 	 */
 	@Override
-	public ProductDTO getProduct(Long id) {
+	public ProductDTO getProductDTO(Long id) {
 		Product product = productRepo.findById(id)
 				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
 
@@ -75,6 +75,18 @@ public class ProductServiceImpl implements ProductServiceI {
 		dto.setDocuments(documentConverter.getDocumentsDTO(product.getDocuments()));
 
 		return dto;
+	}
+	
+	/**
+	 * Obtiene un product activo
+	 * 
+	 * @return ProductDTO activo/inactivo
+	 * @throws SQLException
+	 */
+	@Override
+	public Product getProduct(Long id) {
+		return productRepo.findProductByIdAndActive(id, true)
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
 	}
 
 	/**
@@ -112,8 +124,7 @@ public class ProductServiceImpl implements ProductServiceI {
 	 */
 	@Override
 	public void deleteProduct(ProductDTO dto) {
-		Product product = productRepo.findProductByIdAndActive(dto.getId(), true)
-				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+		Product product = getProduct(dto.getId());
 
 		product.setActive(false);
 		productRepo.save(product);

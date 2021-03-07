@@ -3,7 +3,7 @@ package com.cyberninja.model.entity.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-@JsonInclude(content = Include.NON_NULL)
+@JsonInclude(value = Include.NON_NULL)
 public class OrderDetailsDTO {
 
 	private Integer units;

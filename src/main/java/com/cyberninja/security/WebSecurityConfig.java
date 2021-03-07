@@ -52,6 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(GET, "/product").permitAll()
 			.antMatchers(GET, "/product/*").permitAll()
 			.antMatchers(POST, "/order/cart").hasRole(UserRole.USER.name())
+			.antMatchers(POST, "/order/buy").hasRole(UserRole.USER.name())
 			.antMatchers(POST, "/product").hasRole(UserRole.ADMIN.name())
 			.antMatchers(DELETE, "/product").hasRole(UserRole.ADMIN.name())
 		.anyRequest()
