@@ -56,18 +56,19 @@ public class User implements UserDetails {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 	@Column(name = "ROLES")
+	@JoinColumn(foreignKey = @ForeignKey(name = "FK_USERS_ROLES___USER_ID"))
 	private Set<UserRole> roles;
 
 	@CreatedDate
-	@Column(name = "CREATE_TIME")
-	private LocalDateTime createTime;
+	@Column(name = "CREATION_DATE")
+	private LocalDateTime creationDate;
 
 	@UpdateTimestamp
-	@Column(name = "UPDATE_TIME")
-	private LocalDateTime updateTime;
+	@Column(name = "UPDATE_DATE")
+	private LocalDateTime updateDate;
 
-	@Column(name = "DELETE_TIME")
-	private LocalDateTime deleteTime;
+	@Column(name = "DELETE_DATE")
+	private LocalDateTime deleteDate;
 
 	@Column(name = "LAST_PASS_CHANGE_DATE")
 	private LocalDateTime lastPasswordChange;
@@ -85,7 +86,7 @@ public class User implements UserDetails {
 	private LocalDateTime passwordPolicyExpDate;
 
 	@OneToOne
-	@JoinColumn(name = "CUSTOMER_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_USER__CUSTOMER_ID"))
+	@JoinColumn(name = "CUSTOMER_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_USERS__CUSTOMER_ID"))
 	private Customer customer;
 
 	@Override
@@ -105,7 +106,7 @@ public class User implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return this.getDeleteTime() == null;
+		return this.getDeleteDate() == null;
 	}
 
 	@Override
@@ -139,28 +140,28 @@ public class User implements UserDetails {
 		this.roles = roles;
 	}
 
-	public LocalDateTime getCreateTime() {
-		return createTime;
+	public LocalDateTime getCreationDate() {
+		return creationDate;
 	}
 
-	public void setCreateTime(LocalDateTime createTime) {
-		this.createTime = createTime;
+	public void setCreationDate(LocalDateTime creationDate) {
+		this.creationDate = creationDate;
 	}
 
-	public LocalDateTime getUpdateTime() {
-		return updateTime;
+	public LocalDateTime getUpdateDate() {
+		return updateDate;
 	}
 
-	public void setUpdateTime(LocalDateTime updateTime) {
-		this.updateTime = updateTime;
+	public void setUpdateDate(LocalDateTime updateDate) {
+		this.updateDate = updateDate;
 	}
 
-	public LocalDateTime getDeleteTime() {
-		return deleteTime;
+	public LocalDateTime getDeleteDate() {
+		return deleteDate;
 	}
 
-	public void setDeleteTime(LocalDateTime deleteTime) {
-		this.deleteTime = deleteTime;
+	public void setDeleteDate(LocalDateTime deleteDate) {
+		this.deleteDate = deleteDate;
 	}
 
 	public LocalDateTime getLastPasswordChange() {

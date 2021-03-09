@@ -80,7 +80,7 @@ public class ProductServiceImpl implements ProductServiceI {
 	/**
 	 * Obtiene un product activo
 	 * 
-	 * @return ProductDTO activo/inactivo
+	 * @return ProductDTO
 	 * @throws SQLException
 	 */
 	@Override

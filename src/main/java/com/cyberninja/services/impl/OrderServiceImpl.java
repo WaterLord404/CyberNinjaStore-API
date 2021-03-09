@@ -1,11 +1,13 @@
 package com.cyberninja.services.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.cyberninja.model.entity.Customer;
 import com.cyberninja.model.entity.Order;
 import com.cyberninja.model.entity.OrderDetails;
 import com.cyberninja.model.entity.converter.OrderDTOConverter;
@@ -64,12 +66,16 @@ public class OrderServiceImpl implements OrderServiceI {
 		List<OrderDetails> ordersDetails = orderDetailsConverter.orderDetailsDTOToOrderDetails(dtos);
 
 		Order order = orderConverter.orderDTOToOrder(new OrderDTO());
-		// Busca y asigna el customer
-		order.setCustomer(customerRepo.findById(Long.valueOf(auth.getName())).get());
+		
+		// Busca, actualiza fecha compra y asigna el customer
+		Customer customer = customerRepo.findById(Long.valueOf(auth.getName())).get();
+		customer.setLastPurchase(LocalDate.now());
+		order.setCustomer(customer);
 
-		// Setea el producto y order
+		// Setea el producto y order a la lista vacia (ordersDetails)
 		for (OrderDetails orderDetails : ordersDetails) {
 			orderDetails.setOrder(order);
+			// Obtiene el producto con el id lista de orderDetailsDTO
 			orderDetails.setProduct(productService.getProduct(
 									dtos.get(ordersDetails.indexOf(orderDetails))
 									.getProduct().getId()));

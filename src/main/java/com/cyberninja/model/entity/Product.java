@@ -12,9 +12,11 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -48,7 +50,7 @@ public class Product implements Serializable {
 
 	private Double discount;
 
-	private LocalDate createTime;
+	private LocalDate creationDate;
 
 	private Set<ProductSize> size;
 
@@ -128,7 +130,7 @@ public class Product implements Serializable {
 		this.totalPrice = totalPrice;
 	}
 
-	@Column(name = "DISCOUNT", nullable = false)
+	@Column(name = "DISCOUNT")
 	public Double getDiscount() {
 		return discount;
 	}
@@ -137,18 +139,19 @@ public class Product implements Serializable {
 		this.discount = discount;
 	}
 
-	@Column(name = "CREATE_TIME")
-	public LocalDate getCreateTime() {
-		return createTime;
+	@Column(name = "CREATION_TIME")
+	public LocalDate getCreationDate() {
+		return creationDate;
 	}
 
-	public void setCreateTime(LocalDate createTime) {
-		this.createTime = createTime;
+	public void setCreationDate(LocalDate creationDate) {
+		this.creationDate = creationDate;
 	}
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 	@Column(name = "SIZE", nullable = false)
+	@JoinColumn(foreignKey  = @ForeignKey(name = "FK_PRODUCTS_SIZE___PRODUCT_ID"))
 	public Set<ProductSize> getSize() {
 		return size;
 	}
@@ -160,6 +163,7 @@ public class Product implements Serializable {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 	@Column(name = "COLOUR", nullable = false)
+	@JoinColumn(foreignKey  = @ForeignKey(name = "FK_PRODUCTS_COLOUR___PRODUCT_ID"))
 	public Set<ProductColour> getColour() {
 		return colour;
 	}
@@ -171,6 +175,7 @@ public class Product implements Serializable {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CATEGORY", nullable = false)
+	@JoinColumn(foreignKey  = @ForeignKey(name = "FK_PRODUCTS_CATEGORY___PRODUCT_ID"))
 	public Set<ProductCategory> getCategory() {
 		return category;
 	}

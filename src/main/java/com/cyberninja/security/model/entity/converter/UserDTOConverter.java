@@ -29,8 +29,8 @@ public class UserDTOConverter {
 		user.setUsername(dto.getUsername());
 		user.setPassword(passwordEncoder.encode(dto.getPassword()));
 		user.setRoles(Set.of(UserRole.USER));
-		user.setCreateTime(LocalDateTime.now());
-		user.setUpdateTime(LocalDateTime.now());
+		user.setCreationDate(LocalDateTime.now());
+		user.setUpdateDate(LocalDateTime.now());
 		user.setLastPasswordChange(LocalDateTime.now());
 		user.setLocked(false);
 		user.setEnabled(true);

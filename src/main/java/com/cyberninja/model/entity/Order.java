@@ -29,7 +29,7 @@ public class Order implements Serializable {
 	
 	private Double totalPrice;
 
-	private LocalDate purchaseTime;
+	private LocalDate purchaseDate;
 
 	private Customer customer;
 
@@ -56,12 +56,12 @@ public class Order implements Serializable {
 	}
 
 	@Column(name = "PURCHASE_DATE", nullable = false)
-	public LocalDate getPurchaseTime() {
-		return purchaseTime;
+	public LocalDate getPurchaseDate() {
+		return purchaseDate;
 	}
 
-	public void setPurchaseTime(LocalDate purchaseTime) {
-		this.purchaseTime = purchaseTime;
+	public void setPurchaseDate(LocalDate purchaseDate) {
+		this.purchaseDate = purchaseDate;
 	}
 
 	@ManyToOne(cascade = CascadeType.ALL)

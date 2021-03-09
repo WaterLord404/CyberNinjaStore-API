@@ -13,7 +13,7 @@ public class OrderDTOConverter {
 	public Order orderDTOToOrder(OrderDTO dto) {
 		Order order = new Order();
 		
-		order.setPurchaseTime(LocalDate.now());
+		order.setPurchaseDate(LocalDate.now());
 		
 		return order;
 	}

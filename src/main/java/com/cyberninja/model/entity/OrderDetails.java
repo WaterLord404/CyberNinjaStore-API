@@ -1,5 +1,7 @@
 package com.cyberninja.model.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,11 +11,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "ORDERS_DETAILS")
-public class OrderDetails {
+public class OrderDetails implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7554941645655995147L;
 
 	private Long id;
 
@@ -26,6 +34,8 @@ public class OrderDetails {
 	private Product product;
 
 	private Order order;
+
+	private Cupon cupon;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,7 +65,7 @@ public class OrderDetails {
 	public void setColor(String color) {
 		this.color = color;
 	}
-	
+
 	@Column(name = "SIZE", nullable = false)
 	public String getSize() {
 		return size;
@@ -83,6 +93,20 @@ public class OrderDetails {
 
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+
+	@OneToOne
+	@JoinColumn(name = "CUPON_ID", foreignKey = @ForeignKey(name = "FK_ORDERS_DETAILS__CUPON_ID"))
+	public Cupon getCupon() {
+		return cupon;
+	}
+
+	public void setCupon(Cupon cupon) {
+		this.cupon = cupon;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

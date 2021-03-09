@@ -23,7 +23,7 @@ public class ProductDTOConverter {
 		product.setSize(dto.getSize());
 		product.setColour(dto.getColour());
 		product.setCategory(dto.getCategory());
-		product.setCreateTime(LocalDate.now());
+		product.setCreationDate(LocalDate.now());
 		product.setActive(true);
 		
 		return product;
