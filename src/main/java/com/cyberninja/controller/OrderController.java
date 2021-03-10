@@ -28,7 +28,7 @@ public class OrderController {
 	@Autowired
 	private OrderServiceI orderService;
 
-	@PostMapping(path = "/cart")
+	@PostMapping
 	public ResponseEntity<List<OrderDetailsDTO>> getProductCart(@RequestBody List<OrderDetailsDTO> dtos) {
 		try {
 			return ResponseEntity.ok(orderService.getProductCart(dtos));

@@ -5,15 +5,15 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-@JsonInclude(value  = Include.NON_NULL)
+@JsonInclude(value = Include.NON_NULL)
 public class OrderDTO {
 
 	private Long id;
-	
+
 	private Double totalPrice;
 
 	private List<OrderDetailsDTO> orderProducts;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -37,5 +37,5 @@ public class OrderDTO {
 	public void setOrderProductDTO(List<OrderDetailsDTO> orderProducts) {
 		this.orderProducts = orderProducts;
 	}
-	
+
 }

@@ -85,20 +85,12 @@ public class Discount implements Serializable {
 		this.active = active;
 	}
 
+	@OneToMany(mappedBy = "discount", cascade = CascadeType.ALL)
 	public List<Coupon> getCoupons() {
 		return coupons;
 	}
 
 	public void setCoupons(List<Coupon> coupons) {
-		this.coupons = coupons;
-	}
-
-	@OneToMany(mappedBy = "discount", cascade = CascadeType.ALL)
-	public List<Coupon> getCupons() {
-		return coupons;
-	}
-
-	public void setCupons(List<Coupon> coupons) {
 		this.coupons = coupons;
 	}
 

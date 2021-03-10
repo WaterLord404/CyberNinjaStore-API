@@ -25,7 +25,7 @@ public class DiscountController {
 	private DiscountServiceI discountService;	
 	
 	@PostMapping
-	public ResponseEntity<DiscountDTO> purchaseOrder(@RequestBody DiscountDTO dto) {
+	public ResponseEntity<DiscountDTO> addDiscount(@RequestBody DiscountDTO dto) {
 		try {
 			return ResponseEntity.ok(discountService.addDiscount(dto));
 
