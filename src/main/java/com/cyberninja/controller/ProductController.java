@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.cyberninja.model.entity.dto.ProductDTO;
+import com.cyberninja.model.dto.ProductDTO;
 import com.cyberninja.services.entity.ProductServiceI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;

@@ -1,6 +1,6 @@
 package com.cyberninja.services.business;
 
-import com.cyberninja.model.entity.Product;
+import com.cyberninja.model.Product;
 
 public interface InvoiceServiceI {
 

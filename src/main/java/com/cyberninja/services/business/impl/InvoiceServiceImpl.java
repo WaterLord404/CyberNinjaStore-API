@@ -4,7 +4,7 @@ import static com.cyberninja.common.ApplicationConstans.IVA;
 
 import org.springframework.stereotype.Service;
 
-import com.cyberninja.model.entity.Product;
+import com.cyberninja.model.Product;
 import com.cyberninja.services.business.InvoiceServiceI;
 
 @Service

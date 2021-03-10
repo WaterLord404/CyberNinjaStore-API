@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.cyberninja.model.entity.Product;
-import com.cyberninja.model.entity.dto.ProductDTO;
+import com.cyberninja.model.Product;
+import com.cyberninja.model.dto.ProductDTO;
 
 public interface ProductServiceI {
 

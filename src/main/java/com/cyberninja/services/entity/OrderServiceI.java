@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.security.core.Authentication;
 
-import com.cyberninja.model.entity.dto.OrderDTO;
-import com.cyberninja.model.entity.dto.OrderDetailsDTO;
+import com.cyberninja.model.dto.OrderDTO;
+import com.cyberninja.model.dto.OrderDetailsDTO;
 
 public interface OrderServiceI {
 

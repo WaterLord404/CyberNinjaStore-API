@@ -16,9 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.cyberninja.model.entity.Document;
-import com.cyberninja.model.entity.Product;
-import com.cyberninja.model.repository.DocumentRepository;
+import com.cyberninja.model.Document;
+import com.cyberninja.model.Product;
+import com.cyberninja.repository.DocumentRepository;
 import com.cyberninja.services.entity.DocumentServiceI;
 
 @Service
