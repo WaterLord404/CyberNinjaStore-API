@@ -6,7 +6,7 @@ import com.cyberninja.model.entity.Customer;
 import com.cyberninja.model.entity.dto.CustomerDTO;
 
 @Component
-public class CustomerDTOConverter {
+public class CustomerConverter {
 
 	public Customer customerDTOToCustomer(CustomerDTO dto) {
 		Customer customer = new Customer();

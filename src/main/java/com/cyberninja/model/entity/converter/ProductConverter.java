@@ -10,7 +10,7 @@ import com.cyberninja.model.entity.Product;
 import com.cyberninja.model.entity.dto.ProductDTO;
 
 @Component
-public class ProductDTOConverter {
+public class ProductConverter {
 
 	public Product productDTOToProduct(ProductDTO dto) {
 		Product product = new Product();

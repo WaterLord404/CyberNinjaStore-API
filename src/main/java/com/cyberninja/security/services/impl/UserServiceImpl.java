@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.model.entity.Customer;
-import com.cyberninja.model.entity.converter.CustomerDTOConverter;
+import com.cyberninja.model.entity.converter.CustomerConverter;
 import com.cyberninja.security.model.entity.User;
 import com.cyberninja.security.model.entity.converter.UserDTOConverter;
 import com.cyberninja.security.model.entity.dto.UserDTO;
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserDetailsService , UserServiceI{
 	private CustomerServiceI customerService;
 
 	@Autowired
-	private CustomerDTOConverter customerConverter;
+	private CustomerConverter customerConverter;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

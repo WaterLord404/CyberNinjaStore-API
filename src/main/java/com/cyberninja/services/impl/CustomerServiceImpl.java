@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cyberninja.model.entity.Customer;
-import com.cyberninja.model.entity.converter.CustomerDTOConverter;
+import com.cyberninja.model.entity.converter.CustomerConverter;
 import com.cyberninja.model.entity.dto.CustomerDTO;
 import com.cyberninja.model.repository.CustomerRepository;
 import com.cyberninja.security.model.entity.User;
@@ -18,7 +18,7 @@ public class CustomerServiceImpl implements CustomerServiceI {
 	private CustomerRepository customerRepo;
 
 	@Autowired
-	private CustomerDTOConverter customerConverter;
+	private CustomerConverter customerConverter;
 
 	/**
 	 * Crea un customer

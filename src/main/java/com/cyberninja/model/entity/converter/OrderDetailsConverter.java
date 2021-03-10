@@ -9,7 +9,7 @@ import com.cyberninja.model.entity.OrderDetails;
 import com.cyberninja.model.entity.dto.OrderDetailsDTO;
 
 @Component
-public class OrderDetailsDTOConverter {
+public class OrderDetailsConverter {
 
 	public OrderDetails orderDetailsDTOToOrderDetails(OrderDetailsDTO dto) {
 		OrderDetails orderDetails = new OrderDetails();

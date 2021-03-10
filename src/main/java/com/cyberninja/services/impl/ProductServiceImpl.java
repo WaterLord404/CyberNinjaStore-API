@@ -13,8 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.model.entity.Product;
-import com.cyberninja.model.entity.converter.DocumentDTOConverter;
-import com.cyberninja.model.entity.converter.ProductDTOConverter;
+import com.cyberninja.model.entity.converter.DocumentConverter;
+import com.cyberninja.model.entity.converter.ProductConverter;
 import com.cyberninja.model.entity.dto.ProductDTO;
 import com.cyberninja.model.repository.ProductRepository;
 import com.cyberninja.services.DocumentServiceI;
@@ -27,13 +27,13 @@ public class ProductServiceImpl implements ProductServiceI {
 	private ProductRepository productRepo;
 
 	@Autowired
-	private ProductDTOConverter productConverter;
+	private ProductConverter productConverter;
 
 	@Autowired
 	private DocumentServiceI documentService;
 
 	@Autowired
-	private DocumentDTOConverter documentConverter;
+	private DocumentConverter documentConverter;
 
 	/**
 	 * Obtiene todos los productos con los documentos

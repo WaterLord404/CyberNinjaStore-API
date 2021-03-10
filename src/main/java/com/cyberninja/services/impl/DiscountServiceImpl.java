@@ -1,0 +1,25 @@
+package com.cyberninja.services.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cyberninja.model.entity.converter.DiscountConverter;
+import com.cyberninja.model.entity.dto.DiscountDTO;
+import com.cyberninja.model.repository.DiscountRepository;
+import com.cyberninja.services.DiscountServiceI;
+
+@Service
+public class DiscountServiceImpl implements DiscountServiceI {
+
+	@Autowired
+	private DiscountRepository discountRepo;
+
+	@Autowired
+	private DiscountConverter discountConverter;
+	
+	@Override
+	public DiscountDTO addDiscount(DiscountDTO dto) {
+		return null;
+	}
+
+}

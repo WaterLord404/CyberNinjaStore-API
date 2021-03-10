@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import com.cyberninja.model.entity.Customer;
 import com.cyberninja.model.entity.Order;
 import com.cyberninja.model.entity.OrderDetails;
-import com.cyberninja.model.entity.converter.OrderDTOConverter;
-import com.cyberninja.model.entity.converter.OrderDetailsDTOConverter;
+import com.cyberninja.model.entity.converter.OrderConverter;
+import com.cyberninja.model.entity.converter.OrderDetailsConverter;
 import com.cyberninja.model.entity.dto.OrderDTO;
 import com.cyberninja.model.entity.dto.OrderDetailsDTO;
 import com.cyberninja.model.repository.CustomerRepository;
@@ -26,10 +26,10 @@ public class OrderServiceImpl implements OrderServiceI {
 	private CustomerRepository customerRepo;
 
 	@Autowired
-	private OrderDetailsDTOConverter orderDetailsConverter;
+	private OrderDetailsConverter orderDetailsConverter;
 
 	@Autowired
-	private OrderDTOConverter orderConverter;
+	private OrderConverter orderConverter;
 
 	@Autowired
 	private ProductServiceI productService;

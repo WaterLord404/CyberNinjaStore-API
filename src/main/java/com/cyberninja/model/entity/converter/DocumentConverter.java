@@ -13,7 +13,7 @@ import com.cyberninja.model.entity.Document;
 import com.cyberninja.model.entity.dto.DocumentDTO;
 
 @Component
-public class DocumentDTOConverter {
+public class DocumentConverter {
 	
 	public DocumentDTO documentToDocumentDTO(Document document) {
 		DocumentDTO dto = new DocumentDTO();

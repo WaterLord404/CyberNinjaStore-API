@@ -8,7 +8,7 @@ import com.cyberninja.model.entity.Order;
 import com.cyberninja.model.entity.dto.OrderDTO;
 
 @Component
-public class OrderDTOConverter {
+public class OrderConverter {
 
 	public Order orderDTOToOrder(OrderDTO dto) {
 		Order order = new Order();

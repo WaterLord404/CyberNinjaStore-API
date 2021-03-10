@@ -1,6 +1,7 @@
 package com.cyberninja.model.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -28,6 +29,10 @@ public class Discount implements Serializable {
 	private Double value;
 
 	private DiscountType type;
+
+	private LocalDate creationDate;
+
+	private Boolean active;
 
 	private List<Coupon> coupons;
 
@@ -61,7 +66,33 @@ public class Discount implements Serializable {
 	public void setType(DiscountType type) {
 		this.type = type;
 	}
-	
+
+	@Column(name = "CREATION_DATE", nullable = false)
+	public LocalDate getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(LocalDate creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	@Column(name = "ACTIVE", nullable = false)
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public List<Coupon> getCoupons() {
+		return coupons;
+	}
+
+	public void setCoupons(List<Coupon> coupons) {
+		this.coupons = coupons;
+	}
+
 	@OneToMany(mappedBy = "discount", cascade = CascadeType.ALL)
 	public List<Coupon> getCupons() {
 		return coupons;
