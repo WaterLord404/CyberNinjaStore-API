@@ -35,7 +35,7 @@ public class OrderDetails implements Serializable {
 
 	private Order order;
 
-	private Cupon cupon;
+	private Coupon coupon;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -97,12 +97,12 @@ public class OrderDetails implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "CUPON_ID", foreignKey = @ForeignKey(name = "FK_ORDERS_DETAILS__CUPON_ID"))
-	public Cupon getCupon() {
-		return cupon;
+	public Coupon getCupon() {
+		return coupon;
 	}
 
-	public void setCupon(Cupon cupon) {
-		this.cupon = cupon;
+	public void setCupon(Coupon coupon) {
+		this.coupon = coupon;
 	}
 
 	public static long getSerialversionuid() {

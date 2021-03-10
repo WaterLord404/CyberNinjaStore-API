@@ -6,15 +6,18 @@ import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "CUPONS")
-public class Cupon implements Serializable {
+@Table(name = "COUPONS")
+public class Coupon implements Serializable {
 
 	/**
 	 * 
@@ -41,7 +44,7 @@ public class Cupon implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "CUPON_ID")
+	@Column(name = "COUPONS_ID")
 	public Long getId() {
 		return id;
 	}
@@ -104,7 +107,8 @@ public class Cupon implements Serializable {
 		this.active = active;
 	}
 
-	@Column(name = "DISCOUNT")
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "DISCOUNT_ID", foreignKey = @ForeignKey(name = "FK_COUPONS__DISCOUNT_ID"))
 	public Discount getDiscount() {
 		return discount;
 	}

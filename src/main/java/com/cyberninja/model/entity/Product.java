@@ -18,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -48,8 +49,6 @@ public class Product implements Serializable {
 
 	private Double totalPrice;
 
-	private Double discount;
-
 	private LocalDate creationDate;
 
 	private Set<ProductSize> size;
@@ -57,6 +56,8 @@ public class Product implements Serializable {
 	private Set<ProductColour> colour;
 
 	private Set<ProductCategory> category;
+
+	private Discount discount;
 
 	private List<Document> documents;
 
@@ -130,15 +131,6 @@ public class Product implements Serializable {
 		this.totalPrice = totalPrice;
 	}
 
-	@Column(name = "DISCOUNT")
-	public Double getDiscount() {
-		return discount;
-	}
-
-	public void setDiscount(Double discount) {
-		this.discount = discount;
-	}
-
 	@Column(name = "CREATION_TIME")
 	public LocalDate getCreationDate() {
 		return creationDate;
@@ -151,7 +143,7 @@ public class Product implements Serializable {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 	@Column(name = "SIZE", nullable = false)
-	@JoinColumn(foreignKey  = @ForeignKey(name = "FK_PRODUCTS_SIZE___PRODUCT_ID"))
+	@JoinColumn(foreignKey = @ForeignKey(name = "FK_PRODUCTS_SIZE___PRODUCT_ID"))
 	public Set<ProductSize> getSize() {
 		return size;
 	}
@@ -163,7 +155,7 @@ public class Product implements Serializable {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 	@Column(name = "COLOUR", nullable = false)
-	@JoinColumn(foreignKey  = @ForeignKey(name = "FK_PRODUCTS_COLOUR___PRODUCT_ID"))
+	@JoinColumn(foreignKey = @ForeignKey(name = "FK_PRODUCTS_COLOUR___PRODUCT_ID"))
 	public Set<ProductColour> getColour() {
 		return colour;
 	}
@@ -175,13 +167,23 @@ public class Product implements Serializable {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CATEGORY", nullable = false)
-	@JoinColumn(foreignKey  = @ForeignKey(name = "FK_PRODUCTS_CATEGORY___PRODUCT_ID"))
+	@JoinColumn(foreignKey = @ForeignKey(name = "FK_PRODUCTS_CATEGORY___PRODUCT_ID"))
 	public Set<ProductCategory> getCategory() {
 		return category;
 	}
 
 	public void setCategory(Set<ProductCategory> category) {
 		this.category = category;
+	}
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "DISCOUNT_ID", foreignKey = @ForeignKey(name = "FK_PRODUCTS__DISCOUNT_ID"))
+	public Discount getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Discount discount) {
+		this.discount = discount;
 	}
 
 	@OneToMany(mappedBy = "product", orphanRemoval = true, cascade = CascadeType.ALL)
