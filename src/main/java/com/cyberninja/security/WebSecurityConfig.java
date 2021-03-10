@@ -1,11 +1,8 @@
 package com.cyberninja.security;
 
 
-import static com.cyberninja.security.common.SecurityConstants.LOG_IN;
-import static com.cyberninja.security.common.SecurityConstants.SIGN_UP_URL;
-import static org.springframework.http.HttpMethod.DELETE;
-import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.PUT;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -47,18 +44,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.cors().and().csrf().disable().authorizeRequests()
-			.antMatchers(POST, SIGN_UP_URL).permitAll()
-			.antMatchers(POST, LOG_IN).permitAll()
-			.antMatchers(GET, "/product").permitAll()
-			.antMatchers(GET, "/product/*").permitAll()
-			
-			.antMatchers(POST, "/order/cart").hasRole(UserRole.USER.name())
+			.antMatchers(POST, "/order").hasRole(UserRole.USER.name())
 			.antMatchers(POST, "/order/buy").hasRole(UserRole.USER.name())
 			
 			.antMatchers(POST, "/product").hasRole(UserRole.ADMIN.name())
-			.antMatchers(DELETE, "/product").hasRole(UserRole.ADMIN.name())
+			.antMatchers(PUT, "/product").hasRole(UserRole.ADMIN.name())
 			
 			.antMatchers(POST, "/discount").hasRole(UserRole.ADMIN.name())
+			.antMatchers(PUT, "/discount/*").hasRole(UserRole.ADMIN.name())
+			.antMatchers(POST, "/coupon").hasRole(UserRole.ADMIN.name())
+			
+			.antMatchers("/**").permitAll()
 		.anyRequest()
 		.authenticated()	
 		.and()

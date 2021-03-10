@@ -53,7 +53,7 @@ public class Coupon implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "CODE", nullable = false)
+	@Column(name = "CODE", unique = true, nullable = false)
 	public String getCode() {
 		return code;
 	}

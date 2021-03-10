@@ -18,6 +18,9 @@ public class CouponServiceImpl implements CouponServiceI {
 	@Autowired
 	private CouponConverter couponConverter;
 
+	/**
+	 * Crea un cupon
+	 */
 	@Override
 	public CouponDTO addCoupon(CouponDTO dto) {
 		Coupon coupon = couponConverter.couponDTOToCoupon(dto);

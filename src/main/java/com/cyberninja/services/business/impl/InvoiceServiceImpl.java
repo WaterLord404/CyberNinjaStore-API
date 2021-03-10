@@ -12,6 +12,7 @@ public class InvoiceServiceImpl implements InvoiceServiceI {
 
 	/**
 	 * Calcula el iva y descuento
+	 * 
 	 * @return Product
 	 */
 	@Override
@@ -20,11 +21,11 @@ public class InvoiceServiceImpl implements InvoiceServiceI {
 		Double price = calculateVat(product.getSalePrice());
 		product.setPriceWoutDiscount(price);
 
-		// Calcular descuento
-		if (product.getDiscount() > 0 && product.getDiscount() <= 100) {
-			product.setTotalPrice(calculateDiscount(price, product.getDiscount()));
-		} else if (product.getDiscount() == 0) {
+		// Calcula el descuento
+		if(product.getDiscount() == null) {
 			product.setTotalPrice(price);
+		} else {
+			product.setTotalPrice(calculateDiscount(price, product.getDiscount().getValue()));			
 		}
 
 		return product;

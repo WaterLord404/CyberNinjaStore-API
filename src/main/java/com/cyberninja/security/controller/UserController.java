@@ -1,9 +1,11 @@
 package com.cyberninja.security.controller;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,11 +30,13 @@ public class UserController {
 	public ResponseEntity<UserDTO> signUp(@RequestBody UserDTO dto) {
 		try {
 			return ResponseEntity.ok(userService.createUser(dto));
-			
+
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus());
 		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
 			throw new ResponseStatusException(BAD_REQUEST);
+		} catch (DataIntegrityViolationException e) {
+			throw new ResponseStatusException(CONFLICT);
 		} catch (Exception e) {
 			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
 		}

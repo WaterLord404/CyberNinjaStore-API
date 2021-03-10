@@ -3,12 +3,10 @@ package com.cyberninja.controller;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -79,14 +77,15 @@ public class ProductController {
 	 * @return ProductDTO
 	 */
 	@PostMapping
-	public ResponseEntity<ProductDTO> createProduct(@RequestParam(required = true) String product,
+	public ResponseEntity<ProductDTO> createProduct(
+			@RequestParam(required = true) String product,
 			@RequestParam(required = true) List<MultipartFile> images) {
 		try {
+			// String to object
 			ObjectMapper objectMapper = new ObjectMapper();
-
-			return ResponseEntity.status(CREATED)
-					.body(productService.createProduct(
-							objectMapper.readValue(product, ProductDTO.class), images));
+			ProductDTO dto = objectMapper.readValue(product, ProductDTO.class);
+			
+			return ResponseEntity.status(CREATED).body(productService.createProduct(dto, images));
 
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus());
@@ -106,13 +105,14 @@ public class ProductController {
 	 * @return ProductDTO
 	 */
 	@PutMapping
-	public ResponseEntity<Object> deleteProduct(@RequestBody ProductDTO dto) {
+	public ResponseEntity<ProductDTO> deleteProduct(@RequestBody ProductDTO dto) {
 		try {
-			productService.deleteProduct(dto);
-			return ResponseEntity.ok().build();
+			return ResponseEntity.ok(productService.deleteProduct(dto));
 
-		} catch (EmptyResultDataAccessException e) {
-			throw new ResponseStatusException(NOT_FOUND);
+		} catch (ResponseStatusException e) {
+			throw new ResponseStatusException(e.getStatus());
+		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
+			throw new ResponseStatusException(BAD_REQUEST);
 		} catch (Exception e) {
 			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
 		}

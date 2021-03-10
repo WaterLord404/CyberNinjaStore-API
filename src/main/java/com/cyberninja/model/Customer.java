@@ -80,7 +80,7 @@ public class Customer implements Serializable {
 		this.surname = surname;
 	}
 
-	@Column(name = "EMAIL", nullable = false)
+	@Column(name = "EMAIL", unique = true, nullable = false)
 	public String getEmail() {
 		return email;
 	}

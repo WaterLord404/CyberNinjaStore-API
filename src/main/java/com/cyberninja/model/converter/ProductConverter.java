@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cyberninja.model.Product;
@@ -12,6 +13,12 @@ import com.cyberninja.model.dto.ProductDTO;
 @Component
 public class ProductConverter {
 
+	@Autowired
+	private DiscountConverter discountConverter;
+
+	@Autowired
+	private DocumentConverter documentConverter;
+
 	public Product productDTOToProduct(ProductDTO dto) {
 		Product product = new Product();
 
@@ -19,13 +26,12 @@ public class ProductConverter {
 		product.setDescription(dto.getDescription());
 		product.setPurchasePrice(dto.getPurchasePrice());
 		product.setSalePrice(dto.getSalePrice());
-		product.setDiscount(dto.getDiscount());
 		product.setSize(dto.getSize());
 		product.setColour(dto.getColour());
 		product.setCategory(dto.getCategory());
 		product.setCreationDate(LocalDate.now());
 		product.setActive(true);
-		
+
 		return product;
 	}
 
@@ -37,12 +43,16 @@ public class ProductConverter {
 		dto.setDescription(product.getDescription());
 		dto.setTotalPrice(product.getTotalPrice());
 		dto.setPriceWoutDiscount(product.getPriceWoutDiscount());
-		dto.setDiscount(product.getDiscount());
 		dto.setSize(product.getSize());
 		dto.setColour(product.getColour());
 		dto.setCategory(product.getCategory());
 		dto.setActive(product.isActive());
-		
+		dto.setDocuments(documentConverter.getDocumentsDTO(product.getDocuments()));
+
+		if (product.getDiscount() != null) {
+			dto.setDiscount(discountConverter.discountToDiscountDTO(product.getDiscount()));
+		}
+
 		return dto;
 	}
 

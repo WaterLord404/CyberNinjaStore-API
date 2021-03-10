@@ -18,6 +18,6 @@ public interface ProductServiceI {
 
 	public ProductDTO createProduct(ProductDTO dto, List<MultipartFile> images) throws SQLException;
 
-	public void deleteProduct(ProductDTO dto);
+	public ProductDTO deleteProduct(ProductDTO dto);
 
 }

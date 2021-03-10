@@ -34,7 +34,7 @@ public class OrderController {
 			return ResponseEntity.ok(orderService.getProductCart(dtos));
 			
 		} catch (ResponseStatusException e) {
-			throw new ResponseStatusException(e.getStatus(), e.getMessage());
+			throw new ResponseStatusException(e.getStatus());
 		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
 			throw new ResponseStatusException(BAD_REQUEST);
 		} catch (Exception e) {

@@ -12,11 +12,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.model.Product;
-import com.cyberninja.model.converter.DocumentConverter;
 import com.cyberninja.model.converter.ProductConverter;
 import com.cyberninja.model.dto.ProductDTO;
 import com.cyberninja.repository.ProductRepository;
 import com.cyberninja.services.business.InvoiceServiceI;
+import com.cyberninja.services.entity.DiscountServiceI;
 import com.cyberninja.services.entity.DocumentServiceI;
 import com.cyberninja.services.entity.ProductServiceI;
 
@@ -31,12 +31,12 @@ public class ProductServiceImpl implements ProductServiceI {
 
 	@Autowired
 	private DocumentServiceI documentService;
-
-	@Autowired
-	private DocumentConverter documentConverter;
 	
 	@Autowired
 	private InvoiceServiceI invoiceService;
+	
+	@Autowired
+	private DiscountServiceI discountService;
 
 	/**
 	 * Obtiene todos los productos con los documentos
@@ -48,13 +48,7 @@ public class ProductServiceImpl implements ProductServiceI {
 	public List<ProductDTO> getProducts() throws SQLException {
 		List<ProductDTO> dtos = new ArrayList<>(); // Lista de productsDTO a retornar
 
-		for (Product product : productRepo.findProductsByActive(true)) {
-
-			ProductDTO productDTO = productConverter.productToProductDTO(product);
-			productDTO.setDocuments(documentConverter.getDocumentsDTO(product.getDocuments()));
-
-			dtos.add(productDTO);
-		}
+		dtos = productConverter.productsToProductsDTO(productRepo.findProductsByActive(true));
 
 		if (dtos.isEmpty()) {
 			throw new ResponseStatusException(NOT_FOUND);
@@ -74,10 +68,7 @@ public class ProductServiceImpl implements ProductServiceI {
 		Product product = productRepo.findById(id)
 				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
 
-		ProductDTO dto = productConverter.productToProductDTO(product);
-		dto.setDocuments(documentConverter.getDocumentsDTO(product.getDocuments()));
-
-		return dto;
+		return productConverter.productToProductDTO(product);
 	}
 	
 	/**
@@ -99,9 +90,14 @@ public class ProductServiceImpl implements ProductServiceI {
 	 * @throws SQLException
 	 */
 	@Override
-	public ProductDTO createProduct(ProductDTO dto, List<MultipartFile> images) throws SQLException {
+	public ProductDTO createProduct(ProductDTO dto, List<MultipartFile> images) {
 		Product product = productConverter.productDTOToProduct(dto);
 
+		// Asigna el descuento
+		if(dto.getDiscount() != null) {
+			product.setDiscount(discountService.getDiscount(dto.getDiscount().getId()));			
+		}
+		
 		// Calcula iva y descuento
 		product = invoiceService.calculateInvoice(product);
 		
@@ -118,11 +114,13 @@ public class ProductServiceImpl implements ProductServiceI {
 	 * 
 	 */
 	@Override
-	public void deleteProduct(ProductDTO dto) {
+	public ProductDTO deleteProduct(ProductDTO dto) {
 		Product product = getProduct(dto.getId());
 
 		product.setActive(false);
 		productRepo.save(product);
+		
+		return productConverter.productToProductDTO(product);
 	}
 
 }

@@ -21,16 +21,6 @@ public class OrderDetailsConverter {
 		return orderDetails;
 	}
 	
-	public OrderDetailsDTO orderDetailsToOrderDetailsDTO(OrderDetails orderDetails) {
-		OrderDetailsDTO dto = new OrderDetailsDTO();
-		
-		dto.setUnits(orderDetails.getUnits());
-		dto.setColor(orderDetails.getColor());
-		dto.setSize(orderDetails.getSize());
-		
-		return dto;
-	}
-	
 	public List<OrderDetails> orderDetailsDTOToOrderDetails(List<OrderDetailsDTO> dtos) {
 		List<OrderDetails> ordersDetails = new ArrayList<>();
 		for (OrderDetailsDTO orderDetailsDTO : dtos) {

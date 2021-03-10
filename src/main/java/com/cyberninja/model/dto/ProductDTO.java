@@ -26,7 +26,7 @@ public class ProductDTO {
 
 	private Double totalPrice;
 
-	private Double discount;
+	private DiscountDTO discount;
 
 	private Set<ProductSize> size;
 
@@ -94,11 +94,11 @@ public class ProductDTO {
 		this.totalPrice = totalPrice;
 	}
 
-	public Double getDiscount() {
+	public DiscountDTO getDiscount() {
 		return discount;
 	}
 
-	public void setDiscount(Double discount) {
+	public void setDiscount(DiscountDTO discount) {
 		this.discount = discount;
 	}
 
