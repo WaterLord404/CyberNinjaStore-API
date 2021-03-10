@@ -1,4 +1,4 @@
-package com.cyberninja.services.impl;
+package com.cyberninja.services.entity.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,7 @@ import com.cyberninja.model.entity.dto.CustomerDTO;
 import com.cyberninja.model.repository.CustomerRepository;
 import com.cyberninja.security.model.entity.User;
 import com.cyberninja.security.model.entity.dto.UserDTO;
-import com.cyberninja.services.CustomerServiceI;
+import com.cyberninja.services.entity.CustomerServiceI;
 
 @Service
 public class CustomerServiceImpl implements CustomerServiceI {

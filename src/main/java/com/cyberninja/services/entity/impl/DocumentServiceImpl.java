@@ -1,4 +1,4 @@
-package com.cyberninja.services.impl;
+package com.cyberninja.services.entity.impl;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE;
@@ -19,7 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.cyberninja.model.entity.Document;
 import com.cyberninja.model.entity.Product;
 import com.cyberninja.model.repository.DocumentRepository;
-import com.cyberninja.services.DocumentServiceI;
+import com.cyberninja.services.entity.DocumentServiceI;
 
 @Service
 public class DocumentServiceImpl implements DocumentServiceI {

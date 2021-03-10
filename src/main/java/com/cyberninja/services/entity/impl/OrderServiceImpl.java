@@ -1,4 +1,4 @@
-package com.cyberninja.services.impl;
+package com.cyberninja.services.entity.impl;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,8 +16,8 @@ import com.cyberninja.model.entity.dto.OrderDTO;
 import com.cyberninja.model.entity.dto.OrderDetailsDTO;
 import com.cyberninja.model.repository.CustomerRepository;
 import com.cyberninja.model.repository.OrderDetailsRepository;
-import com.cyberninja.services.OrderServiceI;
-import com.cyberninja.services.ProductServiceI;
+import com.cyberninja.services.entity.OrderServiceI;
+import com.cyberninja.services.entity.ProductServiceI;
 
 @Service
 public class OrderServiceImpl implements OrderServiceI {

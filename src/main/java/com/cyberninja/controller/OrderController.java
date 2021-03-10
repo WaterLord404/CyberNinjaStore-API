@@ -18,7 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.model.entity.dto.OrderDTO;
 import com.cyberninja.model.entity.dto.OrderDetailsDTO;
-import com.cyberninja.services.OrderServiceI;
+import com.cyberninja.services.entity.OrderServiceI;
 
 @RestController
 @CrossOrigin(origins = "*")

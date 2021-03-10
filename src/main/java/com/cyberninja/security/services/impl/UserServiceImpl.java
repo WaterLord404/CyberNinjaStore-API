@@ -18,7 +18,7 @@ import com.cyberninja.security.model.entity.converter.UserDTOConverter;
 import com.cyberninja.security.model.entity.dto.UserDTO;
 import com.cyberninja.security.model.repository.UserRepository;
 import com.cyberninja.security.services.UserServiceI;
-import com.cyberninja.services.CustomerServiceI;
+import com.cyberninja.services.entity.CustomerServiceI;
 
 @Service
 public class UserServiceImpl implements UserDetailsService , UserServiceI{

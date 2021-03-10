@@ -19,7 +19,7 @@ public class ProductConverter {
 		product.setDescription(dto.getDescription());
 		product.setPurchasePrice(dto.getPurchasePrice());
 		product.setSalePrice(dto.getSalePrice());
-		product.setDiscount(Math.round(dto.getDiscount() * 100.0) / 100.0);
+		product.setDiscount(dto.getDiscount());
 		product.setSize(dto.getSize());
 		product.setColour(dto.getColour());
 		product.setCategory(dto.getCategory());

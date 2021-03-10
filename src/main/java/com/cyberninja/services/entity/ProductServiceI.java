@@ -1,4 +1,4 @@
-package com.cyberninja.services;
+package com.cyberninja.services.entity;
 
 import java.sql.SQLException;
 import java.util.List;

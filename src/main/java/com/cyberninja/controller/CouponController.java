@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.model.entity.dto.CouponDTO;
-import com.cyberninja.services.CouponServiceI;
+import com.cyberninja.services.entity.CouponServiceI;
 
 @RestController
 @CrossOrigin(origins = "*")

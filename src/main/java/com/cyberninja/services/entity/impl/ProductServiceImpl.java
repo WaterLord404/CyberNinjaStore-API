@@ -1,6 +1,5 @@
-package com.cyberninja.services.impl;
+package com.cyberninja.services.entity.impl;
 
-import static com.cyberninja.common.ApplicationConstans.IVA;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.sql.SQLException;
@@ -17,8 +16,9 @@ import com.cyberninja.model.entity.converter.DocumentConverter;
 import com.cyberninja.model.entity.converter.ProductConverter;
 import com.cyberninja.model.entity.dto.ProductDTO;
 import com.cyberninja.model.repository.ProductRepository;
-import com.cyberninja.services.DocumentServiceI;
-import com.cyberninja.services.ProductServiceI;
+import com.cyberninja.services.business.InvoiceServiceI;
+import com.cyberninja.services.entity.DocumentServiceI;
+import com.cyberninja.services.entity.ProductServiceI;
 
 @Service
 public class ProductServiceImpl implements ProductServiceI {
@@ -34,6 +34,9 @@ public class ProductServiceImpl implements ProductServiceI {
 
 	@Autowired
 	private DocumentConverter documentConverter;
+	
+	@Autowired
+	private InvoiceServiceI invoiceService;
 
 	/**
 	 * Obtiene todos los productos con los documentos
@@ -99,17 +102,9 @@ public class ProductServiceImpl implements ProductServiceI {
 	public ProductDTO createProduct(ProductDTO dto, List<MultipartFile> images) throws SQLException {
 		Product product = productConverter.productDTOToProduct(dto);
 
-		// Calcular IVA
-		Double price = calculateVat(product.getSalePrice());
-		product.setPriceWoutDiscount(price);
-
-		// Calcular descuento
-		if (product.getDiscount() > 0 && product.getDiscount() <= 100) {
-			product.setTotalPrice(calculateDiscount(price, product.getDiscount()));
-		} else if (product.getDiscount() == 0) {
-			product.setTotalPrice(price);
-		}
-
+		// Calcula iva y descuento
+		product = invoiceService.calculateInvoice(product);
+		
 		// Añade las imagenes
 		product.setDocuments(documentService.createDocuments(images, product));
 
@@ -128,24 +123,6 @@ public class ProductServiceImpl implements ProductServiceI {
 
 		product.setActive(false);
 		productRepo.save(product);
-	}
-
-	/**
-	 * Calcula el precio con IVA
-	 * 
-	 * @return Double
-	 */
-	private Double calculateVat(Double salePrice) {
-		return Math.round((salePrice + (salePrice * IVA)) * 100.0) / 100.0;
-	}
-
-	/**
-	 * Calcula el descuento
-	 * 
-	 * @return Double
-	 */
-	private Double calculateDiscount(Double price, Double discount) {
-		return Math.round((price - (price * (discount / 100))) * 100.0) / 100.0;
 	}
 
 }
