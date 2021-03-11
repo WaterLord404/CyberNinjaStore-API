@@ -1,6 +1,6 @@
 package com.cyberninja.services.entity;
 
-import com.cyberninja.model.dto.CouponDTO;
+import com.cyberninja.model.entity.dto.CouponDTO;
 
 public interface CouponServiceI {
 

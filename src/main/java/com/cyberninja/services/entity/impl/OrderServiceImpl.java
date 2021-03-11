@@ -7,15 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import com.cyberninja.model.Customer;
-import com.cyberninja.model.Order;
-import com.cyberninja.model.OrderDetails;
-import com.cyberninja.model.converter.OrderConverter;
-import com.cyberninja.model.converter.OrderDetailsConverter;
-import com.cyberninja.model.dto.OrderDTO;
-import com.cyberninja.model.dto.OrderDetailsDTO;
-import com.cyberninja.repository.CustomerRepository;
-import com.cyberninja.repository.OrderDetailsRepository;
+import com.cyberninja.model.entity.Customer;
+import com.cyberninja.model.entity.Order;
+import com.cyberninja.model.entity.OrderDetails;
+import com.cyberninja.model.entity.converter.OrderConverter;
+import com.cyberninja.model.entity.converter.OrderDetailsConverter;
+import com.cyberninja.model.entity.dto.OrderDTO;
+import com.cyberninja.model.entity.dto.OrderDetailsDTO;
+import com.cyberninja.model.repository.CustomerRepository;
+import com.cyberninja.model.repository.OrderDetailsRepository;
 import com.cyberninja.services.entity.OrderServiceI;
 import com.cyberninja.services.entity.ProductServiceI;
 

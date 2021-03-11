@@ -1,8 +1,8 @@
 package com.cyberninja.services.entity;
 
-import com.cyberninja.model.Discount;
-import com.cyberninja.model.dto.DiscountDTO;
-import com.cyberninja.model.dto.ProductDTO;
+import com.cyberninja.model.entity.Discount;
+import com.cyberninja.model.entity.dto.DiscountDTO;
+import com.cyberninja.model.entity.dto.ProductDTO;
 
 public interface DiscountServiceI {
 

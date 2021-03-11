@@ -1,12 +1,12 @@
 package com.cyberninja.services.business.impl;
 
 import static com.cyberninja.common.ApplicationConstans.IVA;
-import static com.cyberninja.model.enumerated.DiscountType.FIXED;
-import static com.cyberninja.model.enumerated.DiscountType.PERCENTAGE;
+import static com.cyberninja.model.entity.enumerated.DiscountType.FIXED;
+import static com.cyberninja.model.entity.enumerated.DiscountType.PERCENTAGE;
 
 import org.springframework.stereotype.Service;
 
-import com.cyberninja.model.Product;
+import com.cyberninja.model.entity.Product;
 import com.cyberninja.services.business.InvoiceServiceI;
 
 @Service

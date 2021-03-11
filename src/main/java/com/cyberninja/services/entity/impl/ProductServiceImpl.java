@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.cyberninja.model.Product;
-import com.cyberninja.model.converter.ProductConverter;
-import com.cyberninja.model.dto.ProductDTO;
-import com.cyberninja.repository.ProductRepository;
+import com.cyberninja.model.entity.Product;
+import com.cyberninja.model.entity.converter.ProductConverter;
+import com.cyberninja.model.entity.dto.ProductDTO;
+import com.cyberninja.model.repository.ProductRepository;
 import com.cyberninja.services.business.InvoiceServiceI;
 import com.cyberninja.services.entity.DiscountServiceI;
 import com.cyberninja.services.entity.DocumentServiceI;

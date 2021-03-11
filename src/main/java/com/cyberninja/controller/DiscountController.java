@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.cyberninja.model.dto.DiscountDTO;
-import com.cyberninja.model.dto.ProductDTO;
+import com.cyberninja.model.entity.dto.DiscountDTO;
+import com.cyberninja.model.entity.dto.ProductDTO;
 import com.cyberninja.services.entity.DiscountServiceI;
 
 @RestController

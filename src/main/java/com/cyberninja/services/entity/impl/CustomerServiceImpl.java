@@ -3,10 +3,10 @@ package com.cyberninja.services.entity.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cyberninja.model.Customer;
-import com.cyberninja.model.converter.CustomerConverter;
-import com.cyberninja.model.dto.CustomerDTO;
-import com.cyberninja.repository.CustomerRepository;
+import com.cyberninja.model.entity.Customer;
+import com.cyberninja.model.entity.converter.CustomerConverter;
+import com.cyberninja.model.entity.dto.CustomerDTO;
+import com.cyberninja.model.repository.CustomerRepository;
 import com.cyberninja.security.model.entity.User;
 import com.cyberninja.security.model.entity.dto.UserDTO;
 import com.cyberninja.services.entity.CustomerServiceI;

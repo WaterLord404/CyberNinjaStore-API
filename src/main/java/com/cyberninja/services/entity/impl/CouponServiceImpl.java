@@ -3,10 +3,10 @@ package com.cyberninja.services.entity.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cyberninja.model.Coupon;
-import com.cyberninja.model.converter.CouponConverter;
-import com.cyberninja.model.dto.CouponDTO;
-import com.cyberninja.repository.CouponRepository;
+import com.cyberninja.model.entity.Coupon;
+import com.cyberninja.model.entity.converter.CouponConverter;
+import com.cyberninja.model.entity.dto.CouponDTO;
+import com.cyberninja.model.repository.CouponRepository;
 import com.cyberninja.services.entity.CouponServiceI;
 
 @Service

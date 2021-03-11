@@ -11,10 +11,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.cyberninja.model.Customer;
-import com.cyberninja.model.converter.CustomerConverter;
+import com.cyberninja.model.entity.Customer;
+import com.cyberninja.model.entity.converter.CustomerConverter;
 import com.cyberninja.security.model.entity.User;
-import com.cyberninja.security.model.entity.converter.UserDTOConverter;
+import com.cyberninja.security.model.entity.converter.UserConverter;
 import com.cyberninja.security.model.entity.dto.UserDTO;
 import com.cyberninja.security.model.repository.UserRepository;
 import com.cyberninja.security.services.UserServiceI;
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserDetailsService , UserServiceI{
 	private UserRepository userRepo;
 
 	@Autowired
-	private UserDTOConverter userConverter;
+	private UserConverter userConverter;
 
 	@Autowired
 	private CustomerServiceI customerService;
