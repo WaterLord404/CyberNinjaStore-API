@@ -16,6 +16,7 @@ import com.cyberninja.model.entity.dto.OrderDTO;
 import com.cyberninja.model.entity.dto.OrderDetailsDTO;
 import com.cyberninja.model.repository.CustomerRepository;
 import com.cyberninja.model.repository.OrderDetailsRepository;
+import com.cyberninja.services.business.InvoiceServiceI;
 import com.cyberninja.services.entity.OrderServiceI;
 import com.cyberninja.services.entity.ProductServiceI;
 
@@ -36,6 +37,9 @@ public class OrderServiceImpl implements OrderServiceI {
 
 	@Autowired
 	private OrderDetailsRepository orderDetailsRepo;
+	
+	@Autowired
+	private InvoiceServiceI invoiceService;
 
 	/**
 	 * Obtiene los productos (activos e inactivos) seleccionados del carrito con las
@@ -82,25 +86,11 @@ public class OrderServiceImpl implements OrderServiceI {
 		}
 
 		// Calcula el precio total
-		order.setTotalPrice(calculateTotalPrice(ordersDetails));
+		order.setTotalPrice(invoiceService.calculateTotalPrice(ordersDetails));
 
 		orderDetailsRepo.saveAll(ordersDetails);
 
 		return orderConverter.orderToOrderDTO(order);
-	}
-
-	/**
-	 * Suma el precio de todos los productos
-	 * 
-	 * @param products
-	 * @return
-	 */
-	private Double calculateTotalPrice(List<OrderDetails> ordersDetails) {
-		Double result = 0.0;
-		for (OrderDetails orderDetails : ordersDetails) {
-			result = result + (orderDetails.getUnits() * orderDetails.getProduct().getTotalPrice());
-		}
-		return Math.round(result * 100.0) / 100.0;
 	}
 
 }

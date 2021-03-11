@@ -4,8 +4,11 @@ import static com.cyberninja.common.ApplicationConstans.IVA;
 import static com.cyberninja.model.entity.enumerated.DiscountType.FIXED;
 import static com.cyberninja.model.entity.enumerated.DiscountType.PERCENTAGE;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.cyberninja.model.entity.OrderDetails;
 import com.cyberninja.model.entity.Product;
 import com.cyberninja.services.business.InvoiceServiceI;
 
@@ -29,7 +32,7 @@ public class InvoiceServiceImpl implements InvoiceServiceI {
 		if (product.getDiscount() != null) {
 			discount = roundDiscount(product.getDiscount().getValue());
 		}
-		
+
 		// Si no tiene descuento el precio total es el calculo del iva
 		if (product.getDiscount() == null) {
 			product.setTotalPrice(price);
@@ -44,6 +47,21 @@ public class InvoiceServiceImpl implements InvoiceServiceI {
 		}
 
 		return product;
+	}
+
+	/**
+	 * Suma el precio de todos los productos
+	 * 
+	 * @param products
+	 * @return
+	 */
+	@Override
+	public Double calculateTotalPrice(List<OrderDetails> ordersDetails) {
+		Double totalPrice = 0.0;
+		for (OrderDetails orderDetails : ordersDetails) {
+			totalPrice = totalPrice + (orderDetails.getUnits() * orderDetails.getProduct().getTotalPrice());
+		}
+		return Math.round(totalPrice * 100.0) / 100.0;
 	}
 
 	/**
@@ -82,4 +100,5 @@ public class InvoiceServiceImpl implements InvoiceServiceI {
 	private Double calculateDiscountFixed(Double price, Double discount) {
 		return Math.round((price - discount) * 100.0) / 100.0;
 	}
+
 }
