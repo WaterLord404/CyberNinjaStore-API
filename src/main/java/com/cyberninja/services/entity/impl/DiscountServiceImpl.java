@@ -60,10 +60,16 @@ public class DiscountServiceImpl implements DiscountServiceI {
 				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
 	}
 
+	/**
+	 * Actualiza el descuetno de un producto
+	 */
 	@Override
-	public ProductDTO setDiscount(Long productId, Long discountId) {
+	public ProductDTO setDiscount(Long productId, Long discountId, Boolean active) {
 		Product product = productService.getProduct(productId);
 
+		if (!active) {
+			product.setDiscount(null);
+		}
 		product.setDiscount(getDiscount(discountId));
 
 		// Calcula iva y descuento

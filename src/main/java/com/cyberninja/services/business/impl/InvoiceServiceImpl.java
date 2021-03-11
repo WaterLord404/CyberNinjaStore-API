@@ -25,20 +25,21 @@ public class InvoiceServiceImpl implements InvoiceServiceI {
 		Double price = calculateVat(product.getSalePrice());
 		product.setPriceWoutDiscount(price);
 
+		// Redondeo del descuento
+		if (product.getDiscount() != null) {
+			discount = roundDiscount(product.getDiscount().getValue());
+		}
+		
 		// Si no tiene descuento el precio total es el calculo del iva
 		if (product.getDiscount() == null) {
 			product.setTotalPrice(price);
 
-			// Redondeo del descuento
-		} else if (product.getDiscount() != null) {
-			discount = roundDiscount(product.getDiscount().getValue());
-
 			// Calculo tipo porcentaje
-		} else if (product.getDiscount().getType().equals(PERCENTAGE)) {
+		} else if (product.getDiscount().getType().name().equals(PERCENTAGE.name())) {
 			product.setTotalPrice(calculateDiscountPercentage(price, discount));
 
 			// Calculo tipo fijo
-		} else if (product.getDiscount().getType().equals(FIXED)) {
+		} else if (product.getDiscount().getType().name().equals(FIXED.name())) {
 			product.setTotalPrice(calculateDiscountFixed(price, discount));
 		}
 

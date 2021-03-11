@@ -79,7 +79,8 @@ public class ProductController {
 	@PostMapping
 	public ResponseEntity<ProductDTO> createProduct(
 			@RequestParam(required = true) String product,
-			@RequestParam(required = true) List<MultipartFile> images) {
+			@RequestParam(required = true) List<MultipartFile> images
+			) {
 		try {
 			// String to object
 			ObjectMapper objectMapper = new ObjectMapper();
