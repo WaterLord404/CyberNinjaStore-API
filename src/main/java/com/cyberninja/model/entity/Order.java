@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -26,7 +27,7 @@ public class Order implements Serializable {
 	private static final long serialVersionUID = 7311370312609110974L;
 
 	private Long id;
-	
+
 	private Double totalPrice;
 
 	private LocalDate purchaseDate;
@@ -34,6 +35,8 @@ public class Order implements Serializable {
 	private Customer customer;
 
 	private List<OrderDetails> ordersDetails;
+
+	private Coupon coupon;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +48,7 @@ public class Order implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	@Column(name = "TOTAL_PRICE", nullable = false)
 	public Double getTotalPrice() {
 		return totalPrice;
@@ -81,6 +84,16 @@ public class Order implements Serializable {
 
 	public void setOrdersDetails(List<OrderDetails> ordersDetails) {
 		this.ordersDetails = ordersDetails;
+	}
+
+	@OneToOne
+	@JoinColumn(name = "CUPON_ID", foreignKey = @ForeignKey(name = "FK_ORDERS__COUPON_ID"))
+	public Coupon getCoupon() {
+		return coupon;
+	}
+
+	public void setCoupon(Coupon coupon) {
+		this.coupon = coupon;
 	}
 
 	public static long getSerialversionuid() {

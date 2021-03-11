@@ -8,6 +8,4 @@ public interface UtilsServiceI {
 
 	public Blob createBlob(MultipartFile img);
 
-	public String generateRandomCode();
-
 }

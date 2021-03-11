@@ -14,7 +14,7 @@ import com.cyberninja.model.entity.dto.DiscountDTO;
 import com.cyberninja.model.entity.dto.ProductDTO;
 import com.cyberninja.model.repository.DiscountRepository;
 import com.cyberninja.model.repository.ProductRepository;
-import com.cyberninja.services.business.InvoiceServiceI;
+import com.cyberninja.services.business.OrderDetailsBusinessServiceI;
 import com.cyberninja.services.entity.DiscountServiceI;
 import com.cyberninja.services.entity.ProductServiceI;
 
@@ -34,7 +34,7 @@ public class DiscountServiceImpl implements DiscountServiceI {
 	private ProductConverter productConverter;
 
 	@Autowired
-	private InvoiceServiceI invoiceService;
+	private OrderDetailsBusinessServiceI invoiceService;
 	
 	@Autowired
 	private ProductRepository productRepo;

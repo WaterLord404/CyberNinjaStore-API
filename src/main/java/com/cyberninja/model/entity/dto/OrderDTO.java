@@ -14,6 +14,8 @@ public class OrderDTO {
 
 	private List<OrderDetailsDTO> orderProducts;
 
+	private CouponDTO coupon;
+
 	public Long getId() {
 		return id;
 	}
@@ -35,6 +37,18 @@ public class OrderDTO {
 	}
 
 	public void setOrderProductDTO(List<OrderDetailsDTO> orderProducts) {
+		this.orderProducts = orderProducts;
+	}
+
+	public CouponDTO getCoupon() {
+		return coupon;
+	}
+
+	public void setCoupon(CouponDTO coupon) {
+		this.coupon = coupon;
+	}
+
+	public void setOrderProducts(List<OrderDetailsDTO> orderProducts) {
 		this.orderProducts = orderProducts;
 	}
 

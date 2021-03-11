@@ -11,6 +11,6 @@ public interface OrderServiceI {
 
 	public List<OrderDetailsDTO> getProductCart(List<OrderDetailsDTO> ids);
 
-	public OrderDTO purchaseOrder(List<OrderDetailsDTO> dtos, Authentication auth);
+	public OrderDTO purchaseOrder(List<OrderDetailsDTO> dtos, Authentication auth, String couponCode);
 	
 }

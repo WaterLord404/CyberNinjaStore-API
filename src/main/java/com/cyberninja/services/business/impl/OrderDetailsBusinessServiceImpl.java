@@ -6,14 +6,20 @@ import static com.cyberninja.model.entity.enumerated.DiscountType.PERCENTAGE;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cyberninja.model.entity.Coupon;
 import com.cyberninja.model.entity.OrderDetails;
 import com.cyberninja.model.entity.Product;
-import com.cyberninja.services.business.InvoiceServiceI;
+import com.cyberninja.services.business.CouponBusinessServiceI;
+import com.cyberninja.services.business.OrderDetailsBusinessServiceI;
 
 @Service
-public class InvoiceServiceImpl implements InvoiceServiceI {
+public class OrderDetailsBusinessServiceImpl implements OrderDetailsBusinessServiceI {
+
+	@Autowired
+	private CouponBusinessServiceI couponValidatorService;
 
 	/**
 	 * Calcula el iva y descuento
@@ -56,11 +62,16 @@ public class InvoiceServiceImpl implements InvoiceServiceI {
 	 * @return
 	 */
 	@Override
-	public Double calculateTotalPrice(List<OrderDetails> ordersDetails) {
+	public Double calculateTotalPrice(List<OrderDetails> ordersDetails, Coupon coupon) {
 		Double totalPrice = 0.0;
 		for (OrderDetails orderDetails : ordersDetails) {
 			totalPrice = totalPrice + (orderDetails.getUnits() * orderDetails.getProduct().getTotalPrice());
 		}
+
+		if (couponValidatorService.isCouponValid(coupon)) {
+			
+		}
+
 		return Math.round(totalPrice * 100.0) / 100.0;
 	}
 

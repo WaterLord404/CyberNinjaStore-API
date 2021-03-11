@@ -40,7 +40,7 @@ public class Coupon implements Serializable {
 
 	private Discount discount;
 
-	private OrderDetails orderDetail;
+	private Order order;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -117,13 +117,13 @@ public class Coupon implements Serializable {
 		this.discount = discount;
 	}
 
-	@OneToOne(mappedBy = "cupon", cascade = CascadeType.ALL)
-	public OrderDetails getOrderDetail() {
-		return orderDetail;
+	@OneToOne(mappedBy = "coupon", cascade = CascadeType.ALL)
+	public Order getOrder() {
+		return order;
 	}
 
-	public void setOrderDetail(OrderDetails orderDetail) {
-		this.orderDetail = orderDetail;
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 
 	public static long getSerialversionuid() {
