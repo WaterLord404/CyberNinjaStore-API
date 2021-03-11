@@ -1,6 +1,8 @@
 package com.cyberninja.services.business.impl;
 
 import static com.cyberninja.common.ApplicationConstans.IVA;
+import static com.cyberninja.model.enumerated.DiscountType.FIXED;
+import static com.cyberninja.model.enumerated.DiscountType.PERCENTAGE;
 
 import org.springframework.stereotype.Service;
 
@@ -17,18 +19,40 @@ public class InvoiceServiceImpl implements InvoiceServiceI {
 	 */
 	@Override
 	public Product calculateInvoice(Product product) {
+		Double discount = 0.0;
+
 		// Calcular IVA
 		Double price = calculateVat(product.getSalePrice());
 		product.setPriceWoutDiscount(price);
 
-		// Calcula el descuento
-		if(product.getDiscount() == null) {
+		// Si no tiene descuento el precio total es el calculo del iva
+		if (product.getDiscount() == null) {
 			product.setTotalPrice(price);
-		} else {
-			product.setTotalPrice(calculateDiscount(price, product.getDiscount().getValue()));			
+
+			// Redondeo del descuento
+		} else if (product.getDiscount() != null) {
+			discount = roundDiscount(product.getDiscount().getValue());
+
+			// Calculo tipo porcentaje
+		} else if (product.getDiscount().getType().equals(PERCENTAGE)) {
+			product.setTotalPrice(calculateDiscountPercentage(price, discount));
+
+			// Calculo tipo fijo
+		} else if (product.getDiscount().getType().equals(FIXED)) {
+			product.setTotalPrice(calculateDiscountFixed(price, discount));
 		}
 
 		return product;
+	}
+
+	/**
+	 * Redondea el descuento con 2 decimales
+	 * 
+	 * @param discount
+	 * @return
+	 */
+	private Double roundDiscount(Double discount) {
+		return Math.round(discount * 100.0) / 100.0;
 	}
 
 	/**
@@ -41,12 +65,20 @@ public class InvoiceServiceImpl implements InvoiceServiceI {
 	}
 
 	/**
-	 * Calcula el descuento
+	 * Calcula el descuento por porcentaje
 	 * 
 	 * @return Double
 	 */
-	private Double calculateDiscount(Double price, Double discount) {
+	private Double calculateDiscountPercentage(Double price, Double discount) {
 		return Math.round((price - (price * (discount / 100))) * 100.0) / 100.0;
 	}
 
+	/**
+	 * Calcula el descuento por capital
+	 * 
+	 * @return Double
+	 */
+	private Double calculateDiscountFixed(Double price, Double discount) {
+		return Math.round((price - discount) * 100.0) / 100.0;
+	}
 }
