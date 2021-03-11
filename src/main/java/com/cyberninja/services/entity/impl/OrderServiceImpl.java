@@ -82,6 +82,12 @@ public class OrderServiceImpl implements OrderServiceI {
 		customer.setLastPurchase(LocalDate.now());
 		order.setCustomer(customer);
 
+		// Asigna el cupon
+		if (couponCode != null) {
+			coupon = couponService.getCouponByCode(couponCode);
+			order.setCoupon(coupon);
+		}
+		
 		// Asigna a cada order detail su order y product
 		for (OrderDetails orderDetails : ordersDetails) {
 			orderDetails.setOrder(order);
@@ -89,12 +95,6 @@ public class OrderServiceImpl implements OrderServiceI {
 			orderDetails.setProduct(productService.getProduct(
 									dtos.get(ordersDetails.indexOf(orderDetails))
 									.getProduct().getId()));
-		}
-
-		// Asigna el cupon
-		if (couponCode != null) {
-			coupon = couponService.getCouponByCode(couponCode);
-			order.setCoupon(coupon);
 		}
 
 		// Calcula el precio total

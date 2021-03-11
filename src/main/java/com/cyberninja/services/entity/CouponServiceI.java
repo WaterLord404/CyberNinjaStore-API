@@ -8,4 +8,8 @@ public interface CouponServiceI {
 	public CouponDTO addCoupon(CouponDTO dto);
 
 	public Coupon getCouponByCode(String couponCode);
+
+	void useCoupon(Coupon coupon);
+	
+	void deleteCoupon(Coupon coupon);
 }

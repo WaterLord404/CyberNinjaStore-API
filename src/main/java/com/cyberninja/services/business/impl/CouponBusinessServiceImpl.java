@@ -27,7 +27,8 @@ public class CouponBusinessServiceImpl implements CouponBusinessServiceI {
 		    !LocalDate.now().isAfter(coupon.getExpirationDate())) {
 			
 			isValid = true;
-		}
+			
+		} 
 	
 		return isValid;
 	}

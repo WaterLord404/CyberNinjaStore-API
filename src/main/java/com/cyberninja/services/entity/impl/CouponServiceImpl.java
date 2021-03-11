@@ -26,7 +26,7 @@ public class CouponServiceImpl implements CouponServiceI {
 
 	@Autowired
 	private CouponBusinessServiceI couponBService;
-	
+
 	@Autowired
 	private DiscountServiceI discountService;
 
@@ -40,13 +40,13 @@ public class CouponServiceImpl implements CouponServiceI {
 		coupon.setCode(couponBService.generateCode(dto.getCode()));
 
 		// Valida el cupon
-		if(!couponBService.isCouponValid(coupon)) {
+		if (!couponBService.isCouponValid(coupon)) {
 			throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
 		}
-		
+
 		// Asignacion del descuento
 		coupon.setDiscount(discountService.getDiscount(dto.getDiscount().getId()));
-		
+
 		couponRepo.save(coupon);
 
 		return couponConverter.couponToCouponDTO(coupon);
@@ -59,6 +59,28 @@ public class CouponServiceImpl implements CouponServiceI {
 	public Coupon getCouponByCode(String couponCode) {
 		return couponRepo.findCouponByCodeAndActive(couponCode, true)
 				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+	}
+
+	/**
+	 * Suma 1 uso
+	 */
+	@Override
+	public void useCoupon(Coupon coupon) {
+		coupon.setUses(coupon.getUses() + 1);
+		couponRepo.save(coupon);
+	}
+
+	/**
+	 * Desactiva un cupon
+	 */
+	@Override
+	public void deleteCoupon(Coupon coupon) {
+		coupon = couponRepo.findCouponByCode(coupon.getCode());
+
+		if (coupon != null) {
+			coupon.setActive(false);
+			couponRepo.save(coupon);
+		}
 	}
 
 }

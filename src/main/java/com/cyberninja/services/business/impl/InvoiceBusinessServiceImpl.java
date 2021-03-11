@@ -3,7 +3,7 @@ package com.cyberninja.services.business.impl;
 import static com.cyberninja.common.ApplicationConstans.IVA;
 import static com.cyberninja.model.entity.enumerated.DiscountType.FIXED;
 import static com.cyberninja.model.entity.enumerated.DiscountType.PERCENTAGE;
-import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.util.List;
 
@@ -16,15 +16,19 @@ import com.cyberninja.model.entity.Discount;
 import com.cyberninja.model.entity.OrderDetails;
 import com.cyberninja.services.business.CouponBusinessServiceI;
 import com.cyberninja.services.business.InvoiceBusinessServiceI;
+import com.cyberninja.services.entity.CouponServiceI;
 
 @Service
 public class InvoiceBusinessServiceImpl implements InvoiceBusinessServiceI {
 
 	@Autowired
 	private CouponBusinessServiceI couponBService;
+	
+	@Autowired
+	private CouponServiceI couponService;
 
 	/**
-	 * Calcula el iva y descuento
+	 * Calcula descuento
 	 * 
 	 * @return Product
 	 */
@@ -63,14 +67,17 @@ public class InvoiceBusinessServiceImpl implements InvoiceBusinessServiceI {
 			totalPrice = totalPrice + (orderDetails.getUnits() * orderDetails.getProduct().getTotalPrice());
 		}
 
-	
 		if (coupon != null) {
 			// Valida el cupon
 			if (couponBService.isCouponValid(coupon)) {
+				// Asigna el total
 				totalPrice = calculateInvoice(totalPrice, coupon.getDiscount());
+				// Suma 1 al uso del cupon
+				couponService.useCoupon(coupon);
 				
 			} else {
-				throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+				couponService.deleteCoupon(coupon);
+				throw new ResponseStatusException(NOT_FOUND);
 			}
 		}
 
