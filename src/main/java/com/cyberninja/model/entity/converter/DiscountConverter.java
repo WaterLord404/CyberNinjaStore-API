@@ -2,18 +2,23 @@ package com.cyberninja.model.entity.converter;
 
 import java.time.LocalDate;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cyberninja.model.entity.Discount;
 import com.cyberninja.model.entity.dto.DiscountDTO;
+import com.cyberninja.services.business.InvoiceBusinessServiceI;
 
 @Component
 public class DiscountConverter {
 
+	@Autowired
+	private InvoiceBusinessServiceI invoiceBService;
+	
 	public Discount discountDTOToDiscount(DiscountDTO dto) {
 		Discount discount = new Discount();
 
-		discount.setValue(dto.getValue());
+		discount.setValue(invoiceBService.roundDiscount(dto.getValue()));
 		discount.setType(dto.getType());
 		discount.setCreationDate(LocalDate.now());
 		discount.setActive(true);

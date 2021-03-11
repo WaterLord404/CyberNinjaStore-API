@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -86,8 +85,8 @@ public class Order implements Serializable {
 		this.ordersDetails = ordersDetails;
 	}
 
-	@OneToOne
-	@JoinColumn(name = "CUPON_ID", foreignKey = @ForeignKey(name = "FK_ORDERS__COUPON_ID"))
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "COUPON_ID", foreignKey = @ForeignKey(name = "FK_ORDERS__COUPON_ID"))
 	public Coupon getCoupon() {
 		return coupon;
 	}

@@ -6,5 +6,5 @@ public interface CouponBusinessServiceI {
 
 	public Boolean isCouponValid(Coupon coupon);
 
-	public String generateRandomCode();
+	public String generateCode(String code);
 }

@@ -1,6 +1,7 @@
 package com.cyberninja.services.entity.impl;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,8 @@ import com.cyberninja.model.entity.dto.DiscountDTO;
 import com.cyberninja.model.entity.dto.ProductDTO;
 import com.cyberninja.model.repository.DiscountRepository;
 import com.cyberninja.model.repository.ProductRepository;
-import com.cyberninja.services.business.OrderDetailsBusinessServiceI;
+import com.cyberninja.services.business.DiscountBusinessServiceI;
+import com.cyberninja.services.business.InvoiceBusinessServiceI;
 import com.cyberninja.services.entity.DiscountServiceI;
 import com.cyberninja.services.entity.ProductServiceI;
 
@@ -34,17 +36,25 @@ public class DiscountServiceImpl implements DiscountServiceI {
 	private ProductConverter productConverter;
 
 	@Autowired
-	private OrderDetailsBusinessServiceI invoiceService;
-	
+	private InvoiceBusinessServiceI invoiceBService;
+
 	@Autowired
 	private ProductRepository productRepo;
-	
+
+	@Autowired
+	private DiscountBusinessServiceI discountBService;
+
 	/**
 	 * Crea un descuento
 	 */
 	@Override
 	public DiscountDTO addDiscount(DiscountDTO dto) {
 		Discount discount = discountConverter.discountDTOToDiscount(dto);
+
+		// Valida el descuento
+		if (!discountBService.isDiscountValid(discount)) {
+			throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+		}
 
 		discountRepo.save(discount);
 
@@ -64,17 +74,14 @@ public class DiscountServiceImpl implements DiscountServiceI {
 	 * Actualiza el descuetno de un producto
 	 */
 	@Override
-	public ProductDTO setDiscount(Long productId, Long discountId, Boolean active) {
+	public ProductDTO setDiscount(Long productId, Long discountId) {
 		Product product = productService.getProduct(productId);
 
-		if (!active) {
-			product.setDiscount(null);
-		}
 		product.setDiscount(getDiscount(discountId));
 
 		// Calcula iva y descuento
-		product = invoiceService.calculateInvoice(product);
-		
+		product.setTotalPrice(invoiceBService.calculateInvoice(product.getPriceWithVat(), product.getDiscount()));
+
 		productRepo.save(product);
 
 		return productConverter.productToProductDTO(product);

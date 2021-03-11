@@ -1,7 +1,9 @@
 package com.cyberninja.services.entity.impl;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -11,6 +13,7 @@ import com.cyberninja.model.entity.dto.CouponDTO;
 import com.cyberninja.model.repository.CouponRepository;
 import com.cyberninja.services.business.CouponBusinessServiceI;
 import com.cyberninja.services.entity.CouponServiceI;
+import com.cyberninja.services.entity.DiscountServiceI;
 
 @Service
 public class CouponServiceImpl implements CouponServiceI {
@@ -22,7 +25,10 @@ public class CouponServiceImpl implements CouponServiceI {
 	private CouponConverter couponConverter;
 
 	@Autowired
-	private CouponBusinessServiceI couponBusinessService;
+	private CouponBusinessServiceI couponBService;
+	
+	@Autowired
+	private DiscountServiceI discountService;
 
 	/**
 	 * Crea un cupon
@@ -31,13 +37,16 @@ public class CouponServiceImpl implements CouponServiceI {
 	public CouponDTO addCoupon(CouponDTO dto) {
 		Coupon coupon = couponConverter.couponDTOToCoupon(dto);
 
-		// Genera un código aleatorio si no tiene
-		if (dto.getCode() == null) {
-			coupon.setCode("CN" + couponBusinessService.generateRandomCode());
-		} else {
-			coupon.setCode(dto.getCode());
-		}
+		coupon.setCode(couponBService.generateCode(dto.getCode()));
 
+		// Valida el cupon
+		if(!couponBService.isCouponValid(coupon)) {
+			throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+		}
+		
+		// Asignacion del descuento
+		coupon.setDiscount(discountService.getDiscount(dto.getDiscount().getId()));
+		
 		couponRepo.save(coupon);
 
 		return couponConverter.couponToCouponDTO(coupon);
@@ -47,9 +56,9 @@ public class CouponServiceImpl implements CouponServiceI {
 	 * Obtiene un cupon
 	 */
 	@Override
-	public Coupon getCoupon(String couponCode) {
+	public Coupon getCouponByCode(String couponCode) {
 		return couponRepo.findCouponByCodeAndActive(couponCode, true)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
 	}
 
 }

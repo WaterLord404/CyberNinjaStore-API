@@ -41,14 +41,14 @@ public class DiscountController {
 		}
 	}
 
-	@PutMapping(path = "/{productId}/{discountId}{active}")
+	@PutMapping(path = "/{productId}/{discountId}")
 	public ResponseEntity<ProductDTO> setDiscount(
 			@PathVariable Long productId, 
 			@PathVariable(required = false) Long discountId,
 			@PathVariable(required = false) Boolean active
 			) {
 		try {
-			return ResponseEntity.ok(discountService.setDiscount(productId, discountId, active));
+			return ResponseEntity.ok(discountService.setDiscount(productId, discountId));
 
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus());

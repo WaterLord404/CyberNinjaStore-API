@@ -45,7 +45,7 @@ public class Product implements Serializable {
 
 	private Double salePrice;
 
-	private Double priceWoutDiscount;
+	private Double priceWithVat;
 
 	private Double totalPrice;
 
@@ -113,13 +113,13 @@ public class Product implements Serializable {
 		this.salePrice = salePrice;
 	}
 
-	@Column(name = "PRICE_WOUT_DISCOUNT", nullable = false)
-	public Double getPriceWoutDiscount() {
-		return priceWoutDiscount;
+	@Column(name = "PRICE_WITH_VAT", nullable = false)
+	public Double getPriceWithVat() {
+		return priceWithVat;
 	}
 
-	public void setPriceWoutDiscount(Double priceWoutDiscount) {
-		this.priceWoutDiscount = priceWoutDiscount;
+	public void setPriceWithVat(Double priceWithVat) {
+		this.priceWithVat = priceWithVat;
 	}
 
 	@Column(name = "TOTAL_PRICE", nullable = false)
@@ -196,11 +196,11 @@ public class Product implements Serializable {
 	}
 
 	@OneToMany(mappedBy = "product", orphanRemoval = true, cascade = CascadeType.ALL)
-	public List<OrderDetails> getOrder() {
+	public List<OrderDetails> getOrdersDetails() {
 		return ordersDetails;
 	}
 
-	public void setOrder(List<OrderDetails> ordersDetails) {
+	public void setOrdersDetails(List<OrderDetails> ordersDetails) {
 		this.ordersDetails = ordersDetails;
 	}
 

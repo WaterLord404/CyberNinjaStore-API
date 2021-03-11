@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.cyberninja.model.entity.Product;
 import com.cyberninja.model.entity.dto.ProductDTO;
+import com.cyberninja.services.business.InvoiceBusinessServiceI;
 
 @Component
 public class ProductConverter {
@@ -18,6 +19,9 @@ public class ProductConverter {
 
 	@Autowired
 	private DocumentConverter documentConverter;
+	
+	@Autowired
+	private InvoiceBusinessServiceI invoiceBService;
 
 	public Product productDTOToProduct(ProductDTO dto) {
 		Product product = new Product();
@@ -31,6 +35,7 @@ public class ProductConverter {
 		product.setCategory(dto.getCategory());
 		product.setCreationDate(LocalDate.now());
 		product.setActive(true);
+		product.setPriceWithVat(invoiceBService.calculateVat(dto.getSalePrice()));
 
 		return product;
 	}
@@ -42,7 +47,7 @@ public class ProductConverter {
 		dto.setName(product.getName());
 		dto.setDescription(product.getDescription());
 		dto.setTotalPrice(product.getTotalPrice());
-		dto.setPriceWoutDiscount(product.getPriceWoutDiscount());
+		dto.setPriceWoutDiscount(product.getPriceWithVat());
 		dto.setSize(product.getSize());
 		dto.setColour(product.getColour());
 		dto.setCategory(product.getCategory());

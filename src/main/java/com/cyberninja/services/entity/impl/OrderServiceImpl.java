@@ -17,7 +17,7 @@ import com.cyberninja.model.entity.dto.OrderDTO;
 import com.cyberninja.model.entity.dto.OrderDetailsDTO;
 import com.cyberninja.model.repository.CustomerRepository;
 import com.cyberninja.model.repository.OrderDetailsRepository;
-import com.cyberninja.services.business.OrderDetailsBusinessServiceI;
+import com.cyberninja.services.business.InvoiceBusinessServiceI;
 import com.cyberninja.services.entity.CouponServiceI;
 import com.cyberninja.services.entity.OrderServiceI;
 import com.cyberninja.services.entity.ProductServiceI;
@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderServiceI {
 	private OrderDetailsRepository orderDetailsRepo;
 
 	@Autowired
-	private OrderDetailsBusinessServiceI invoiceService;
+	private InvoiceBusinessServiceI invoiceBService;
 
 	@Autowired
 	private CouponServiceI couponService;
@@ -72,8 +72,8 @@ public class OrderServiceImpl implements OrderServiceI {
 	 */
 	@Override
 	public OrderDTO purchaseOrder(List<OrderDetailsDTO> dtos, Authentication auth, String couponCode) {
-		Coupon coupon = null;
 		Order order = orderConverter.orderDTOToOrder(new OrderDTO());
+		Coupon coupon = null;
 
 		List<OrderDetails> ordersDetails = orderDetailsConverter.orderDetailsDTOToOrderDetails(dtos);
 		
@@ -82,15 +82,6 @@ public class OrderServiceImpl implements OrderServiceI {
 		customer.setLastPurchase(LocalDate.now());
 		order.setCustomer(customer);
 
-		// Asigna el cupon
-		if (couponCode != null) {
-			coupon = couponService.getCoupon(couponCode);
-			order.setCoupon(coupon);
-		}
-
-		// Calcula el precio total
-		order.setTotalPrice(invoiceService.calculateTotalPrice(ordersDetails, coupon));
-		
 		// Asigna a cada order detail su order y product
 		for (OrderDetails orderDetails : ordersDetails) {
 			orderDetails.setOrder(order);
@@ -99,6 +90,15 @@ public class OrderServiceImpl implements OrderServiceI {
 									dtos.get(ordersDetails.indexOf(orderDetails))
 									.getProduct().getId()));
 		}
+
+		// Asigna el cupon
+		if (couponCode != null) {
+			coupon = couponService.getCouponByCode(couponCode);
+			order.setCoupon(coupon);
+		}
+
+		// Calcula el precio total
+		order.setTotalPrice(invoiceBService.calculateTotalPrice(ordersDetails, coupon));
 
 		orderDetailsRepo.saveAll(ordersDetails);
 

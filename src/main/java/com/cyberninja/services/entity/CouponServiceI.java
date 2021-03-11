@@ -7,5 +7,5 @@ public interface CouponServiceI {
 
 	public CouponDTO addCoupon(CouponDTO dto);
 
-	public Coupon getCoupon(String couponCode);
+	public Coupon getCouponByCode(String couponCode);
 }

@@ -5,5 +5,5 @@ public class ApplicationConstans {
 	
 	public static final int CUPON_CODE_LENGHT = 8;
 	
-	public static final String CUPON_ALPHANUM = "0123456789ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+	public static final String CUPON_ALPHANUM = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 }

@@ -10,5 +10,5 @@ public interface DiscountServiceI {
 	
 	public Discount getDiscount(Long id);
 
-	public ProductDTO setDiscount(Long productId, Long discountId, Boolean active);
+	public ProductDTO setDiscount(Long productId, Long discountId);
 }

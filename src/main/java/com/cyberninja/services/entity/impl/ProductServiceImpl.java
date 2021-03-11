@@ -15,7 +15,7 @@ import com.cyberninja.model.entity.Product;
 import com.cyberninja.model.entity.converter.ProductConverter;
 import com.cyberninja.model.entity.dto.ProductDTO;
 import com.cyberninja.model.repository.ProductRepository;
-import com.cyberninja.services.business.OrderDetailsBusinessServiceI;
+import com.cyberninja.services.business.InvoiceBusinessServiceI;
 import com.cyberninja.services.entity.DiscountServiceI;
 import com.cyberninja.services.entity.DocumentServiceI;
 import com.cyberninja.services.entity.ProductServiceI;
@@ -33,7 +33,7 @@ public class ProductServiceImpl implements ProductServiceI {
 	private DocumentServiceI documentService;
 	
 	@Autowired
-	private OrderDetailsBusinessServiceI invoiceService;
+	private InvoiceBusinessServiceI invoiceBService;
 	
 	@Autowired
 	private DiscountServiceI discountService;
@@ -99,8 +99,10 @@ public class ProductServiceImpl implements ProductServiceI {
 		}
 		
 		// Calcula iva y descuento
-		product = invoiceService.calculateInvoice(product);
-		
+		product.setTotalPrice(invoiceBService.calculateInvoice(
+											  product.getPriceWithVat(), 
+											  product.getDiscount()));
+
 		// Añade las imagenes
 		product.setDocuments(documentService.createDocuments(images, product));
 

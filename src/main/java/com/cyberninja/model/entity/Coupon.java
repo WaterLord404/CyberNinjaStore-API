@@ -2,6 +2,7 @@ package com.cyberninja.model.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,7 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -40,7 +41,7 @@ public class Coupon implements Serializable {
 
 	private Discount discount;
 
-	private Order order;
+	private List<Order> orders;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -117,13 +118,13 @@ public class Coupon implements Serializable {
 		this.discount = discount;
 	}
 
-	@OneToOne(mappedBy = "coupon", cascade = CascadeType.ALL)
-	public Order getOrder() {
-		return order;
+	@OneToMany(mappedBy = "coupon", orphanRemoval = true, cascade = CascadeType.ALL)
+	public List<Order> getOrders() {
+		return orders;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 
 	public static long getSerialversionuid() {

@@ -13,6 +13,7 @@ public class CouponConverter {
 	public Coupon couponDTOToCoupon(CouponDTO dto) {
 		Coupon coupon = new Coupon();
 
+		coupon.setCode(dto.getCode());
 		coupon.setCreationDate(LocalDate.now());
 		coupon.setExpirationDate(dto.getExpirationDate());
 		coupon.setUses(0);

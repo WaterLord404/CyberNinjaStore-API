@@ -47,10 +47,10 @@ public class OrderController {
 	public ResponseEntity<OrderDTO> purchaseOrder(
 			@RequestBody List<OrderDetailsDTO> dtos, 
 			Authentication auth,
-			@RequestParam(name = "coupon", required = false) String couponCode
+			@RequestParam(required = false) String coupon
 			) {
 		try {
-			return ResponseEntity.ok(orderService.purchaseOrder(dtos, auth, couponCode));
+			return ResponseEntity.ok(orderService.purchaseOrder(dtos, auth, coupon));
 
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus());
