@@ -6,9 +6,9 @@ import com.cyberninja.model.entity.Coupon;
 import com.cyberninja.model.entity.Discount;
 import com.cyberninja.model.entity.OrderDetails;
 
-public interface InvoiceBusinessServiceI {
+public interface OrderBusinessServiceI {
 
-	public Double calculateInvoice(Double priceWithVAT, Discount discount);
+	public Double calculateDiscount(Double priceWithVAT, Discount discount);
 
 	public Double calculateTotalPrice(List<OrderDetails> ordersDetails, Coupon coupon);
 

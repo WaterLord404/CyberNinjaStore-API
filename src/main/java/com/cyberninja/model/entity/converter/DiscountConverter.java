@@ -7,18 +7,18 @@ import org.springframework.stereotype.Component;
 
 import com.cyberninja.model.entity.Discount;
 import com.cyberninja.model.entity.dto.DiscountDTO;
-import com.cyberninja.services.business.InvoiceBusinessServiceI;
+import com.cyberninja.services.business.OrderBusinessServiceI;
 
 @Component
 public class DiscountConverter {
 
 	@Autowired
-	private InvoiceBusinessServiceI invoiceBService;
+	private OrderBusinessServiceI orderBService;
 	
 	public Discount discountDTOToDiscount(DiscountDTO dto) {
 		Discount discount = new Discount();
 
-		discount.setValue(invoiceBService.roundDiscount(dto.getValue()));
+		discount.setValue(orderBService.roundDiscount(dto.getValue()));
 		discount.setType(dto.getType());
 		discount.setCreationDate(LocalDate.now());
 		discount.setActive(true);

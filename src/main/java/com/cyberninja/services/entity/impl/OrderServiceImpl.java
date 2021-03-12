@@ -17,7 +17,7 @@ import com.cyberninja.model.entity.dto.OrderDTO;
 import com.cyberninja.model.entity.dto.OrderDetailsDTO;
 import com.cyberninja.model.repository.CustomerRepository;
 import com.cyberninja.model.repository.OrderDetailsRepository;
-import com.cyberninja.services.business.InvoiceBusinessServiceI;
+import com.cyberninja.services.business.OrderBusinessServiceI;
 import com.cyberninja.services.entity.CouponServiceI;
 import com.cyberninja.services.entity.OrderServiceI;
 import com.cyberninja.services.entity.ProductServiceI;
@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderServiceI {
 	private OrderDetailsRepository orderDetailsRepo;
 
 	@Autowired
-	private InvoiceBusinessServiceI invoiceBService;
+	private OrderBusinessServiceI orderBService;
 
 	@Autowired
 	private CouponServiceI couponService;
@@ -98,7 +98,7 @@ public class OrderServiceImpl implements OrderServiceI {
 		}
 
 		// Calcula el precio total
-		order.setTotalPrice(invoiceBService.calculateTotalPrice(ordersDetails, coupon));
+		order.setTotalPrice(orderBService.calculateTotalPrice(ordersDetails, coupon));
 
 		orderDetailsRepo.saveAll(ordersDetails);
 

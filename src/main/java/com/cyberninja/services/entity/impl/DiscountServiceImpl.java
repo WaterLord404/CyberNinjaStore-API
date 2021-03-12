@@ -16,7 +16,7 @@ import com.cyberninja.model.entity.dto.ProductDTO;
 import com.cyberninja.model.repository.DiscountRepository;
 import com.cyberninja.model.repository.ProductRepository;
 import com.cyberninja.services.business.DiscountBusinessServiceI;
-import com.cyberninja.services.business.InvoiceBusinessServiceI;
+import com.cyberninja.services.business.OrderBusinessServiceI;
 import com.cyberninja.services.entity.DiscountServiceI;
 import com.cyberninja.services.entity.ProductServiceI;
 
@@ -36,7 +36,7 @@ public class DiscountServiceImpl implements DiscountServiceI {
 	private ProductConverter productConverter;
 
 	@Autowired
-	private InvoiceBusinessServiceI invoiceBService;
+	private OrderBusinessServiceI orderBService;
 
 	@Autowired
 	private ProductRepository productRepo;
@@ -80,7 +80,7 @@ public class DiscountServiceImpl implements DiscountServiceI {
 		product.setDiscount(getDiscount(discountId));
 
 		// Calcula el descuento
-		product.setTotalPrice(invoiceBService.calculateInvoice(product.getPriceWithVat(), product.getDiscount()));
+		product.setTotalPrice(orderBService.calculateDiscount(product.getPriceWithVat(), product.getDiscount()));
 
 		productRepo.save(product);
 

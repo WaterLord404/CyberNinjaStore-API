@@ -15,11 +15,11 @@ import com.cyberninja.model.entity.Coupon;
 import com.cyberninja.model.entity.Discount;
 import com.cyberninja.model.entity.OrderDetails;
 import com.cyberninja.services.business.CouponBusinessServiceI;
-import com.cyberninja.services.business.InvoiceBusinessServiceI;
+import com.cyberninja.services.business.OrderBusinessServiceI;
 import com.cyberninja.services.entity.CouponServiceI;
 
 @Service
-public class InvoiceBusinessServiceImpl implements InvoiceBusinessServiceI {
+public class OrderBusinessServiceImpl implements OrderBusinessServiceI {
 
 	@Autowired
 	private CouponBusinessServiceI couponBService;
@@ -33,7 +33,7 @@ public class InvoiceBusinessServiceImpl implements InvoiceBusinessServiceI {
 	 * @return Product
 	 */
 	@Override
-	public Double calculateInvoice(Double price, Discount discount) {
+	public Double calculateDiscount(Double price, Discount discount) {
 		Double totalPrice = 0.0;
 
 		// El precio tiene que ser mayor que 0 para aplicar descuento
@@ -74,7 +74,7 @@ public class InvoiceBusinessServiceImpl implements InvoiceBusinessServiceI {
 			// Valida el cupon
 			if (couponBService.isCouponValid(coupon)) {
 				// Calcula el descuento
-				totalPrice = calculateInvoice(totalPrice, coupon.getDiscount());
+				totalPrice = calculateDiscount(totalPrice, coupon.getDiscount());
 				// Suma 1 al uso del cupon
 				couponService.useCoupon(coupon);
 				
