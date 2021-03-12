@@ -71,15 +71,15 @@ public class DiscountServiceImpl implements DiscountServiceI {
 	}
 
 	/**
-	 * Actualiza el descuetno de un producto
+	 * Actualiza el descuento de un producto
 	 */
 	@Override
-	public ProductDTO setDiscount(Long productId, Long discountId) {
+	public ProductDTO updateDiscount(Long productId, Long discountId) {
 		Product product = productService.getProduct(productId);
 
 		product.setDiscount(getDiscount(discountId));
 
-		// Calcula iva y descuento
+		// Calcula el descuento
 		product.setTotalPrice(invoiceBService.calculateInvoice(product.getPriceWithVat(), product.getDiscount()));
 
 		productRepo.save(product);

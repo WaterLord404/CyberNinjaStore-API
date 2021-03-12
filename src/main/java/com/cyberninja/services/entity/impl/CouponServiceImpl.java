@@ -53,7 +53,7 @@ public class CouponServiceImpl implements CouponServiceI {
 	}
 
 	/**
-	 * Obtiene un cupon
+	 * Obtiene un cupon activo
 	 */
 	@Override
 	public Coupon getCouponByCode(String couponCode) {
@@ -75,12 +75,8 @@ public class CouponServiceImpl implements CouponServiceI {
 	 */
 	@Override
 	public void deleteCoupon(Coupon coupon) {
-		coupon = couponRepo.findCouponByCode(coupon.getCode());
-
-		if (coupon != null) {
-			coupon.setActive(false);
-			couponRepo.save(coupon);
-		}
+		coupon.setActive(false);
+		couponRepo.save(coupon);
 	}
 
 }

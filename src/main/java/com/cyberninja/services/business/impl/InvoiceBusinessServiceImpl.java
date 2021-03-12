@@ -33,21 +33,24 @@ public class InvoiceBusinessServiceImpl implements InvoiceBusinessServiceI {
 	 * @return Product
 	 */
 	@Override
-	public Double calculateInvoice(Double priceWithVAT, Discount discount) {
+	public Double calculateInvoice(Double price, Discount discount) {
 		Double totalPrice = 0.0;
 
-		// Si no tiene descuento el precio total es el calculo del iva
-		if (discount == null) {
-			totalPrice = priceWithVAT;
-		}
-		// Calculo tipo porcentaje
-		else if (discount.getType().equals(PERCENTAGE)) {
+		// El precio tiene que ser mayor que 0 para aplicar descuento
+		if (price > 0) {
+			// Si no tiene descuento el precio total es el calculo del iva
+			if (discount == null) {
+				totalPrice = price;
+			}
+			// Calculo tipo porcentaje
+			else if (discount.getType().equals(PERCENTAGE)) {
 
-			totalPrice = calculateDiscountPercentage(priceWithVAT, discount.getValue());
-		}
-		// Calculo tipo fijo
-		else if (discount.getType().equals(FIXED)) {
-			totalPrice = calculateDiscountFixed(priceWithVAT, discount.getValue());
+				totalPrice = calculateDiscountPercentage(price, discount.getValue());
+			}
+			// Calculo tipo fijo
+			else if (discount.getType().equals(FIXED)) {
+				totalPrice = calculateDiscountFixed(price, discount.getValue());
+			}
 		}
 
 		return totalPrice;
@@ -70,7 +73,7 @@ public class InvoiceBusinessServiceImpl implements InvoiceBusinessServiceI {
 		if (coupon != null) {
 			// Valida el cupon
 			if (couponBService.isCouponValid(coupon)) {
-				// Asigna el total
+				// Calcula el descuento
 				totalPrice = calculateInvoice(totalPrice, coupon.getDiscount());
 				// Suma 1 al uso del cupon
 				couponService.useCoupon(coupon);

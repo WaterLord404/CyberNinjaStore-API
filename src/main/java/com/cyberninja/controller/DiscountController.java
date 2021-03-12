@@ -48,7 +48,7 @@ public class DiscountController {
 			@PathVariable(required = false) Boolean active
 			) {
 		try {
-			return ResponseEntity.ok(discountService.setDiscount(productId, discountId));
+			return ResponseEntity.ok(discountService.updateDiscount(productId, discountId));
 
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus());

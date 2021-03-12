@@ -98,7 +98,7 @@ public class ProductServiceImpl implements ProductServiceI {
 			product.setDiscount(discountService.getDiscount(dto.getDiscount().getId()));			
 		}
 		
-		// Calcula iva y descuento
+		// Calcula el descuento
 		product.setTotalPrice(invoiceBService.calculateInvoice(
 											  product.getPriceWithVat(), 
 											  product.getDiscount()));

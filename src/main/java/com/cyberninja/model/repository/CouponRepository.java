@@ -12,6 +12,4 @@ public interface CouponRepository extends JpaRepository<Coupon, Long> {
 
 	public Optional<Coupon> findCouponByCodeAndActive(String couponCode, Boolean active);
 	
-	public Coupon findCouponByCode(String couponCode);
-
 }
