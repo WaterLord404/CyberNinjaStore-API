@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import com.cyberninja.model.entity.Coupon;
 import com.cyberninja.model.entity.Customer;
 import com.cyberninja.model.entity.Order;
 import com.cyberninja.model.entity.OrderDetails;
@@ -73,7 +72,6 @@ public class OrderServiceImpl implements OrderServiceI {
 	@Override
 	public OrderDTO purchaseOrder(List<OrderDetailsDTO> dtos, Authentication auth, String couponCode) {
 		Order order = orderConverter.orderDTOToOrder(new OrderDTO());
-		Coupon coupon = null;
 
 		List<OrderDetails> ordersDetails = orderDetailsConverter.orderDetailsDTOToOrderDetails(dtos);
 		
@@ -83,9 +81,8 @@ public class OrderServiceImpl implements OrderServiceI {
 		order.setCustomer(customer);
 
 		// Asigna el cupon
-		if (couponCode != null) {
-			coupon = couponService.getCouponByCode(couponCode);
-			order.setCoupon(coupon);
+		if(couponCode != null) {
+			order.setCoupon(couponService.getCouponByCode(couponCode));			
 		}
 		
 		// Asigna a cada order detail su order y product
@@ -98,7 +95,7 @@ public class OrderServiceImpl implements OrderServiceI {
 		}
 
 		// Calcula el precio total
-		order.setTotalPrice(orderBService.calculateTotalPrice(ordersDetails, coupon));
+		order.setTotalPrice(orderBService.calculateTotalPrice(ordersDetails, order.getCoupon()));
 
 		orderDetailsRepo.saveAll(ordersDetails);
 
