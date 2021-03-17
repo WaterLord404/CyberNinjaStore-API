@@ -7,6 +7,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cyberninja.model.entity.Product;
 import com.cyberninja.model.entity.dto.ProductDTO;
+import com.cyberninja.model.entity.enumerated.ProductCategory;
+import com.cyberninja.model.entity.enumerated.ProductColour;
+import com.cyberninja.model.entity.enumerated.ProductSize;
 
 public interface ProductServiceI {
 
@@ -19,5 +22,11 @@ public interface ProductServiceI {
 	public ProductDTO createProduct(ProductDTO dto, List<MultipartFile> images) throws SQLException;
 
 	public ProductDTO deleteProduct(ProductDTO dto);
+
+	public ProductSize[] getSizes();
+
+	public ProductColour[] getColours();
+
+	public ProductCategory[] getCategories();
 
 }

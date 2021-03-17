@@ -1,6 +1,7 @@
 package com.cyberninja.security;
 
 
+import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpMethod.PUT;
 
@@ -48,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(POST, "/order/buy").hasRole(UserRole.USER.name())
 			
 			.antMatchers(POST, "/product").hasRole(UserRole.ADMIN.name())
-			.antMatchers(PUT, "/product").hasRole(UserRole.ADMIN.name())
+			.antMatchers(DELETE, "/product").hasRole(UserRole.ADMIN.name())
 			
 			.antMatchers(POST, "/discount").hasRole(UserRole.ADMIN.name())
 			.antMatchers(PUT, "/discount/*").hasRole(UserRole.ADMIN.name())

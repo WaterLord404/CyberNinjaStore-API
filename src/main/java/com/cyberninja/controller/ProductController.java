@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.model.entity.dto.ProductDTO;
+import com.cyberninja.model.entity.enumerated.ProductCategory;
+import com.cyberninja.model.entity.enumerated.ProductColour;
+import com.cyberninja.model.entity.enumerated.ProductSize;
 import com.cyberninja.services.entity.ProductServiceI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
@@ -105,7 +108,7 @@ public class ProductController {
 	 * 
 	 * @return ProductDTO
 	 */
-	@PutMapping
+	@DeleteMapping
 	public ResponseEntity<ProductDTO> deleteProduct(@RequestBody ProductDTO dto) {
 		try {
 			return ResponseEntity.ok(productService.deleteProduct(dto));
@@ -119,4 +122,40 @@ public class ProductController {
 		}
 	}
 
+	
+	@GetMapping(path = "/size")
+	public ResponseEntity<ProductSize[]> getSizes() {
+		try {
+			return ResponseEntity.ok(productService.getSizes());
+
+		} catch (ResponseStatusException e) {
+			throw new ResponseStatusException(e.getStatus());
+		} catch (Exception e) {
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(path = "/color")
+	public ResponseEntity<ProductColour[]> getColours() {
+		try {
+			return ResponseEntity.ok(productService.getColours());
+
+		} catch (ResponseStatusException e) {
+			throw new ResponseStatusException(e.getStatus());
+		} catch (Exception e) {
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(path = "/category")
+	public ResponseEntity<ProductCategory[]> getCategories() {
+		try {
+			return ResponseEntity.ok(productService.getCategories());
+
+		} catch (ResponseStatusException e) {
+			throw new ResponseStatusException(e.getStatus());
+		} catch (Exception e) {
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+		}
+	}
 }

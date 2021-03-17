@@ -14,6 +14,9 @@ import org.springframework.web.server.ResponseStatusException;
 import com.cyberninja.model.entity.Product;
 import com.cyberninja.model.entity.converter.ProductConverter;
 import com.cyberninja.model.entity.dto.ProductDTO;
+import com.cyberninja.model.entity.enumerated.ProductCategory;
+import com.cyberninja.model.entity.enumerated.ProductColour;
+import com.cyberninja.model.entity.enumerated.ProductSize;
 import com.cyberninja.model.repository.ProductRepository;
 import com.cyberninja.services.business.OrderBusinessServiceI;
 import com.cyberninja.services.entity.DiscountServiceI;
@@ -123,6 +126,30 @@ public class ProductServiceImpl implements ProductServiceI {
 		productRepo.save(product);
 		
 		return productConverter.productToProductDTO(product);
+	}
+
+	/**
+	 * Obtiene los tamaños
+	 */
+	@Override
+	public ProductSize[] getSizes() {
+		return ProductSize.values();
+	}
+	
+	/**
+	 * Obtiene los colores
+	 */
+	@Override
+	public ProductColour[] getColours() {
+		return ProductColour.values();
+	}
+
+	/**
+	 * Obtiene las categorias
+	 */
+	@Override
+	public ProductCategory[] getCategories() {
+		return ProductCategory.values();
 	}
 
 }

@@ -1,6 +1,8 @@
 package com.cyberninja.model.entity.converter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,5 +36,15 @@ public class DiscountConverter {
 		dto.setType(discount.getType());
 
 		return dto;
+	}
+	
+	public List<DiscountDTO> discountsToDiscountsDTO(List<Discount> discounts) {
+		List<DiscountDTO> dtos = new ArrayList<>();
+		
+		for (Discount discount : discounts) {
+			dtos.add(discountToDiscountDTO(discount));
+		}
+
+		return dtos;
 	}
 }

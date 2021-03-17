@@ -27,7 +27,7 @@ public class CouponController {
 	private CouponServiceI couponService;
 
 	@PostMapping
-	public ResponseEntity<CouponDTO> addDiscount(@RequestBody CouponDTO dto) {
+	public ResponseEntity<CouponDTO> addCoupon(@RequestBody CouponDTO dto) {
 		try {
 			return ResponseEntity.ok(couponService.addCoupon(dto));
 
