@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 import com.cyberninja.model.entity.Product;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long>{
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
-	public List<Product> findProductsByActive(boolean active);
-	
-	public Optional<Product> findProductByIdAndActive(Long id, boolean active);
+	List<Product> findProductsByActive(boolean active);
+
+	Optional<Product> findProductByIdAndActive(Long id, boolean active);
 }

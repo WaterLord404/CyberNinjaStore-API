@@ -13,20 +13,20 @@ import com.cyberninja.model.entity.enumerated.ProductSize;
 
 public interface ProductServiceI {
 
-	public List<ProductDTO> getProducts() throws SQLException;
+	List<ProductDTO> getProducts() throws SQLException;
 
-	public ProductDTO getProductDTO(Long id);
-	
-	public Product getProduct(Long id);
+	ProductDTO getProductDTO(Long id);
 
-	public ProductDTO createProduct(ProductDTO dto, List<MultipartFile> images) throws SQLException;
+	Product getProduct(Long id);
 
-	public ProductDTO deleteProduct(ProductDTO dto);
+	ProductDTO createProduct(ProductDTO dto, List<MultipartFile> images) throws SQLException;
 
-	public ProductSize[] getSizes();
+	ProductDTO deleteProduct(ProductDTO dto);
 
-	public ProductColour[] getColours();
+	ProductSize[] getSizes();
 
-	public ProductCategory[] getCategories();
+	ProductColour[] getColours();
+
+	ProductCategory[] getCategories();
 
 }

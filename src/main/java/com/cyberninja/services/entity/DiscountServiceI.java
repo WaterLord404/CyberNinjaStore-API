@@ -8,11 +8,11 @@ import com.cyberninja.model.entity.dto.ProductDTO;
 
 public interface DiscountServiceI {
 
-	public DiscountDTO addDiscount(DiscountDTO dto);
-	
-	public Discount getDiscount(Long id);
+	DiscountDTO addDiscount(DiscountDTO dto);
 
-	public ProductDTO updateDiscount(Long productId, Long discountId);
+	Discount getDiscount(Long id);
 
-	public List<DiscountDTO> getDiscounts();
+	ProductDTO updateDiscount(Long productId, Long discountId);
+
+	List<DiscountDTO> getDiscounts();
 }

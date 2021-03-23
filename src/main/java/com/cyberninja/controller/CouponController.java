@@ -9,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,18 @@ public class CouponController {
 	@Autowired
 	private CouponServiceI couponService;
 
+	@GetMapping
+	public ResponseEntity<CouponDTO> getCoupon(@RequestBody CouponDTO dto) {
+		try {
+			return ResponseEntity.ok(couponService.getCoupon(dto));
+
+		} catch (ResponseStatusException e) {
+			throw new ResponseStatusException(e.getStatus());
+		} catch (Exception e) {
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	@PostMapping
 	public ResponseEntity<CouponDTO> addCoupon(@RequestBody CouponDTO dto) {
 		try {
@@ -41,4 +54,5 @@ public class CouponController {
 			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
 		}
 	}
+	
 }

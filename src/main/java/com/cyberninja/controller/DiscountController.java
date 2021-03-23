@@ -31,7 +31,7 @@ public class DiscountController {
 	private DiscountServiceI discountService;
 
 	@GetMapping
-	public ResponseEntity<List<DiscountDTO>> getProducts() {
+	public ResponseEntity<List<DiscountDTO>> getDiscounts() {
 		try {
 			return ResponseEntity.ok(discountService.getDiscounts());
 

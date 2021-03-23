@@ -9,6 +9,6 @@ import com.cyberninja.model.entity.Product;
 
 public interface DocumentServiceI {
 
-	public List<Document> createDocuments(List<MultipartFile> imgs, Product product);
+	List<Document> createDocuments(List<MultipartFile> imgs, Product product);
 
 }

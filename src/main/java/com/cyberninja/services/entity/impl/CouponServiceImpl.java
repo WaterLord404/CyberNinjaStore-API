@@ -31,6 +31,24 @@ public class CouponServiceImpl implements CouponServiceI {
 	private DiscountServiceI discountService;
 
 	/**
+	 * Obtiene un cupon
+	 */
+	@Override
+	public CouponDTO getCoupon(CouponDTO dto) {
+		return couponConverter.couponToCouponDTO(
+				getCouponByCode(couponConverter.couponDTOToCoupon(dto).getCode()));
+	}
+
+	/**
+	 * Obtiene un cupon activo por codigo
+	 */
+	@Override
+	public Coupon getCouponByCode(String couponCode) {
+		return couponRepo.findCouponByCodeAndActive(couponCode, true)
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+	}
+	
+	/**
 	 * Crea un cupon
 	 */
 	@Override
@@ -50,15 +68,6 @@ public class CouponServiceImpl implements CouponServiceI {
 		couponRepo.save(coupon);
 
 		return couponConverter.couponToCouponDTO(coupon);
-	}
-
-	/**
-	 * Obtiene un cupon activo
-	 */
-	@Override
-	public Coupon getCouponByCode(String couponCode) {
-		return couponRepo.findCouponByCodeAndActive(couponCode, true)
-				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
 	}
 
 	/**

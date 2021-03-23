@@ -9,8 +9,8 @@ import com.cyberninja.model.entity.dto.OrderDetailsDTO;
 
 public interface OrderServiceI {
 
-	public List<OrderDetailsDTO> getProductCart(List<OrderDetailsDTO> ids);
+	List<OrderDetailsDTO> getProductCart(List<OrderDetailsDTO> ids);
 
-	public OrderDTO purchaseOrder(List<OrderDetailsDTO> dtos, Authentication auth, String couponCode);
-	
+	OrderDTO purchaseOrder(List<OrderDetailsDTO> dtos, Authentication auth, String couponCode);
+
 }

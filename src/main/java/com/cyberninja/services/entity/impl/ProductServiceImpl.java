@@ -48,7 +48,7 @@ public class ProductServiceImpl implements ProductServiceI {
 	 * @throws SQLException
 	 */
 	@Override
-	public List<ProductDTO> getProducts() throws SQLException {
+	public List<ProductDTO> getProducts() {
 		List<ProductDTO> dtos = new ArrayList<>(); // Lista de productsDTO a retornar
 
 		dtos = productConverter.productsToProductsDTO(productRepo.findProductsByActive(true));

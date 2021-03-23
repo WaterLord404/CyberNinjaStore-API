@@ -10,6 +10,6 @@ import com.cyberninja.model.entity.Coupon;
 @Repository
 public interface CouponRepository extends JpaRepository<Coupon, Long> {
 
-	public Optional<Coupon> findCouponByCodeAndActive(String couponCode, Boolean active);
-	
+	Optional<Coupon> findCouponByCodeAndActive(String couponCode, Boolean active);
+
 }

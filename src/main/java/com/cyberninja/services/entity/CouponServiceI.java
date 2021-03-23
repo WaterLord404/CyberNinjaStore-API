@@ -5,11 +5,14 @@ import com.cyberninja.model.entity.dto.CouponDTO;
 
 public interface CouponServiceI {
 
-	public CouponDTO addCoupon(CouponDTO dto);
+	CouponDTO getCoupon(CouponDTO dto);
+	
+	Coupon getCouponByCode(String couponCode);
 
-	public Coupon getCouponByCode(String couponCode);
+	CouponDTO addCoupon(CouponDTO dto);
 
 	void useCoupon(Coupon coupon);
 	
 	void deleteCoupon(Coupon coupon);
+
 }
