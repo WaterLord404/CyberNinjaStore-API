@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -28,9 +29,9 @@ public class CouponController {
 	private CouponServiceI couponService;
 
 	@GetMapping
-	public ResponseEntity<CouponDTO> getCoupon(@RequestBody CouponDTO dto) {
+	public ResponseEntity<CouponDTO> getCoupon(@RequestParam String coupon) {
 		try {
-			return ResponseEntity.ok(couponService.getCoupon(dto));
+			return ResponseEntity.ok(couponService.getCoupon(coupon));
 
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus());

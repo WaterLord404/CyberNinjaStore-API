@@ -5,9 +5,9 @@ import com.cyberninja.model.entity.dto.CouponDTO;
 
 public interface CouponServiceI {
 
-	CouponDTO getCoupon(CouponDTO dto);
+	CouponDTO getCoupon(String couponCode);
 	
-	Coupon getCouponByCode(String couponCode);
+	Coupon getValidCouponByCode(String couponCode);
 
 	CouponDTO addCoupon(CouponDTO dto);
 

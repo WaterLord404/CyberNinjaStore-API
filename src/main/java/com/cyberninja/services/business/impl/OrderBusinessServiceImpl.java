@@ -3,27 +3,21 @@ package com.cyberninja.services.business.impl;
 import static com.cyberninja.common.ApplicationConstans.IVA;
 import static com.cyberninja.model.entity.enumerated.DiscountType.FIXED;
 import static com.cyberninja.model.entity.enumerated.DiscountType.PERCENTAGE;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.model.entity.Coupon;
 import com.cyberninja.model.entity.Discount;
 import com.cyberninja.model.entity.OrderDetails;
-import com.cyberninja.services.business.CouponBusinessServiceI;
 import com.cyberninja.services.business.OrderBusinessServiceI;
 import com.cyberninja.services.entity.CouponServiceI;
 
 @Service
 public class OrderBusinessServiceImpl implements OrderBusinessServiceI {
 
-	@Autowired
-	private CouponBusinessServiceI couponBService;
-	
 	@Autowired
 	private CouponServiceI couponService;
 
@@ -53,6 +47,8 @@ public class OrderBusinessServiceImpl implements OrderBusinessServiceI {
 			}
 		}
 
+		if (totalPrice <= 0) {totalPrice = 0.0;};
+		
 		return totalPrice;
 	}
 
@@ -71,17 +67,10 @@ public class OrderBusinessServiceImpl implements OrderBusinessServiceI {
 		}
 
 		if (coupon != null) {
-			// Valida el cupon
-			if (couponBService.isCouponValid(coupon)) {
-				// Calcula el descuento
-				totalPrice = calculateDiscount(totalPrice, coupon.getDiscount());
-				// Suma 1 al uso del cupon
-				couponService.useCoupon(coupon);
-				
-			} else {
-				couponService.deleteCoupon(coupon);
-				throw new ResponseStatusException(NOT_FOUND);
-			}
+			// Calcula el descuento
+			totalPrice = calculateDiscount(totalPrice, coupon.getDiscount());
+			// Suma 1 al uso del cupon
+			couponService.useCoupon(coupon);
 		}
 
 		return Math.round(totalPrice * 100.0) / 100.0;

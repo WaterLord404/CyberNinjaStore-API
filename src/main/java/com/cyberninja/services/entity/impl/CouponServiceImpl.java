@@ -9,6 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.model.entity.Coupon;
 import com.cyberninja.model.entity.converter.CouponConverter;
+import com.cyberninja.model.entity.converter.DiscountConverter;
 import com.cyberninja.model.entity.dto.CouponDTO;
 import com.cyberninja.model.repository.CouponRepository;
 import com.cyberninja.services.business.CouponBusinessServiceI;
@@ -30,24 +31,41 @@ public class CouponServiceImpl implements CouponServiceI {
 	@Autowired
 	private DiscountServiceI discountService;
 
+	@Autowired
+	private DiscountConverter discountConverter;
+	
 	/**
-	 * Obtiene un cupon
+	 * Obtiene un cupon con el descuento
 	 */
 	@Override
-	public CouponDTO getCoupon(CouponDTO dto) {
-		return couponConverter.couponToCouponDTO(
-				getCouponByCode(couponConverter.couponDTOToCoupon(dto).getCode()));
+	public CouponDTO getCoupon(String couponCode) {
+		Coupon coupon = getValidCouponByCode(couponCode);
+		
+		CouponDTO dto = couponConverter.couponToCouponDTO(coupon);
+		
+		dto.setDiscount(discountConverter.discountToDiscountDTO(
+				discountService.getDiscount(
+						coupon.getDiscount().getId())));
+		
+		return dto;
 	}
 
 	/**
-	 * Obtiene un cupon activo por codigo
+	 * Obtiene un cupon activo y valido por el codigo
 	 */
 	@Override
-	public Coupon getCouponByCode(String couponCode) {
-		return couponRepo.findCouponByCodeAndActive(couponCode, true)
+	public Coupon getValidCouponByCode(String couponCode) {
+		Coupon coupon = couponRepo.findCouponByCodeAndActive(couponCode, true)
 				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+		
+		if (!couponBService.isCouponValid(coupon)) {
+			deleteCoupon(coupon);
+			throw new ResponseStatusException(NOT_FOUND);
+		}
+		
+		return coupon;
 	}
-	
+
 	/**
 	 * Crea un cupon
 	 */

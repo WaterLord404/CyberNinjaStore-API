@@ -82,7 +82,8 @@ public class OrderServiceImpl implements OrderServiceI {
 
 		// Asigna el cupon
 		if(couponCode != null) {
-			order.setCoupon(couponService.getCouponByCode(couponCode));			
+			couponCode = couponCode.toUpperCase();
+			order.setCoupon(couponService.getValidCouponByCode(couponCode));			
 		}
 		
 		// Asigna a cada order detail su order y product
