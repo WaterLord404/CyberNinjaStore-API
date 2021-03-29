@@ -67,10 +67,7 @@ public class UserServiceImpl implements UserDetailsService , UserServiceI{
 	 */
 	@Override
 	public UserDTO getUser(UserDTO dto) {
-		User user = userConverter.userDTOToUser(dto);
 		Customer customer = customerService.getCustomer(dto);
-		// Entity to DTO
-		dto = userConverter.userToUserDTO(user);
 		dto.setCustomer(customerConverter.CustomerToCustomerDTO(customer));
 		
 		return dto;

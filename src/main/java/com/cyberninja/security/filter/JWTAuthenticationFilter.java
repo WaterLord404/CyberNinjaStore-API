@@ -6,7 +6,6 @@ import static com.cyberninja.security.common.SecurityConstants.TOKEN_PREFIX;
 import static com.cyberninja.security.filter.jwt.JWTTokenProvider.generateToken;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -28,9 +27,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @WebFilter
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	
-	private UserServiceI userService;
-	
 	private AuthenticationManager authenticationManager;
+	
+	private UserServiceI userService;
 	
 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, UserServiceI userService) {
         this.authenticationManager = authenticationManager;
@@ -59,16 +58,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
 		
-        response.addHeader(HEADER_STRING, TOKEN_PREFIX + generateToken(((User)authResult.getPrincipal())));
+        UserDTO userDTO = userService.getUser(user);
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        String userDTO = objectMapper.writeValueAsString(userService.getUser(user));
-
-        PrintWriter out = response.getWriter();
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        out.print(userDTO);
-        out.flush();
+        response.addHeader(HEADER_STRING, TOKEN_PREFIX + generateToken(((User)authResult.getPrincipal()), userDTO));
 	}
 
 }

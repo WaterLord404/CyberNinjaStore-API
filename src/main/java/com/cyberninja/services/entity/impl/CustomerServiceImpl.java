@@ -42,5 +42,4 @@ public class CustomerServiceImpl implements CustomerServiceI {
 	public Customer getCustomer(UserDTO dto) {
 		return customerRepo.getCustomerByUserUsername(dto.getUsername());
 	}
-	
 }

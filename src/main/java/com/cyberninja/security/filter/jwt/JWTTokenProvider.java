@@ -8,6 +8,7 @@ import java.sql.Date;
 import javax.crypto.SecretKey;
 
 import com.cyberninja.security.model.entity.User;
+import com.cyberninja.security.model.entity.dto.UserDTO;
 
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
@@ -19,13 +20,15 @@ public class JWTTokenProvider {
 
 	private static SecretKey key;
 
-	public static String generateToken(User user) {
+	public static String generateToken(User user, UserDTO userDTO) {
+		
 		return Jwts.builder()
 				.setHeaderParam(Header.TYPE, Header.JWT_TYPE)
 				.setSubject(user.getId().toString())
 				.setId(user.getId().toString()).setIssuedAt(new Date(System.currentTimeMillis()))
 				.claim("updateTime", user.getUpdateDate())
 				.claim("role", user.getRoles())
+				.claim("user", userDTO)
 				.claim("locked", user.isLocked())
 				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
 				.signWith(getKey(), SignatureAlgorithm.HS512)
