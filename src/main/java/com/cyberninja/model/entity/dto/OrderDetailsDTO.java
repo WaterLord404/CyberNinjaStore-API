@@ -8,7 +8,7 @@ public class OrderDetailsDTO {
 
 	private Integer units;
 
-	private String color;
+	private String colour;
 
 	private String size;
 
@@ -24,12 +24,12 @@ public class OrderDetailsDTO {
 		this.units = units;
 	}
 
-	public String getColor() {
-		return color;
+	public String getColour() {
+		return colour;
 	}
 
-	public void setColor(String color) {
-		this.color = color;
+	public void setColour(String color) {
+		this.colour = color;
 	}
 
 	public String getSize() {

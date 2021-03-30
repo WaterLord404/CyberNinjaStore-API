@@ -15,7 +15,7 @@ public class OrderDetailsConverter {
 		OrderDetails orderDetails = new OrderDetails();
 		
 		orderDetails.setUnits(dto.getUnits());
-		orderDetails.setColor(dto.getColor());
+		orderDetails.setColor(dto.getColour());
 		orderDetails.setSize(dto.getSize());
 		
 
