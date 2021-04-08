@@ -19,11 +19,9 @@ import com.cyberninja.services.utils.UtilsServiceI;
 @Service
 public class DocumentServiceImpl implements DocumentServiceI {
 
-	@Autowired
-	private DocumentRepository documentRepo;
+	@Autowired private DocumentRepository documentRepo;
 	
-	@Autowired
-	private UtilsServiceI utilsService;
+	@Autowired private UtilsServiceI utilsService;
 	
 	/**
 	 * @param List multipartFile imgs

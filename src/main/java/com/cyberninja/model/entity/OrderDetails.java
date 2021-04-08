@@ -26,7 +26,7 @@ public class OrderDetails implements Serializable {
 
 	private Integer units;
 
-	private String color;
+	private String colour;
 
 	private String size;
 
@@ -34,6 +34,8 @@ public class OrderDetails implements Serializable {
 
 	private Order order;
 
+	private Cart cart;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ORDER_DETAILS_ID")
@@ -55,12 +57,12 @@ public class OrderDetails implements Serializable {
 	}
 
 	@Column(name = "COLOR", nullable = false)
-	public String getColor() {
-		return color;
+	public String getColour() {
+		return colour;
 	}
 
-	public void setColor(String color) {
-		this.color = color;
+	public void setColour(String colour) {
+		this.colour = colour;
 	}
 
 	@Column(name = "SIZE", nullable = false)
@@ -73,7 +75,7 @@ public class OrderDetails implements Serializable {
 	}
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "PRODUCT_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_ORDERS_DETAILS__PRODUCT_ID"))
+	@JoinColumn(name = "PRODUCT_ID", foreignKey = @ForeignKey(name = "FK_ORDERS_DETAILS__PRODUCT_ID"))
 	public Product getProduct() {
 		return product;
 	}
@@ -83,13 +85,23 @@ public class OrderDetails implements Serializable {
 	}
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ORDER_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_ORDERS_DETAILS__ORDER_ID"))
+	@JoinColumn(name = "ORDER_ID", foreignKey = @ForeignKey(name = "FK_ORDERS_DETAILS__ORDER_ID"))
 	public Order getOrder() {
 		return order;
 	}
 
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "CART_ID", foreignKey = @ForeignKey(name = "FK_ORDERS_DETAILS__CART_ID"))
+	public Cart getCart() {
+		return cart;
+	}
+
+	public void setCart(Cart cart) {
+		this.cart = cart;
 	}
 
 	public static long getSerialversionuid() {

@@ -14,14 +14,11 @@ import com.cyberninja.services.business.OrderBusinessServiceI;
 @Component
 public class ProductConverter {
 
-	@Autowired
-	private DiscountConverter discountConverter;
+	@Autowired private DiscountConverter discountConverter;
 
-	@Autowired
-	private DocumentConverter documentConverter;
+	@Autowired private DocumentConverter documentConverter;
 	
-	@Autowired
-	private OrderBusinessServiceI orderBService;
+	@Autowired private OrderBusinessServiceI orderBService;
 
 	public Product productDTOToProduct(ProductDTO dto) {
 		Product product = new Product();

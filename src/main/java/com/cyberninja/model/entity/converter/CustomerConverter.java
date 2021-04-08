@@ -21,7 +21,7 @@ public class CustomerConverter {
 		customer.setPostalCode(dto.getPostalCode());
 		customer.setAddress(dto.getAddress());
 		customer.setLastPurchase(null);
-	
+		
 		return customer;
 	}
 

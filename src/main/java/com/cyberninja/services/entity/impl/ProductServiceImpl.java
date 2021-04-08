@@ -26,20 +26,15 @@ import com.cyberninja.services.entity.ProductServiceI;
 @Service
 public class ProductServiceImpl implements ProductServiceI {
 
-	@Autowired
-	private ProductRepository productRepo;
+	@Autowired private ProductRepository productRepo;
 
-	@Autowired
-	private ProductConverter productConverter;
+	@Autowired private ProductConverter productConverter;
 
-	@Autowired
-	private DocumentServiceI documentService;
+	@Autowired private DocumentServiceI documentService;
+
+	@Autowired private OrderBusinessServiceI orderBService;
 	
-	@Autowired
-	private OrderBusinessServiceI orderBService;
-	
-	@Autowired
-	private DiscountServiceI discountService;
+	@Autowired private DiscountServiceI discountService;
 
 	/**
 	 * Obtiene todos los productos con los documentos

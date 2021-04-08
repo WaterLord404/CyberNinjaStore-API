@@ -23,17 +23,13 @@ import com.cyberninja.services.entity.CustomerServiceI;
 @Service
 public class UserServiceImpl implements UserDetailsService , UserServiceI{
 
-	@Autowired
-	private UserRepository userRepo;
+	@Autowired private UserRepository userRepo;
 
-	@Autowired
-	private UserConverter userConverter;
+	@Autowired private UserConverter userConverter;
 
-	@Autowired
-	private CustomerServiceI customerService;
+	@Autowired private CustomerServiceI customerService;
 
-	@Autowired
-	private CustomerConverter customerConverter;
+	@Autowired private CustomerConverter customerConverter;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

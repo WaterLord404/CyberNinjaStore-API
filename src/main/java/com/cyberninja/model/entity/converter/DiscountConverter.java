@@ -14,8 +14,7 @@ import com.cyberninja.services.business.OrderBusinessServiceI;
 @Component
 public class DiscountConverter {
 
-	@Autowired
-	private OrderBusinessServiceI orderBService;
+	@Autowired private OrderBusinessServiceI orderBService;
 	
 	public Discount discountDTOToDiscount(DiscountDTO dto) {
 		Discount discount = new Discount();

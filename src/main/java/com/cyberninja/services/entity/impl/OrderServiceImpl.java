@@ -24,45 +24,19 @@ import com.cyberninja.services.entity.ProductServiceI;
 @Service
 public class OrderServiceImpl implements OrderServiceI {
 
-	@Autowired
-	private CustomerRepository customerRepo;
+	@Autowired private CustomerRepository customerRepo;
 
-	@Autowired
-	private OrderDetailsConverter orderDetailsConverter;
+	@Autowired private OrderDetailsConverter orderDetailsConverter;
 
-	@Autowired
-	private OrderConverter orderConverter;
+	@Autowired private OrderConverter orderConverter;
 
-	@Autowired
-	private ProductServiceI productService;
+	@Autowired private ProductServiceI productService;
 
-	@Autowired
-	private OrderDetailsRepository orderDetailsRepo;
+	@Autowired private OrderDetailsRepository orderDetailsRepo;
 
-	@Autowired
-	private OrderBusinessServiceI orderBService;
+	@Autowired private OrderBusinessServiceI orderBService;
 
-	@Autowired
-	private CouponServiceI couponService;
-
-	/**
-	 * Obtiene los productos (activos e inactivos) seleccionados del carrito con las
-	 * imagenes
-	 * 
-	 * Esto sirve, para eliminar un producto que mantenga el usuario en localstorage
-	 * pero en BD no exista
-	 * 
-	 * @return List ProductDTO activo/inactivo
-	 */
-	@Override
-	public List<OrderDetailsDTO> getProductCart(List<OrderDetailsDTO> dtos) {
-		for (OrderDetailsDTO orderDetailDTO : dtos) {
-			dtos.get(dtos.indexOf(orderDetailDTO))
-					.setProduct(productService.getProductDTO(orderDetailDTO.getProduct().getId()));
-		}
-
-		return dtos;
-	}
+	@Autowired private CouponServiceI couponService;
 
 	/**
 	 * Añade un pedido a su correspondiente customer
@@ -87,11 +61,11 @@ public class OrderServiceImpl implements OrderServiceI {
 		}
 		
 		// Asigna a cada order detail su order y product
-		for (OrderDetails orderDetails : ordersDetails) {
-			orderDetails.setOrder(order);
+		for (OrderDetails i : ordersDetails) {
+			i.setOrder(order);
 			// Obtiene el producto con el id lista de orderDetailsDTO
-			orderDetails.setProduct(productService.getProduct(
-									dtos.get(ordersDetails.indexOf(orderDetails))
+			i.setProduct(productService.getProduct(
+									dtos.get(ordersDetails.indexOf(i))
 									.getProduct().getId()));
 		}
 

@@ -25,26 +25,19 @@ import com.cyberninja.services.entity.ProductServiceI;
 @Service
 public class DiscountServiceImpl implements DiscountServiceI {
 
-	@Autowired
-	private DiscountRepository discountRepo;
+	@Autowired private DiscountRepository discountRepo;
 
-	@Autowired
-	private DiscountConverter discountConverter;
+	@Autowired private DiscountConverter discountConverter;
 
-	@Autowired
-	private ProductServiceI productService;
+	@Autowired private ProductServiceI productService;
 
-	@Autowired
-	private ProductConverter productConverter;
+	@Autowired private ProductConverter productConverter;
 
-	@Autowired
-	private OrderBusinessServiceI orderBService;
+	@Autowired private OrderBusinessServiceI orderBService;
 
-	@Autowired
-	private ProductRepository productRepo;
+	@Autowired private ProductRepository productRepo;
 
-	@Autowired
-	private DiscountBusinessServiceI discountBService;
+	@Autowired private DiscountBusinessServiceI discountBService;
 
 	/**
 	 * Obtiene todos los descuentos activos

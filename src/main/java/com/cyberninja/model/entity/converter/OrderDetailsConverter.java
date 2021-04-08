@@ -15,11 +15,21 @@ public class OrderDetailsConverter {
 		OrderDetails orderDetails = new OrderDetails();
 		
 		orderDetails.setUnits(dto.getUnits());
-		orderDetails.setColor(dto.getColour());
+		orderDetails.setColour(dto.getColour());
 		orderDetails.setSize(dto.getSize());
 		
 
 		return orderDetails;
+	}
+	
+	public OrderDetailsDTO orderDetailsToOrderDetailsDTO(OrderDetails orderDetails) {
+		OrderDetailsDTO dto = new OrderDetailsDTO();
+		
+		dto.setUnits(orderDetails.getUnits());
+		dto.setColour(orderDetails.getColour());
+		dto.setSize(orderDetails.getSize());
+		
+		return dto;
 	}
 	
 	public List<OrderDetails> orderDetailsDTOToOrderDetails(List<OrderDetailsDTO> dtos) {
@@ -28,5 +38,13 @@ public class OrderDetailsConverter {
 			ordersDetails.add(orderDetailsDTOToOrderDetails(orderDetailsDTO));
 		}
 		return ordersDetails;
+	}
+	
+	public List<OrderDetailsDTO> orderDetailsToOrderDetailsDTO(List<OrderDetails> ordersDetails) {
+		List<OrderDetailsDTO> dtos = new ArrayList<>();
+		for (OrderDetails orderDetails : ordersDetails) {
+			dtos.add(orderDetailsToOrderDetailsDTO(orderDetails));
+		}
+		return dtos;
 	}
 }

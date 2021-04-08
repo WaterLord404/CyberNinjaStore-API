@@ -28,22 +28,8 @@ public class OrderController {
 
 	@Autowired
 	private OrderServiceI orderService;
-
-	@PostMapping
-	public ResponseEntity<List<OrderDetailsDTO>> getProductCart(@RequestBody List<OrderDetailsDTO> dtos) {
-		try {
-			return ResponseEntity.ok(orderService.getProductCart(dtos));
-			
-		} catch (ResponseStatusException e) {
-			throw new ResponseStatusException(e.getStatus());
-		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
-			throw new ResponseStatusException(BAD_REQUEST);
-		} catch (Exception e) {
-			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
-		}
-	}
 	
-	@PostMapping(path = "/buy")
+	@PostMapping
 	public ResponseEntity<OrderDTO> purchaseOrder(
 			@RequestBody List<OrderDetailsDTO> dtos, 
 			Authentication auth,

@@ -19,20 +19,15 @@ import com.cyberninja.services.entity.DiscountServiceI;
 @Service
 public class CouponServiceImpl implements CouponServiceI {
 
-	@Autowired
-	private CouponRepository couponRepo;
+	@Autowired private CouponRepository couponRepo;
 
-	@Autowired
-	private CouponConverter couponConverter;
+	@Autowired private CouponConverter couponConverter;
 
-	@Autowired
-	private CouponBusinessServiceI couponBService;
+	@Autowired private CouponBusinessServiceI couponBService;
 
-	@Autowired
-	private DiscountServiceI discountService;
+	@Autowired private DiscountServiceI discountService;
 
-	@Autowired
-	private DiscountConverter discountConverter;
+	@Autowired private DiscountConverter discountConverter;
 	
 	/**
 	 * Obtiene un cupon con el descuento
