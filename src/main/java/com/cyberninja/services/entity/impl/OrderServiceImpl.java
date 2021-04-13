@@ -17,6 +17,7 @@ import com.cyberninja.model.entity.dto.OrderDetailsDTO;
 import com.cyberninja.model.repository.CustomerRepository;
 import com.cyberninja.model.repository.OrderDetailsRepository;
 import com.cyberninja.services.business.OrderBusinessServiceI;
+import com.cyberninja.services.entity.CartServiceI;
 import com.cyberninja.services.entity.CouponServiceI;
 import com.cyberninja.services.entity.OrderServiceI;
 import com.cyberninja.services.entity.ProductServiceI;
@@ -38,6 +39,8 @@ public class OrderServiceImpl implements OrderServiceI {
 
 	@Autowired private CouponServiceI couponService;
 
+	@Autowired private CartServiceI cartService;
+	
 	/**
 	 * Añade un pedido a su correspondiente customer
 	 * 
@@ -60,13 +63,14 @@ public class OrderServiceImpl implements OrderServiceI {
 			order.setCoupon(couponService.getValidCouponByCode(couponCode));			
 		}
 		
-		// Asigna a cada order detail su order y product
+		// Asigna a cada order detail su order, product y carrito
 		for (OrderDetails i : ordersDetails) {
 			i.setOrder(order);
 			// Obtiene el producto con el id lista de orderDetailsDTO
 			i.setProduct(productService.getProduct(
 									dtos.get(ordersDetails.indexOf(i))
 									.getProduct().getId()));
+			i.setCart(cartService.getCart(auth));
 		}
 
 		// Calcula el precio total

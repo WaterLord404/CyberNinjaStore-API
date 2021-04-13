@@ -2,6 +2,7 @@ package com.cyberninja.services.entity.impl;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,6 @@ import com.cyberninja.model.entity.converter.OrderDetailsConverter;
 import com.cyberninja.model.entity.converter.ProductConverter;
 import com.cyberninja.model.entity.dto.OrderDetailsDTO;
 import com.cyberninja.model.repository.CartRepository;
-import com.cyberninja.model.repository.CustomerRepository;
 import com.cyberninja.model.repository.OrderDetailsRepository;
 import com.cyberninja.services.entity.CartServiceI;
 import com.cyberninja.services.entity.ProductServiceI;
@@ -28,9 +28,7 @@ public class CartServiceImpl implements CartServiceI {
 	@Autowired private CartRepository cartRepo;
 	
 	@Autowired private ProductServiceI productService;
-	
-	@Autowired private CustomerRepository customerRepo;
-		
+			
 	@Autowired private OrderDetailsConverter orderDetailsConverter;
 		
 	@Autowired private ProductConverter productConverter;
@@ -38,16 +36,16 @@ public class CartServiceImpl implements CartServiceI {
 	@Autowired private OrderDetailsRepository orderDetailsRepo;
 	
 	/**
-	 * Obtiene el carrito que se guardará en el localstorage
+	 * Obtiene los productos del carrito que se guardará en el localstorage
 	 */
 	@Override
-	public List<OrderDetailsDTO> getCart(Authentication auth) {
+	public List<OrderDetailsDTO> getCartProducts(Authentication auth) {
 		List<OrderDetailsDTO> dtos = new ArrayList<>(); 
 
-		Customer customer = customerRepo.findById(Long.valueOf(auth.getName())).get();
+		Cart cart = getCart(auth);
 
-		// Obtiene el carrito del customer
-		List<OrderDetails> ordersDetails = orderDetailsRepo.getCart(customer.getId());
+		// Items del carrito del usuario
+		List<OrderDetails> ordersDetails = orderDetailsRepo.userCart(cart.getId());
 
 		dtos = orderDetailsConverter.orderDetailsToOrderDetailsDTO(ordersDetails);
 				
@@ -66,12 +64,33 @@ public class CartServiceImpl implements CartServiceI {
 	}
 	
 	/**
-	 * Guarda el carrito
+	 * Guarda el carrito unicamente con los orderDetails nuevos
 	 */
 	@Override
-	public List<OrderDetailsDTO> saveCart(Authentication auth) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<OrderDetailsDTO> saveCart(List<OrderDetailsDTO> dtos, Authentication auth) {
+		List<OrderDetails> ordersDetails = orderDetailsConverter.orderDetailsDTOToOrderDetails(dtos);
+	
+		Cart cart = getCart(auth);
+		
+		// Asigna el producto y el carrito a cada orderDetail
+		for (OrderDetails i : ordersDetails) {
+			i.setProduct(productService.getProduct(
+					dtos.get(ordersDetails.indexOf(i))
+					.getProduct().getId()));
+			
+			i.setCart(cart);
+		}
+		
+		// Elimina los orderDetails del usuario para intercambiarlos con los nuevos
+		orderDetailsRepo.deleteAll(orderDetailsRepo.userCart(cart.getId()));
+		
+		if (dtos.isEmpty()) {
+			throw new ResponseStatusException(NOT_FOUND);
+		}	
+				
+		orderDetailsRepo.saveAll(ordersDetails);
+
+		return orderDetailsConverter.orderDetailsToOrderDetailsDTO(ordersDetails);
 	}
 
 	
@@ -105,6 +124,17 @@ public class CartServiceImpl implements CartServiceI {
 		customer.setCart(cart);
 		
 		cartRepo.save(cart);
+	}
+
+	/**
+	 * Obtiene el carrito de un customer
+	 */
+	@Override
+	public Cart getCart(Authentication auth) {
+		Cart cart = cartRepo.getCart(Long.valueOf(auth.getName()))
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+		cart.setUpdateDate(LocalDate.now());
+		return cart;
 	}
 
 }

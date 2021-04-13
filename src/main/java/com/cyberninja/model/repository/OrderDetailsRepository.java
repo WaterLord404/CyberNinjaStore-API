@@ -12,10 +12,10 @@ import com.cyberninja.model.entity.OrderDetails;
 public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Long> {
 
 	@Query(value = 
-			"SELECT od.* " + 
-			"FROM CUSTOMERS c, CARTS ca, ORDERS_DETAILS od " + 
-			"WHERE c.CART_ID = ca.CART_ID " + 
-			"AND ca.CART_ID = od.CART_ID " + 
-			"AND c.CUSTOMER_ID = ?1", nativeQuery = true)
-	List<OrderDetails> getCart(Long id);
+			"SELECT od.* " +
+			"FROM CARTS ca, ORDERS_DETAILS od " +
+			"WHERE ca.CART_ID = od.CART_ID " +
+			"AND od.ORDER_ID IS NULL " +
+			"AND od.CART_ID = ?1", nativeQuery = true)
+	List<OrderDetails> userCart(Long id);
 }

@@ -18,7 +18,6 @@ public class OrderDetailsConverter {
 		orderDetails.setColour(dto.getColour());
 		orderDetails.setSize(dto.getSize());
 		
-
 		return orderDetails;
 	}
 	

@@ -74,7 +74,7 @@ public class OrderDetails implements Serializable {
 		this.size = size;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.PERSIST })
 	@JoinColumn(name = "PRODUCT_ID", foreignKey = @ForeignKey(name = "FK_ORDERS_DETAILS__PRODUCT_ID"))
 	public Product getProduct() {
 		return product;
@@ -84,7 +84,7 @@ public class OrderDetails implements Serializable {
 		this.product = product;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.PERSIST })
 	@JoinColumn(name = "ORDER_ID", foreignKey = @ForeignKey(name = "FK_ORDERS_DETAILS__ORDER_ID"))
 	public Order getOrder() {
 		return order;
@@ -94,7 +94,7 @@ public class OrderDetails implements Serializable {
 		this.order = order;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.PERSIST })
 	@JoinColumn(name = "CART_ID", foreignKey = @ForeignKey(name = "FK_ORDERS_DETAILS__CART_ID"))
 	public Cart getCart() {
 		return cart;
