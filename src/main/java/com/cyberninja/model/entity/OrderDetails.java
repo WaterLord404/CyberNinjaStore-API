@@ -13,6 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.cyberninja.model.entity.enumerated.ProductColour;
+import com.cyberninja.model.entity.enumerated.ProductSize;
+
 @Entity
 @Table(name = "ORDERS_DETAILS")
 public class OrderDetails implements Serializable {
@@ -26,9 +29,9 @@ public class OrderDetails implements Serializable {
 
 	private Integer units;
 
-	private String colour;
+	private ProductColour colour;
 
-	private String size;
+	private ProductSize size;
 
 	private Product product;
 
@@ -57,20 +60,20 @@ public class OrderDetails implements Serializable {
 	}
 
 	@Column(name = "COLOR", nullable = false)
-	public String getColour() {
+	public ProductColour getColour() {
 		return colour;
 	}
 
-	public void setColour(String colour) {
+	public void setColour(ProductColour colour) {
 		this.colour = colour;
 	}
 
 	@Column(name = "SIZE", nullable = false)
-	public String getSize() {
+	public ProductSize getSize() {
 		return size;
 	}
 
-	public void setSize(String size) {
+	public void setSize(ProductSize size) {
 		this.size = size;
 	}
 

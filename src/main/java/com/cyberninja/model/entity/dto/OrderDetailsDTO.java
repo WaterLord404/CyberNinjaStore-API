@@ -1,5 +1,7 @@
 package com.cyberninja.model.entity.dto;
 
+import com.cyberninja.model.entity.enumerated.ProductColour;
+import com.cyberninja.model.entity.enumerated.ProductSize;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -8,9 +10,9 @@ public class OrderDetailsDTO {
 
 	private Integer units;
 
-	private String colour;
+	private ProductColour colour;
 
-	private String size;
+	private ProductSize size;
 
 	private ProductDTO product;
 
@@ -24,19 +26,19 @@ public class OrderDetailsDTO {
 		this.units = units;
 	}
 
-	public String getColour() {
+	public ProductColour getColour() {
 		return colour;
 	}
 
-	public void setColour(String color) {
+	public void setColour(ProductColour color) {
 		this.colour = color;
 	}
 
-	public String getSize() {
+	public ProductSize getSize() {
 		return size;
 	}
 
-	public void setSize(String size) {
+	public void setSize(ProductSize size) {
 		this.size = size;
 	}
 

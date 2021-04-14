@@ -64,6 +64,8 @@ public class Product implements Serializable {
 	private List<OrderDetails> ordersDetails;
 
 	private boolean active;
+	
+	private Provider provider;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -215,6 +217,16 @@ public class Product implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "PROVIDER_ID", foreignKey = @ForeignKey(name = "FK_PRODUCTS__PROVIDER_ID"))
+	public Provider getProvider() {
+		return provider;
+	}
+
+	public void setProvider(Provider provider) {
+		this.provider = provider;
 	}
 
 }
