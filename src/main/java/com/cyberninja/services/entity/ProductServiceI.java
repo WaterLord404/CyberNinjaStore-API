@@ -13,7 +13,7 @@ import com.cyberninja.model.entity.enumerated.ProductSize;
 
 public interface ProductServiceI {
 
-	List<ProductDTO> getProducts() throws SQLException;
+	List<ProductDTO> getProducts(String category);
 
 	ProductDTO getProductDTO(Long id);
 

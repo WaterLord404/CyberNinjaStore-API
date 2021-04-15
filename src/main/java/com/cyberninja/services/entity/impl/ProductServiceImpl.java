@@ -43,10 +43,14 @@ public class ProductServiceImpl implements ProductServiceI {
 	 * @throws SQLException
 	 */
 	@Override
-	public List<ProductDTO> getProducts() {
+	public List<ProductDTO> getProducts(String category) {
 		List<ProductDTO> dtos = new ArrayList<>(); // Lista de productsDTO a retornar
 
-		dtos = productConverter.productsToProductsDTO(productRepo.findProductsByActive(true));
+		if (category == null) {
+			dtos = productConverter.productsToProductsDTO(productRepo.findProductsByActive(true));			
+		} else {
+			dtos = productConverter.productsToProductsDTO(productRepo.findProfductsActiveCategory(category));			
+		}
 
 		if (dtos.isEmpty()) {
 			throw new ResponseStatusException(NOT_FOUND);

@@ -39,14 +39,14 @@ public class ProductController {
 	private ProductServiceI productService;
 
 	/**
-	 * Obtiene todos los productos con sus documentos
+	 * Obtiene todos los productos con sus documentos. Puede filtrarse los resultados
 	 * 
 	 * @return List ProductDTO
 	 */
 	@GetMapping
-	public ResponseEntity<List<ProductDTO>> getProducts() {
+	public ResponseEntity<List<ProductDTO>> getProducts(@RequestParam(required = false) String category) {
 		try {
-			return ResponseEntity.ok(productService.getProducts());
+			return ResponseEntity.ok(productService.getProducts(category));
 
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus());
