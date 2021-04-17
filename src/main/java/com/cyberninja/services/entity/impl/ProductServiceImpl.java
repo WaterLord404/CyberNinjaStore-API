@@ -43,13 +43,49 @@ public class ProductServiceImpl implements ProductServiceI {
 	 * @throws SQLException
 	 */
 	@Override
-	public List<ProductDTO> getProducts(String category) {
+	public List<ProductDTO> getProducts(String category, String filter) {
 		List<ProductDTO> dtos = new ArrayList<>(); // Lista de productsDTO a retornar
 
-		if (category == null) {
-			dtos = productConverter.productsToProductsDTO(productRepo.findProductsByActive(true));			
+		if (filter == null) {
+			filter = "";
+		}
+		
+		// Get products con categoria
+		if (category != null) {
+			
+			// Filtros
+			switch (filter) {
+			case "priceAsc":
+				dtos = productConverter.productsToProductsDTO(
+						productRepo.findProductsActiveCategoryPriceAsc(category));
+				break;
+			case "priceDesc":
+				dtos = productConverter.productsToProductsDTO(
+						productRepo.findProductsActiveCategoryPriceDesc(category));
+				break;
+			// Solo categoria
+			default:
+				dtos = productConverter.productsToProductsDTO(
+						productRepo.findProductsActiveCategory(category));	
+			}
+			
 		} else {
-			dtos = productConverter.productsToProductsDTO(productRepo.findProfductsActiveCategory(category));			
+			// Get products sin categoria
+			
+			switch (filter) {
+			case "priceAsc":
+				dtos = productConverter.productsToProductsDTO(
+						productRepo.findProductsByActiveOrderByTotalPriceAsc(true));
+				break;
+			case "priceDesc":
+				dtos = productConverter.productsToProductsDTO(
+						productRepo.findProductsByActiveOrderByTotalPriceDesc(true));
+				break;
+			
+			default:
+				dtos = productConverter.productsToProductsDTO(
+						productRepo.findProductsByActive(true));
+			}
 		}
 
 		if (dtos.isEmpty()) {

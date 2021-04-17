@@ -44,9 +44,12 @@ public class ProductController {
 	 * @return List ProductDTO
 	 */
 	@GetMapping
-	public ResponseEntity<List<ProductDTO>> getProducts(@RequestParam(required = false) String category) {
+	public ResponseEntity<List<ProductDTO>> getProducts(
+			@RequestParam(required = false) String category,
+			@RequestParam(required = false) String filter
+			) {
 		try {
-			return ResponseEntity.ok(productService.getProducts(category));
+			return ResponseEntity.ok(productService.getProducts(category, filter));
 
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus());

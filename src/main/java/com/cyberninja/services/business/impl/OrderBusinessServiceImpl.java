@@ -73,6 +73,9 @@ public class OrderBusinessServiceImpl implements OrderBusinessServiceI {
 			couponService.useCoupon(coupon);
 		}
 
+		// Shipping
+		totalPrice = totalPrice + 5.99;
+		
 		return Math.round(totalPrice * 100.0) / 100.0;
 	}
 
