@@ -2,7 +2,6 @@ package com.cyberninja.model.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -37,7 +36,6 @@ public class OrderDetails implements Serializable {
 
 	private Order order;
 
-	private Cart cart;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,7 +75,7 @@ public class OrderDetails implements Serializable {
 		this.size = size;
 	}
 
-	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.PERSIST })
+	@ManyToOne
 	@JoinColumn(name = "PRODUCT_ID", foreignKey = @ForeignKey(name = "FK_ORDERS_DETAILS__PRODUCT_ID"))
 	public Product getProduct() {
 		return product;
@@ -87,7 +85,7 @@ public class OrderDetails implements Serializable {
 		this.product = product;
 	}
 
-	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.PERSIST })
+	@ManyToOne
 	@JoinColumn(name = "ORDER_ID", foreignKey = @ForeignKey(name = "FK_ORDERS_DETAILS__ORDER_ID"))
 	public Order getOrder() {
 		return order;
@@ -95,16 +93,6 @@ public class OrderDetails implements Serializable {
 
 	public void setOrder(Order order) {
 		this.order = order;
-	}
-
-	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.PERSIST })
-	@JoinColumn(name = "CART_ID", foreignKey = @ForeignKey(name = "FK_ORDERS_DETAILS__CART_ID"))
-	public Cart getCart() {
-		return cart;
-	}
-
-	public void setCart(Cart cart) {
-		this.cart = cart;
 	}
 
 	public static long getSerialversionuid() {

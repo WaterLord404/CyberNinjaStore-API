@@ -197,7 +197,7 @@ public class Product implements Serializable {
 		this.documents = documents;
 	}
 
-	@OneToMany(mappedBy = "product", orphanRemoval = true, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	public List<OrderDetails> getOrdersDetails() {
 		return ordersDetails;
 	}

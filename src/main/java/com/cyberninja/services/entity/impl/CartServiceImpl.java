@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.model.entity.Cart;
-import com.cyberninja.model.entity.Customer;
+import com.cyberninja.model.entity.Order;
 import com.cyberninja.model.entity.OrderDetails;
 import com.cyberninja.model.entity.converter.OrderDetailsConverter;
 import com.cyberninja.model.entity.converter.ProductConverter;
@@ -20,6 +20,7 @@ import com.cyberninja.model.entity.dto.OrderDetailsDTO;
 import com.cyberninja.model.repository.CartRepository;
 import com.cyberninja.model.repository.OrderDetailsRepository;
 import com.cyberninja.services.entity.CartServiceI;
+import com.cyberninja.services.entity.OrderServiceI;
 import com.cyberninja.services.entity.ProductServiceI;
 
 @Service
@@ -35,6 +36,8 @@ public class CartServiceImpl implements CartServiceI {
 	
 	@Autowired private OrderDetailsRepository orderDetailsRepo;
 	
+	@Autowired private OrderServiceI orderService;
+		
 	/**
 	 * Obtiene los productos del carrito que se guardará en el localstorage
 	 */
@@ -42,22 +45,20 @@ public class CartServiceImpl implements CartServiceI {
 	public List<OrderDetailsDTO> getCartProducts(Authentication auth) {
 		List<OrderDetailsDTO> dtos = new ArrayList<>(); 
 
-		Cart cart = getCart(auth);
-
 		// Items del carrito del usuario
-		List<OrderDetails> ordersDetails = orderDetailsRepo.userCart(cart.getId());
+		List<OrderDetails> ordersDetails = orderDetailsRepo.findUserProductsCart(Long.parseLong(auth.getName()));
 
 		dtos = orderDetailsConverter.orderDetailsToOrderDetailsDTO(ordersDetails);
 				
+		if (dtos.isEmpty()) {
+			throw new ResponseStatusException(NOT_FOUND);
+		}
+		
 		// Asigna el producto a cada orderDetail
 		for (OrderDetails i : ordersDetails) {
 			dtos.get(ordersDetails.indexOf(i)).setProduct(
 					productConverter.productToProductDTO(
 							productService.getProduct(i.getProduct().getId())));
-		}
-
-		if (dtos.isEmpty()) {
-			throw new ResponseStatusException(NOT_FOUND);
 		}
 
 		return dtos;
@@ -70,25 +71,36 @@ public class CartServiceImpl implements CartServiceI {
 	public List<OrderDetailsDTO> saveCart(List<OrderDetailsDTO> dtos, Authentication auth) {
 		List<OrderDetails> ordersDetails = orderDetailsConverter.orderDetailsDTOToOrderDetails(dtos);
 	
-		Cart cart = getCart(auth);
+		// Elimina los orderDetails del usuario
+		orderDetailsRepo.deleteAll(orderDetailsRepo.findUserProductsCart(Long.parseLong(auth.getName())));
+
+		if (dtos.isEmpty()) {
+			throw new ResponseStatusException(NOT_FOUND);
+		}
+
+		// Busca el order, si no existe lo crea
+		Order order = orderService.getOrderOrCreate(auth);
 		
-		// Asigna el producto y el carrito a cada orderDetail
+		// Cada producto asigna su order y producto
 		for (OrderDetails i : ordersDetails) {
 			i.setProduct(productService.getProduct(
 					dtos.get(ordersDetails.indexOf(i))
 					.getProduct().getId()));
-			
-			i.setCart(cart);
+			i.setOrder(order);
 		}
 		
-		// Elimina los orderDetails del usuario para intercambiarlos con los nuevos
-		orderDetailsRepo.deleteAll(orderDetailsRepo.userCart(cart.getId()));
-		
-		if (dtos.isEmpty()) {
-			throw new ResponseStatusException(NOT_FOUND);
-		}	
+		// asigna productos
+		order.setOrdersDetails(ordersDetails);
 				
-		orderDetailsRepo.saveAll(ordersDetails);
+		// asigna carrito
+		Cart cart = getCartOrCreate(auth);
+		cart.setUpdateDate(LocalDate.now());
+		
+		// Asigna el order y el cart
+		cart.setOrder(order);
+		order.setCart(cart);
+		
+		cartRepo.save(cart);
 
 		return orderDetailsConverter.orderDetailsToOrderDetailsDTO(ordersDetails);
 	}
@@ -113,28 +125,13 @@ public class CartServiceImpl implements CartServiceI {
 		return dtos;
 	}
 	
-	/*
-	 * Crea un carrito a un customer
-	 */
-	@Override
-	public void createCart(Customer customer) {
-		Cart cart = new Cart();
-		
-		cart.setCustomer(customer);
-		customer.setCart(cart);
-		
-		cartRepo.save(cart);
-	}
-
 	/**
-	 * Obtiene el carrito de un customer
+	 * Obtiene un carrito, y si no existe lo crea
 	 */
 	@Override
-	public Cart getCart(Authentication auth) {
-		Cart cart = cartRepo.getCart(Long.valueOf(auth.getName()))
-				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
-		cart.setUpdateDate(LocalDate.now());
-		return cart;
+	public Cart getCartOrCreate(Authentication auth) {
+		return cartRepo.findUserCart(Long.parseLong(auth.getName()))
+				.orElse(new Cart());
 	}
 
 }

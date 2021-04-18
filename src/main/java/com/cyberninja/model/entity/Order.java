@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -37,6 +38,8 @@ public class Order implements Serializable {
 
 	private Coupon coupon;
 
+	private Cart cart;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ORDER_ID")
@@ -48,7 +51,7 @@ public class Order implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "TOTAL_PRICE", nullable = false)
+	@Column(name = "TOTAL_PRICE")
 	public Double getTotalPrice() {
 		return totalPrice;
 	}
@@ -57,7 +60,7 @@ public class Order implements Serializable {
 		this.totalPrice = totalPrice;
 	}
 
-	@Column(name = "PURCHASE_DATE", nullable = false)
+	@Column(name = "PURCHASE_DATE")
 	public LocalDate getPurchaseDate() {
 		return purchaseDate;
 	}
@@ -76,7 +79,7 @@ public class Order implements Serializable {
 		this.customer = customer;
 	}
 
-	@OneToMany(mappedBy = "order", orphanRemoval = true, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	public List<OrderDetails> getOrdersDetails() {
 		return ordersDetails;
 	}
@@ -95,6 +98,16 @@ public class Order implements Serializable {
 		this.coupon = coupon;
 	}
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "CART_ID", foreignKey = @ForeignKey(name = "FK_ORDERS__CART_ID"))
+	public Cart getCart() {
+		return cart;
+	}
+
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

@@ -7,11 +7,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -53,8 +51,6 @@ public class Customer implements Serializable {
 	
 	private User user;
 	
-	private Cart cart;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "CUSTOMER_ID")
@@ -156,7 +152,7 @@ public class Customer implements Serializable {
 		this.lastPurchase = lastPurchase;
 	}
 
-	@OneToMany(mappedBy = "customer", orphanRemoval = true, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
 	public List<Order> getOrders() {
 		return orders;
 	}
@@ -172,16 +168,6 @@ public class Customer implements Serializable {
 	
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	@OneToOne
-	@JoinColumn(name = "CART_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_CUSTOMER__CART_ID"))
-	public Cart getCart() {
-		return cart;
-	}
-
-	public void setCart(Cart cart) {
-		this.cart = cart;
 	}
 
 	public static long getSerialversionuid() {

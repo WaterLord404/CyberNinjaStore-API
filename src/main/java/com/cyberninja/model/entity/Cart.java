@@ -2,7 +2,6 @@ package com.cyberninja.model.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -27,9 +25,7 @@ public class Cart implements Serializable {
 
 	private LocalDate updateDate;
 
-	private Customer customer;
-
-	private List<OrderDetails> ordersDetails;
+	private Order order;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,21 +48,12 @@ public class Cart implements Serializable {
 	}
 
 	@OneToOne(mappedBy = "cart", cascade = CascadeType.ALL)
-	public Customer getCustomer() {
-		return customer;
+	public Order getOrder() {
+		return order;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
-	@OneToMany(mappedBy = "cart", orphanRemoval = true, cascade = CascadeType.ALL)
-	public List<OrderDetails> getOrdersDetails() {
-		return ordersDetails;
-	}
-
-	public void setOrdersDetails(List<OrderDetails> ordersDetails) {
-		this.ordersDetails = ordersDetails;
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 
 	public static long getSerialversionuid() {

@@ -72,7 +72,7 @@ public class Provider implements Serializable {
 		this.contract = contract;
 	}
 
-	@OneToMany(mappedBy = "provider", orphanRemoval = true, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
 	public List<Product> getProduct() {
 		return products;
 	}

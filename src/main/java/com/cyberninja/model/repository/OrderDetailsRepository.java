@@ -13,9 +13,11 @@ public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Long
 
 	@Query(value = 
 			"SELECT od.* " +
-			"FROM CARTS ca, ORDERS_DETAILS od " +
-			"WHERE ca.CART_ID = od.CART_ID " +
-			"AND od.ORDER_ID IS NULL " +
-			"AND od.CART_ID = ?1", nativeQuery = true)
-	List<OrderDetails> userCart(Long id);
+			"FROM CUSTOMERS c, ORDERS o, ORDERS_DETAILS od " +
+			"WHERE c.CUSTOMER_ID = o.CUSTOMER_ID " +
+			"AND o.ORDER_ID = od.ORDER_ID " +
+			"AND o.PURCHASE_DATE IS NULL " +
+			"AND c.CUSTOMER_ID = ?1", nativeQuery = true)
+	List<OrderDetails> findUserProductsCart(Long id);
 }
+

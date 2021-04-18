@@ -16,9 +16,10 @@ import com.cyberninja.model.entity.dto.OrderDTO;
 import com.cyberninja.model.entity.dto.OrderDetailsDTO;
 import com.cyberninja.model.repository.CustomerRepository;
 import com.cyberninja.model.repository.OrderDetailsRepository;
+import com.cyberninja.model.repository.OrderRepository;
 import com.cyberninja.services.business.OrderBusinessServiceI;
-import com.cyberninja.services.entity.CartServiceI;
 import com.cyberninja.services.entity.CouponServiceI;
+import com.cyberninja.services.entity.CustomerServiceI;
 import com.cyberninja.services.entity.OrderServiceI;
 import com.cyberninja.services.entity.ProductServiceI;
 
@@ -39,7 +40,9 @@ public class OrderServiceImpl implements OrderServiceI {
 
 	@Autowired private CouponServiceI couponService;
 
-	@Autowired private CartServiceI cartService;
+	@Autowired private CustomerServiceI customerService;
+	
+	@Autowired private OrderRepository orderRepo;
 	
 	/**
 	 * Añade un pedido a su correspondiente customer
@@ -48,9 +51,12 @@ public class OrderServiceImpl implements OrderServiceI {
 	 */
 	@Override
 	public OrderDTO purchaseOrder(List<OrderDetailsDTO> dtos, Authentication auth, String couponCode) {
-		Order order = orderConverter.orderDTOToOrder(new OrderDTO());
+		Order order = getOrderOrCreate(auth);
 
 		List<OrderDetails> ordersDetails = orderDetailsConverter.orderDetailsDTOToOrderDetails(dtos);
+		
+		// Elimina los orderDetails del usuario
+		orderDetailsRepo.deleteAll(orderDetailsRepo.findUserProductsCart(Long.parseLong(auth.getName())));
 		
 		// Busca, actualiza fecha compra y asigna el customer
 		Customer customer = customerRepo.findById(Long.valueOf(auth.getName())).get();
@@ -70,15 +76,33 @@ public class OrderServiceImpl implements OrderServiceI {
 			i.setProduct(productService.getProduct(
 									dtos.get(ordersDetails.indexOf(i))
 									.getProduct().getId()));
-			i.setCart(cartService.getCart(auth));
 		}
 
 		// Calcula el precio total
 		order.setTotalPrice(orderBService.calculateTotalPrice(ordersDetails, order.getCoupon()));
 
+		order.setPurchaseDate(LocalDate.now());
+		
 		orderDetailsRepo.saveAll(ordersDetails);
 
 		return orderConverter.orderToOrderDTO(order);
 	}
+	
+	@Override
+	public Order createOrder(Authentication auth) {
+		Order order = new Order();
+		order.setCustomer(customerService.getCustomerById(Long.parseLong(auth.getName())));
+		return order;
+	}
+	
+	/**
+	 * Obtiene una order, si no existe la crea
+	 */
+	@Override
+	public Order getOrderOrCreate(Authentication auth) {
+		return orderRepo.getUserOrder(Long.parseLong(auth.getName()))
+				.orElse(createOrder(auth));
+	}
+
 
 }

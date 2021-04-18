@@ -118,7 +118,7 @@ public class Coupon implements Serializable {
 		this.discount = discount;
 	}
 
-	@OneToMany(mappedBy = "coupon", orphanRemoval = true, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "coupon", cascade = CascadeType.ALL)
 	public List<Order> getOrders() {
 		return orders;
 	}

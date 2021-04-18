@@ -17,4 +17,14 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
 			"WHERE c.CART_ID = ca.CART_ID " + 
 			"AND c.CUSTOMER_ID = ?1", nativeQuery = true)
 	Optional<Cart> getCart(Long id);
+	
+	@Query(value = 
+			"SELECT ca.* " +
+			"FROM CUSTOMERS c, ORDERS o, CARTS ca " +
+			"WHERE c.CUSTOMER_ID = o.CUSTOMER_ID  " +
+			"AND o.CART_ID = ca.CART_ID " +
+			"AND o.PURCHASE_DATE IS NULL " +
+			"AND c.CUSTOMER_ID = ?1", nativeQuery = true)
+	Optional<Cart> findUserCart(Long id);
 }
+
