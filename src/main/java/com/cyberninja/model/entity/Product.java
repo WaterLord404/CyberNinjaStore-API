@@ -64,8 +64,10 @@ public class Product implements Serializable {
 	private List<OrderDetails> ordersDetails;
 
 	private boolean active;
-	
+
 	private Provider provider;
+
+	private List<Review> reviews;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -188,7 +190,7 @@ public class Product implements Serializable {
 		this.discount = discount;
 	}
 
-	@OneToMany(mappedBy = "product", orphanRemoval = true, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	public List<Document> getDocuments() {
 		return documents;
 	}
@@ -215,10 +217,6 @@ public class Product implements Serializable {
 		this.active = active;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "PROVIDER_ID", foreignKey = @ForeignKey(name = "FK_PRODUCTS__PROVIDER_ID"))
 	public Provider getProvider() {
@@ -227,6 +225,19 @@ public class Product implements Serializable {
 
 	public void setProvider(Provider provider) {
 		this.provider = provider;
+	}
+
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.cyberninja.model.entity.Provider;
 
 @Repository
-public interface ProviderRepository extends JpaRepository<Provider, Long>{
+public interface ProviderRepository extends JpaRepository<Provider, Long> {
 
 	@Query(value = 
 			"SELECT prov.* " + 

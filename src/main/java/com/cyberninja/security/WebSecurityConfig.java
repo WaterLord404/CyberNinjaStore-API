@@ -63,6 +63,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(PUT, "/discount/*").hasRole(UserRole.ADMIN.name())
 			.antMatchers(POST, "/coupon").hasRole(UserRole.ADMIN.name())
 			
+			.antMatchers(POST, "/review/*").hasRole(UserRole.USER.name())
+			
 			.antMatchers("/**").permitAll()
 		.anyRequest()
 		.authenticated()	
