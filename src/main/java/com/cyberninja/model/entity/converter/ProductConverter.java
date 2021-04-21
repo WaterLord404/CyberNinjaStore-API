@@ -33,6 +33,7 @@ public class ProductConverter {
 		product.setCreationDate(LocalDate.now());
 		product.setActive(true);
 		product.setPriceWithVat(orderBService.calculateVat(dto.getSalePrice()));
+		product.setStars(0.0);
 
 		return product;
 	}
@@ -50,6 +51,7 @@ public class ProductConverter {
 		dto.setCategory(product.getCategory());
 		dto.setActive(product.isActive());
 		dto.setDocuments(documentConverter.getDocumentsDTO(product.getDocuments()));
+		dto.setStars(product.getStars());
 
 		if (product.getDiscount() != null) {
 			dto.setDiscount(discountConverter.discountToDiscountDTO(product.getDiscount()));

@@ -46,15 +46,17 @@ public class ProductServiceImpl implements ProductServiceI {
 	public List<ProductDTO> getProducts(String category, String filter) {
 		List<ProductDTO> dtos = new ArrayList<>(); // Lista de productsDTO a retornar
 
-		if (filter == null) {
-			filter = "";
-		}
+		if (filter == null) { filter = ""; }
 		
 		// Get products con categoria
 		if (category != null) {
 			
 			// Filtros
 			switch (filter) {
+			case "popularity":
+				dtos = productConverter.productsToProductsDTO(
+						productRepo.findProductsActiveCategoryPopularity(category));
+				break;
 			case "priceAsc":
 				dtos = productConverter.productsToProductsDTO(
 						productRepo.findProductsActiveCategoryPriceAsc(category));
@@ -63,16 +65,20 @@ public class ProductServiceImpl implements ProductServiceI {
 				dtos = productConverter.productsToProductsDTO(
 						productRepo.findProductsActiveCategoryPriceDesc(category));
 				break;
-			// Solo categoria
+			// nuevos, Solo categoria
 			default:
 				dtos = productConverter.productsToProductsDTO(
-						productRepo.findProductsActiveCategory(category));	
+						productRepo.findProductsActiveCategoryDesc(category));	
 			}
 			
 		} else {
 			// Get products sin categoria
 			
 			switch (filter) {
+			case "popularity":
+				dtos = productConverter.productsToProductsDTO(
+						productRepo.findProductsByActiveOrderByStarsDesc(true));
+				break;
 			case "priceAsc":
 				dtos = productConverter.productsToProductsDTO(
 						productRepo.findProductsByActiveOrderByTotalPriceAsc(true));
@@ -84,7 +90,7 @@ public class ProductServiceImpl implements ProductServiceI {
 			
 			default:
 				dtos = productConverter.productsToProductsDTO(
-						productRepo.findProductsByActive(true));
+						productRepo.findProductsByActiveOrderByIdDesc(true));
 			}
 		}
 
@@ -185,6 +191,12 @@ public class ProductServiceImpl implements ProductServiceI {
 	@Override
 	public ProductCategory[] getCategories() {
 		return ProductCategory.values();
+	}
+
+	@Override
+	public void updateRating(Product product, Double stars) {
+		product.setStars(stars);
+		productRepo.save(product);
 	}
 
 }

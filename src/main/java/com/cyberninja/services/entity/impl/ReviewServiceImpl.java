@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.cyberninja.model.entity.Product;
 import com.cyberninja.model.entity.Review;
 import com.cyberninja.model.entity.converter.ReviewConverter;
 import com.cyberninja.model.entity.dto.ReviewDTO;
@@ -27,6 +28,7 @@ public class ReviewServiceImpl implements ReviewServiceI {
 	@Autowired private ProductServiceI productService;
 	
 	@Autowired private ReviewBusinessServiceI reviewBService;
+	
 	
 	/**
 	 * Obtiene las review de un producto
@@ -55,9 +57,13 @@ public class ReviewServiceImpl implements ReviewServiceI {
 			throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
 		}
 		
-		review.setProduct(productService.getProduct(productId));
+		Product product = productService.getProduct(productId);
+		review.setProduct(product);
 		
 		reviewRepo.save(review);
+		
+		// Asigna la media al producto
+		productService.updateRating(product, reviewRepo.calculateProductAVG(productId));
 		
 		return reviewConverter.reviewToReviewDTO(review);
 	}

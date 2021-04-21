@@ -51,6 +51,8 @@ public class Product implements Serializable {
 
 	private LocalDate creationDate;
 
+	private Double stars;
+	
 	private Set<ProductSize> size;
 
 	private Set<ProductColour> colour;
@@ -234,6 +236,15 @@ public class Product implements Serializable {
 
 	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
+	}
+	
+	@Column(name = "STARS", nullable = false)
+	public Double getStars() {
+		return stars;
+	}
+
+	public void setStars(Double stars) {
+		this.stars = stars;
 	}
 
 	public static long getSerialversionuid() {

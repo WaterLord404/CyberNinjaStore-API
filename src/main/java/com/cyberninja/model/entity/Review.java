@@ -61,7 +61,7 @@ public class Review implements Serializable {
 		this.value = value;
 	}
 
-	@Column(name = "DETAILS")
+	@Column(name = "DETAILS", nullable = false)
 	public String getDetails() {
 		return details;
 	}

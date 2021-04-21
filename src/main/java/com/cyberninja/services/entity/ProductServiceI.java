@@ -29,4 +29,6 @@ public interface ProductServiceI {
 
 	ProductCategory[] getCategories();
 
+	void updateRating(Product product, Double stars);
+
 }

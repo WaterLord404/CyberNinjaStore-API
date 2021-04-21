@@ -26,6 +26,8 @@ public class ProductDTO {
 
 	private Double totalPrice;
 
+	private Double stars;
+
 	private DiscountDTO discount;
 
 	private Set<ProductSize> size;
@@ -136,6 +138,14 @@ public class ProductDTO {
 
 	public boolean isActive() {
 		return active;
+	}
+
+	public Double getStars() {
+		return stars;
+	}
+
+	public void setStars(Double stars) {
+		this.stars = stars;
 	}
 
 	public void setActive(boolean active) {

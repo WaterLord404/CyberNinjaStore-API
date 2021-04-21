@@ -8,8 +8,10 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -42,5 +44,19 @@ public class UserController {
 	@PostMapping("/login")
 	public ResponseEntity<UserDTO> login(@RequestBody UserDTO userDTO) {
 		return ResponseEntity.ok().build();
+	}
+	
+	@PutMapping("/confirm-account")
+	public ResponseEntity<UserDTO> confirmAccount(@RequestParam String token) {
+		try {
+			return ResponseEntity.ok(userService.confirmAccount(token));
+
+		} catch (ResponseStatusException e) {
+			throw new ResponseStatusException(e.getStatus());
+		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
+			throw new ResponseStatusException(BAD_REQUEST);
+		} catch (Exception e) {
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+		}
 	}
 }

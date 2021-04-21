@@ -13,6 +13,7 @@ import com.cyberninja.model.repository.CustomerRepository;
 import com.cyberninja.security.model.entity.User;
 import com.cyberninja.security.model.entity.dto.UserDTO;
 import com.cyberninja.services.entity.CustomerServiceI;
+import com.cyberninja.services.utils.EmailSenderServiceI;
 
 @Service
 public class CustomerServiceImpl implements CustomerServiceI {
@@ -20,6 +21,8 @@ public class CustomerServiceImpl implements CustomerServiceI {
 	@Autowired private CustomerRepository customerRepo;
 
 	@Autowired private CustomerConverter customerConverter;
+	
+	@Autowired private EmailSenderServiceI emailSender;
 
 	/**
 	 * Crea un customer
@@ -33,6 +36,9 @@ public class CustomerServiceImpl implements CustomerServiceI {
 		
 		customerRepo.save(customer);
 
+		// Envia el correo
+		emailSender.sendEmail(customer.getEmail(), user.getConfirmationToken());
+		
 		return customer;
 	}
 	

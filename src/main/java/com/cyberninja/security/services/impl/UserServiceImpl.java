@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.CONFLICT;
 import javax.naming.AuthenticationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -71,6 +72,21 @@ public class UserServiceImpl implements UserDetailsService , UserServiceI{
 
 	public UserDetails loadUserById(Long idUser) throws AuthenticationException {
 		return userRepo.findById(idUser).orElseThrow(() -> new AuthenticationException("Id or username not found"));
+	}
+
+	/**
+	 * Confirma la cuenta del usuario
+	 */
+	@Override
+	public UserDTO confirmAccount(String token) {
+		User user = userRepo.findUserByConfirmationTokenAndEnabled(token, false)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		
+		user.setEnabled(true);
+		
+		userRepo.save(user);
+		
+		return userConverter.userToUserDTO(user);
 	}
 
 }

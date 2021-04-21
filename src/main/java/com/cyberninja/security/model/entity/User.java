@@ -85,6 +85,9 @@ public class User implements UserDetails {
 	@Column(name = "PASS_EXP_DATE")
 	private LocalDateTime passwordPolicyExpDate;
 
+	@Column(name = "CONFIRMATION_TOKEN")
+	private String confirmationToken;
+
 	@OneToOne
 	@JoinColumn(name = "CUSTOMER_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_USERS__CUSTOMER_ID"))
 	private Customer customer;
@@ -182,6 +185,18 @@ public class User implements UserDetails {
 
 	public boolean isLocked() {
 		return locked;
+	}
+
+	public String getConfirmationToken() {
+		return confirmationToken;
+	}
+
+	public void setConfirmationToken(String confirmationToken) {
+		this.confirmationToken = confirmationToken;
+	}
+
+	public static int getMaxAuthAttempts() {
+		return MAX_AUTH_ATTEMPTS;
 	}
 
 	public void setLocked(boolean locked) {

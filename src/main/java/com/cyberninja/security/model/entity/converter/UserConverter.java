@@ -2,6 +2,7 @@ package com.cyberninja.security.model.entity.converter;
 
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,10 +34,11 @@ public class UserConverter {
 		user.setUpdateDate(LocalDateTime.now());
 		user.setLastPasswordChange(LocalDateTime.now());
 		user.setLocked(false);
-		user.setEnabled(true);
+		user.setEnabled(false);
 		user.setAuthenticationAttempts(0);
 		user.setPasswordPolicyExpDate(LocalDateTime.now().plusDays(180));
-
+		user.setConfirmationToken(UUID.randomUUID().toString());
+		
 		return user;
 	}
 

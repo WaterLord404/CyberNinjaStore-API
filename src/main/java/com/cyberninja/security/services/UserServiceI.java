@@ -8,4 +8,6 @@ public interface UserServiceI {
 
 	UserDTO getUser(UserDTO dto);
 
+	UserDTO confirmAccount(String token);
+
 }
