@@ -80,7 +80,11 @@ public class DiscountServiceImpl implements DiscountServiceI {
 	public ProductDTO updateDiscount(Long productId, Long discountId) {
 		Product product = productService.getProduct(productId);
 
-		product.setDiscount(getDiscount(discountId));
+		if (discountId == 0) {
+			product.setDiscount(null);
+		} else {
+			product.setDiscount(getDiscount(discountId));			
+		}
 
 		// Calcula el descuento
 		product.setTotalPrice(orderBService.calculateDiscount(product.getPriceWithVat(), product.getDiscount()));
