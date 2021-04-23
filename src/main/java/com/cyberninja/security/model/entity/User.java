@@ -52,7 +52,7 @@ public class User implements UserDetails {
 
 	@Column(name = "PASSWORD")
 	private String password;
-
+	
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 	@Column(name = "ROLES")

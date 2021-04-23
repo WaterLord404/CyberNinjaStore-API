@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -58,6 +60,7 @@ public class OrderDetails implements Serializable {
 	}
 
 	@Column(name = "COLOR", nullable = false)
+	@Enumerated(EnumType.STRING)
 	public ProductColour getColour() {
 		return colour;
 	}
@@ -67,6 +70,7 @@ public class OrderDetails implements Serializable {
 	}
 
 	@Column(name = "SIZE", nullable = false)
+	@Enumerated(EnumType.STRING)
 	public ProductSize getSize() {
 		return size;
 	}

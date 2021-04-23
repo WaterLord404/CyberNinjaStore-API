@@ -50,7 +50,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			throw new RuntimeException(e);
 		}
 		
-		return 	authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), 
+		return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), 
 																						   user.getPassword()));
 	}
 
@@ -60,7 +60,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		
         UserDTO userDTO = userService.getUser(user);
 
-        response.addHeader(HEADER_STRING, TOKEN_PREFIX + generateToken(((User)authResult.getPrincipal()), userDTO));
+		response.addHeader(HEADER_STRING, TOKEN_PREFIX + generateToken(((User) authResult.getPrincipal()), userDTO));
 	}
 
 }
