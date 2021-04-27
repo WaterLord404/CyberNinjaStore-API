@@ -21,16 +21,9 @@ public class CouponBusinessServiceImpl implements CouponBusinessServiceI {
 	 */
 	@Override
 	public Boolean isCouponValid(Coupon coupon) {
-		Boolean isValid = false;
-		
-		if (coupon.getUses() < coupon.getMaxUses() &&
-		    !LocalDate.now().isAfter(coupon.getExpirationDate()) &&
-		    coupon.getMaxUses() > 0) {
-			
-			isValid = true;
-		}
-	
-		return isValid;
+		return (coupon.getUses() < coupon.getMaxUses() &&
+				!LocalDate.now().isAfter(coupon.getExpirationDate()) &&
+				coupon.getMaxUses() > 0);
 	}
 
 	/**

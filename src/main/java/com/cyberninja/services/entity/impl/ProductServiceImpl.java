@@ -1,5 +1,6 @@
 package com.cyberninja.services.entity.impl;
 
+import static com.cyberninja.common.ApplicationConstans.ITEMS_ON_PAGE;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.sql.SQLException;
@@ -43,10 +44,12 @@ public class ProductServiceImpl implements ProductServiceI {
 	 * @throws SQLException
 	 */
 	@Override
-	public List<ProductDTO> getProducts(String category, String filter) {
+	public List<ProductDTO> getProducts(String category, String filter, Integer page) {
 		List<ProductDTO> dtos = new ArrayList<>(); // Lista de productsDTO a retornar
 
 		if (filter == null) { filter = ""; }
+		
+		Integer actualPage = page * ITEMS_ON_PAGE;
 		
 		// Get products con categoria
 		if (category != null) {
@@ -55,20 +58,20 @@ public class ProductServiceImpl implements ProductServiceI {
 			switch (filter) {
 			case "popularity":
 				dtos = productConverter.productsToProductsDTO(
-						productRepo.findProductsActiveCategoryPopularity(category));
+						productRepo.findProductsActiveCategoryPopularity(category, actualPage , ITEMS_ON_PAGE));
 				break;
 			case "priceAsc":
 				dtos = productConverter.productsToProductsDTO(
-						productRepo.findProductsActiveCategoryPriceAsc(category));
+						productRepo.findProductsActiveCategoryPriceAsc(category, actualPage , ITEMS_ON_PAGE));
 				break;
 			case "priceDesc":
 				dtos = productConverter.productsToProductsDTO(
-						productRepo.findProductsActiveCategoryPriceDesc(category));
+						productRepo.findProductsActiveCategoryPriceDesc(category, actualPage , ITEMS_ON_PAGE));
 				break;
 			// nuevos, Solo categoria
 			default:
 				dtos = productConverter.productsToProductsDTO(
-						productRepo.findProductsActiveCategoryDesc(category));	
+						productRepo.findProductsActiveCategoryDesc(category, actualPage , ITEMS_ON_PAGE));	
 			}
 			
 		} else {
@@ -77,20 +80,20 @@ public class ProductServiceImpl implements ProductServiceI {
 			switch (filter) {
 			case "popularity":
 				dtos = productConverter.productsToProductsDTO(
-						productRepo.findProductsByActiveOrderByStarsDesc(true));
+						productRepo.findProductsByActiveOrderByStarsDesc(actualPage , ITEMS_ON_PAGE));
 				break;
 			case "priceAsc":
 				dtos = productConverter.productsToProductsDTO(
-						productRepo.findProductsByActiveOrderByTotalPriceAsc(true));
+						productRepo.findProductsByActiveOrderByTotalPriceAsc(actualPage , ITEMS_ON_PAGE));
 				break;
 			case "priceDesc":
 				dtos = productConverter.productsToProductsDTO(
-						productRepo.findProductsByActiveOrderByTotalPriceDesc(true));
+						productRepo.findProductsByActiveOrderByTotalPriceDesc(actualPage , ITEMS_ON_PAGE));
 				break;
 			
 			default:
 				dtos = productConverter.productsToProductsDTO(
-						productRepo.findProductsByActiveOrderByIdDesc(true));
+						productRepo.findProductsByActiveOrderByIdDesc(actualPage , ITEMS_ON_PAGE));
 			}
 		}
 

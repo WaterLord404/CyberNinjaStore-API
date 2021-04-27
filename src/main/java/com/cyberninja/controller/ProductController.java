@@ -46,10 +46,11 @@ public class ProductController {
 	@GetMapping
 	public ResponseEntity<List<ProductDTO>> getProducts(
 			@RequestParam(required = false) String category,
-			@RequestParam(required = false) String filter
+			@RequestParam(required = false) String filter,
+			@RequestParam(required = true) Integer page
 			) {
 		try {
-			return ResponseEntity.ok(productService.getProducts(category, filter));
+			return ResponseEntity.ok(productService.getProducts(category, filter, page));
 
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus());
@@ -131,8 +132,6 @@ public class ProductController {
 		try {
 			return ResponseEntity.ok(productService.getSizes());
 
-		} catch (ResponseStatusException e) {
-			throw new ResponseStatusException(e.getStatus());
 		} catch (Exception e) {
 			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
 		}
@@ -143,8 +142,6 @@ public class ProductController {
 		try {
 			return ResponseEntity.ok(productService.getColours());
 
-		} catch (ResponseStatusException e) {
-			throw new ResponseStatusException(e.getStatus());
 		} catch (Exception e) {
 			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
 		}
@@ -155,10 +152,9 @@ public class ProductController {
 		try {
 			return ResponseEntity.ok(productService.getCategories());
 
-		} catch (ResponseStatusException e) {
-			throw new ResponseStatusException(e.getStatus());
 		} catch (Exception e) {
 			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
 		}
 	}
+	
 }

@@ -13,14 +13,10 @@ public class ReviewBusinessServiceImpl implements ReviewBusinessServiceI {
 	 */
 	@Override
 	public Boolean isReviewValid(Review review) {
-		if (review.getValue() >= 1 && 
-			review.getValue() <= 5 &&
-			review.getDetails().length() >= 10 &&
-			review.getDetails().length() <= 255) {
-			
-			return true;
-		}
-		return false;
+		return review.getValue() >= 1 && 
+			   review.getValue() <= 5 &&
+			   review.getDetails().length() >= 10 &&
+			   review.getDetails().length() <= 255;		
 	}
 
 }

@@ -13,7 +13,7 @@ import com.cyberninja.model.entity.enumerated.ProductSize;
 
 public interface ProductServiceI {
 
-	List<ProductDTO> getProducts(String category, String filter);
+	List<ProductDTO> getProducts(String category, String filter, Integer page);
 
 	ProductDTO getProductDTO(Long id);
 

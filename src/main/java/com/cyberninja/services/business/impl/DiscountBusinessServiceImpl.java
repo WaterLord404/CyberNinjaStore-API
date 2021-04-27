@@ -13,22 +13,9 @@ public class DiscountBusinessServiceImpl implements DiscountBusinessServiceI {
 
 	@Override
 	public Boolean isDiscountValid(Discount discount) {
-		Boolean isValid = false;
-
-		if (discount.getType().equals(PERCENTAGE) &&
-			discount.getValue() > 0.0 &&
-			discount.getValue() <= 100.0) {
-
-			isValid = true;
-		}
-
-		if (discount.getType().equals(FIXED) &&
-			discount.getValue() > 0.0) {
-			
-			isValid = true;
-		}
-		
-		return isValid;
+		return discount.getValue() > 0.0 && 
+			 ((discount.getType().equals(PERCENTAGE) && discount.getValue() <= 100.0) ||
+			   discount.getType().equals(FIXED));
 	}
 
 }
