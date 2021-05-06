@@ -1,6 +1,6 @@
 package com.cyberninja.model.entity.converter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,7 @@ public class CouponConverter {
 		Coupon coupon = new Coupon();
 
 		coupon.setCode(dto.getCode());
-		coupon.setCreationDate(LocalDate.now());
+		coupon.setCreationDate(LocalDateTime.now());
 		coupon.setExpirationDate(dto.getExpirationDate());
 		coupon.setUses(0);
 		coupon.setMaxUses(dto.getMaxUses());

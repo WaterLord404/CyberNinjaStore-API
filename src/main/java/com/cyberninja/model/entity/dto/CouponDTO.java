@@ -1,6 +1,6 @@
 package com.cyberninja.model.entity.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -10,7 +10,7 @@ public class CouponDTO {
 
 	private String code;
 
-	private LocalDate expirationDate;
+	private LocalDateTime expirationDate;
 
 	private Integer maxUses;
 
@@ -24,11 +24,11 @@ public class CouponDTO {
 		this.code = code;
 	}
 
-	public LocalDate getExpirationDate() {
+	public LocalDateTime getExpirationDate() {
 		return expirationDate;
 	}
 
-	public void setExpirationDate(LocalDate expirationDate) {
+	public void setExpirationDate(LocalDateTime expirationDate) {
 		this.expirationDate = expirationDate;
 	}
 

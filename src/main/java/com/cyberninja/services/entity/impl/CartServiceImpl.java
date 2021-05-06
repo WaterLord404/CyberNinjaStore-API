@@ -2,7 +2,7 @@ package com.cyberninja.services.entity.impl;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,7 +94,7 @@ public class CartServiceImpl implements CartServiceI {
 				
 		// asigna carrito
 		Cart cart = getCartOrCreate(auth);
-		cart.setUpdateDate(LocalDate.now());
+		cart.setUpdateDate(LocalDateTime.now());
 		
 		// Asigna el order y el cart
 		cart.setOrder(order);

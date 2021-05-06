@@ -1,7 +1,7 @@
 package com.cyberninja.model.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +24,7 @@ public class Review implements Serializable {
 	
 	private Long id;
 	
-	private LocalDate creationDate;
+	private LocalDateTime creationDate;
 	
 	private Integer value;
 	
@@ -44,11 +44,11 @@ public class Review implements Serializable {
 	}
 
 	@Column(name = "CREATION_DATE")
-	public LocalDate getCreationDate() {
+	public LocalDateTime getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(LocalDate creationDate) {
+	public void setCreationDate(LocalDateTime creationDate) {
 		this.creationDate = creationDate;
 	}
 

@@ -1,6 +1,6 @@
 package com.cyberninja.model.entity.converter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class DiscountConverter {
 
 		discount.setValue(orderBService.roundDiscount(dto.getValue()));
 		discount.setType(dto.getType());
-		discount.setCreationDate(LocalDate.now());
+		discount.setCreationDate(LocalDateTime.now());
 		discount.setActive(true);
 
 		return discount;

@@ -1,7 +1,7 @@
 package com.cyberninja.model.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -30,7 +30,7 @@ public class Order implements Serializable {
 
 	private Double totalPrice;
 
-	private LocalDate purchaseDate;
+	private LocalDateTime purchaseDate;
 
 	private Customer customer;
 
@@ -39,6 +39,8 @@ public class Order implements Serializable {
 	private Coupon coupon;
 
 	private Cart cart;
+	
+	private Shipping shipping;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,11 +63,11 @@ public class Order implements Serializable {
 	}
 
 	@Column(name = "PURCHASE_DATE")
-	public LocalDate getPurchaseDate() {
+	public LocalDateTime getPurchaseDate() {
 		return purchaseDate;
 	}
 
-	public void setPurchaseDate(LocalDate purchaseDate) {
+	public void setPurchaseDate(LocalDateTime purchaseDate) {
 		this.purchaseDate = purchaseDate;
 	}
 
@@ -108,6 +110,16 @@ public class Order implements Serializable {
 		this.cart = cart;
 	}
 	
+	@OneToOne
+	@JoinColumn(name = "SHIPPING_ID", foreignKey = @ForeignKey(name = "FK_ORDER__SHIPPING_ID"))
+	public Shipping getShipping() {
+		return shipping;
+	}
+
+	public void setShipping(Shipping shipping) {
+		this.shipping = shipping;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

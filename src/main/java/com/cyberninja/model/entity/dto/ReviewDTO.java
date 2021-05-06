@@ -1,20 +1,20 @@
 package com.cyberninja.model.entity.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ReviewDTO {
 	
-	private LocalDate creationDate;
+	private LocalDateTime creationDate;
 	
 	private Integer value;
 	
 	private String details;
 
-	public LocalDate getCreationDate() {
+	public LocalDateTime getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(LocalDate creationDate) {
+	public void setCreationDate(LocalDateTime creationDate) {
 		this.creationDate = creationDate;
 	}
 

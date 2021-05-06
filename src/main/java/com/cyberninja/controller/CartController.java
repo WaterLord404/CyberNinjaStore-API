@@ -26,8 +26,7 @@ import com.cyberninja.services.entity.CartServiceI;
 @RequestMapping(path = "/cart")
 public class CartController {
 
-	@Autowired
-	private CartServiceI cartService;
+	@Autowired private CartServiceI cartService;
 	
 	@GetMapping
 	public ResponseEntity<List<OrderDetailsDTO>> getCart(Authentication auth) {

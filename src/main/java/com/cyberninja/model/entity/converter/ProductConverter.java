@@ -1,6 +1,6 @@
 package com.cyberninja.model.entity.converter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class ProductConverter {
 		product.setSize(dto.getSize());
 		product.setColour(dto.getColour());
 		product.setCategory(dto.getCategory());
-		product.setCreationDate(LocalDate.now());
+		product.setCreationDate(LocalDateTime.now());
 		product.setActive(true);
 		product.setPriceWithVat(orderBService.calculateVat(dto.getSalePrice()));
 		product.setStars(0.0);

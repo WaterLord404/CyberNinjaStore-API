@@ -4,7 +4,7 @@ import static com.cyberninja.common.ApplicationConstans.CUPON_ALPHANUM;
 import static com.cyberninja.common.ApplicationConstans.CUPON_CODE_LENGHT;
 
 import java.security.SecureRandom;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ public class CouponBusinessServiceImpl implements CouponBusinessServiceI {
 	@Override
 	public Boolean isCouponValid(Coupon coupon) {
 		return (coupon.getUses() < coupon.getMaxUses() &&
-				!LocalDate.now().isAfter(coupon.getExpirationDate()) &&
+				!LocalDateTime.now().isAfter(coupon.getExpirationDate()) &&
 				coupon.getMaxUses() > 0);
 	}
 

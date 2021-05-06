@@ -1,7 +1,7 @@
 package com.cyberninja.model.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -30,7 +30,7 @@ public class Provider implements Serializable {
 	
 	private String name;
 	
-	private LocalDate creationDate;
+	private LocalDateTime creationDate;
 	
 	private ProviderContract contract;
 	
@@ -57,11 +57,11 @@ public class Provider implements Serializable {
 	}
 
 	@Column(name = "CREATION_DATE")
-	public LocalDate getCreationDate() {
+	public LocalDateTime getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(LocalDate creationDate) {
+	public void setCreationDate(LocalDateTime creationDate) {
 		this.creationDate = creationDate;
 	}
 

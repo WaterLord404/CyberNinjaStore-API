@@ -27,8 +27,7 @@ import com.cyberninja.services.entity.DiscountServiceI;
 @RequestMapping(path = "/discount")
 public class DiscountController {
 
-	@Autowired
-	private DiscountServiceI discountService;
+	@Autowired private DiscountServiceI discountService;
 
 	@GetMapping
 	public ResponseEntity<List<DiscountDTO>> getDiscounts() {

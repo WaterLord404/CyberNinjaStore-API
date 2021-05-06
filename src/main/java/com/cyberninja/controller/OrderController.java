@@ -26,8 +26,7 @@ import com.cyberninja.services.entity.OrderServiceI;
 @RequestMapping(path = "/order")
 public class OrderController {
 
-	@Autowired
-	private OrderServiceI orderService;
+	@Autowired private OrderServiceI orderService;
 	
 	@PostMapping
 	public ResponseEntity<OrderDTO> purchaseOrder(

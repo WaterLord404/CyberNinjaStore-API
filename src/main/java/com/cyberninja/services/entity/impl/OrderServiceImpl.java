@@ -1,6 +1,6 @@
 package com.cyberninja.services.entity.impl;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,7 @@ import com.cyberninja.services.entity.CouponServiceI;
 import com.cyberninja.services.entity.CustomerServiceI;
 import com.cyberninja.services.entity.OrderServiceI;
 import com.cyberninja.services.entity.ProductServiceI;
+import com.cyberninja.services.entity.ShippingServiceI;
 
 @Service
 public class OrderServiceImpl implements OrderServiceI {
@@ -44,6 +45,8 @@ public class OrderServiceImpl implements OrderServiceI {
 	
 	@Autowired private OrderRepository orderRepo;
 	
+	@Autowired private ShippingServiceI shippingService;
+	
 	/**
 	 * Añade un pedido a su correspondiente customer
 	 * 
@@ -60,7 +63,7 @@ public class OrderServiceImpl implements OrderServiceI {
 		
 		// Busca, actualiza fecha compra y asigna el customer
 		Customer customer = customerRepo.findById(Long.valueOf(auth.getName())).get();
-		customer.setLastPurchase(LocalDate.now());
+		customer.setLastPurchase(LocalDateTime.now());
 		order.setCustomer(customer);
 
 		// Asigna el cupon
@@ -80,8 +83,10 @@ public class OrderServiceImpl implements OrderServiceI {
 
 		// Calcula el precio total
 		order.setTotalPrice(orderBService.calculateTotalPrice(ordersDetails, order.getCoupon()));
-
-		order.setPurchaseDate(LocalDate.now());
+		order.setPurchaseDate(LocalDateTime.now());
+		
+		// Crea el envio
+		shippingService.addShipping(order);
 		
 		orderDetailsRepo.saveAll(ordersDetails);
 

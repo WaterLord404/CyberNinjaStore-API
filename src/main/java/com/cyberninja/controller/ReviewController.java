@@ -25,8 +25,7 @@ import com.cyberninja.services.entity.ReviewServiceI;
 @RequestMapping(path = "/review")
 public class ReviewController {
 
-	@Autowired
-	private ReviewServiceI reviewService;
+	@Autowired private ReviewServiceI reviewService;
 
 	@GetMapping(path = "/{productId}")
 	public ResponseEntity<List<ReviewDTO>> getReview(@PathVariable Long productId) {

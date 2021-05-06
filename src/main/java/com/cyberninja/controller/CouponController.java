@@ -25,8 +25,7 @@ import com.cyberninja.services.entity.CouponServiceI;
 @RequestMapping(path = "/coupon")
 public class CouponController {
 
-	@Autowired
-	private CouponServiceI couponService;
+	@Autowired private CouponServiceI couponService;
 
 	@GetMapping
 	public ResponseEntity<CouponDTO> getCoupon(@RequestParam String coupon) {

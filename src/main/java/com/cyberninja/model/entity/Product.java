@@ -1,7 +1,7 @@
 package com.cyberninja.model.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -49,7 +49,7 @@ public class Product implements Serializable {
 
 	private Double totalPrice;
 
-	private LocalDate creationDate;
+	private LocalDateTime creationDate;
 
 	private Double stars;
 	
@@ -138,11 +138,11 @@ public class Product implements Serializable {
 	}
 
 	@Column(name = "CREATION_TIME")
-	public LocalDate getCreationDate() {
+	public LocalDateTime getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(LocalDate creationDate) {
+	public void setCreationDate(LocalDateTime creationDate) {
 		this.creationDate = creationDate;
 	}
 
