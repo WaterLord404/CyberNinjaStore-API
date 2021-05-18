@@ -10,6 +10,7 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +42,18 @@ public class OrderController {
 			throw new ResponseStatusException(e.getStatus());
 		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
 			throw new ResponseStatusException(BAD_REQUEST);
+		} catch (Exception e) {
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<OrderDTO>> getOrdersWithShipping(Authentication auth) {
+		try {
+			return ResponseEntity.ok(orderService.getOrdersWithShipping(auth));
+
+		} catch (ResponseStatusException e) {
+			throw new ResponseStatusException(e.getStatus());
 		} catch (Exception e) {
 			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
 		}

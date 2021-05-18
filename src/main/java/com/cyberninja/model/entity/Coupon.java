@@ -1,7 +1,7 @@
 package com.cyberninja.model.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -29,9 +29,9 @@ public class Coupon implements Serializable {
 
 	private String code;
 
-	private LocalDateTime creationDate;
+	private LocalDate creationDate;
 
-	private LocalDateTime expirationDate;
+	private LocalDate expirationDate;
 
 	private Integer uses;
 
@@ -64,20 +64,20 @@ public class Coupon implements Serializable {
 	}
 
 	@Column(name = "CREATION_DATE")
-	public LocalDateTime getCreationDate() {
+	public LocalDate getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(LocalDateTime creationDate) {
+	public void setCreationDate(LocalDate creationDate) {
 		this.creationDate = creationDate;
 	}
 
 	@Column(name = "EXPIRATION_DATE")
-	public LocalDateTime getExpirationDate() {
+	public LocalDate getExpirationDate() {
 		return expirationDate;
 	}
 
-	public void setExpirationDate(LocalDateTime expirationDate) {
+	public void setExpirationDate(LocalDate expirationDate) {
 		this.expirationDate = expirationDate;
 	}
 

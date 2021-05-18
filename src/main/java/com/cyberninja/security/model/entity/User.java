@@ -1,6 +1,6 @@
 package com.cyberninja.security.model.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -61,17 +61,17 @@ public class User implements UserDetails {
 
 	@CreatedDate
 	@Column(name = "CREATION_DATE")
-	private LocalDateTime creationDate;
+	private LocalDate creationDate;
 
 	@UpdateTimestamp
 	@Column(name = "UPDATE_DATE")
-	private LocalDateTime updateDate;
+	private LocalDate updateDate;
 
 	@Column(name = "DELETE_DATE")
-	private LocalDateTime deleteDate;
+	private LocalDate deleteDate;
 
 	@Column(name = "LAST_PASS_CHANGE_DATE")
-	private LocalDateTime lastPasswordChange;
+	private LocalDate lastPasswordChange;
 
 	@Column(name = "LOCKED")
 	private boolean locked;
@@ -83,13 +83,13 @@ public class User implements UserDetails {
 	private Integer authenticationAttempts;
 
 	@Column(name = "PASS_EXP_DATE")
-	private LocalDateTime passwordPolicyExpDate;
+	private LocalDate passwordPolicyExpDate;
 
 	@Column(name = "CONFIRMATION_TOKEN")
 	private String confirmationToken;
 
 	@OneToOne
-	@JoinColumn(name = "CUSTOMER_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_USERS__CUSTOMER_ID"))
+	@JoinColumn(name = "CUSTOMER_ID", foreignKey = @ForeignKey(name = "FK_USERS__CUSTOMER_ID"))
 	private Customer customer;
 
 	@Override
@@ -143,35 +143,35 @@ public class User implements UserDetails {
 		this.roles = roles;
 	}
 
-	public LocalDateTime getCreationDate() {
+	public LocalDate getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(LocalDateTime creationDate) {
+	public void setCreationDate(LocalDate creationDate) {
 		this.creationDate = creationDate;
 	}
 
-	public LocalDateTime getUpdateDate() {
+	public LocalDate getUpdateDate() {
 		return updateDate;
 	}
 
-	public void setUpdateDate(LocalDateTime updateDate) {
+	public void setUpdateDate(LocalDate updateDate) {
 		this.updateDate = updateDate;
 	}
 
-	public LocalDateTime getDeleteDate() {
+	public LocalDate getDeleteDate() {
 		return deleteDate;
 	}
 
-	public void setDeleteDate(LocalDateTime deleteDate) {
+	public void setDeleteDate(LocalDate deleteDate) {
 		this.deleteDate = deleteDate;
 	}
 
-	public LocalDateTime getLastPasswordChange() {
+	public LocalDate getLastPasswordChange() {
 		return lastPasswordChange;
 	}
 
-	public void setLastPasswordChange(LocalDateTime lastPasswordChange) {
+	public void setLastPasswordChange(LocalDate lastPasswordChange) {
 		this.lastPasswordChange = lastPasswordChange;
 	}
 
@@ -211,11 +211,11 @@ public class User implements UserDetails {
 		this.authenticationAttempts = authenticationAttempts;
 	}
 
-	public LocalDateTime getPasswordPolicyExpDate() {
+	public LocalDate getPasswordPolicyExpDate() {
 		return passwordPolicyExpDate;
 	}
 
-	public void setPasswordPolicyExpDate(LocalDateTime passwordPolicyExpDate) {
+	public void setPasswordPolicyExpDate(LocalDate passwordPolicyExpDate) {
 		this.passwordPolicyExpDate = passwordPolicyExpDate;
 	}
 

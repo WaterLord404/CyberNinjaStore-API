@@ -1,5 +1,5 @@
 package com.cyberninja.model.entity.enumerated;
 
 public enum ShippingStatus {
-	ACCEPTED, DENIED, RETURNED, ONTHEWAY, DELIVERED
+	ACCEPTED, RETURNED, INTRANSIT, DELIVERED
 }

@@ -1,7 +1,7 @@
 package com.cyberninja.model.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -30,7 +30,7 @@ public class Order implements Serializable {
 
 	private Double totalPrice;
 
-	private LocalDateTime purchaseDate;
+	private LocalDate purchaseDate;
 
 	private Customer customer;
 
@@ -63,11 +63,11 @@ public class Order implements Serializable {
 	}
 
 	@Column(name = "PURCHASE_DATE")
-	public LocalDateTime getPurchaseDate() {
+	public LocalDate getPurchaseDate() {
 		return purchaseDate;
 	}
 
-	public void setPurchaseDate(LocalDateTime purchaseDate) {
+	public void setPurchaseDate(LocalDate purchaseDate) {
 		this.purchaseDate = purchaseDate;
 	}
 

@@ -2,7 +2,7 @@ package com.cyberninja.services.entity.impl;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,8 +84,7 @@ public class CartServiceImpl implements CartServiceI {
 		// Cada producto asigna su order y producto
 		for (OrderDetails i : ordersDetails) {
 			i.setProduct(productService.getProduct(
-					dtos.get(ordersDetails.indexOf(i))
-					.getProduct().getId()));
+					dtos.get(ordersDetails.indexOf(i)).getProduct().getId()));
 			i.setOrder(order);
 		}
 		
@@ -94,7 +93,7 @@ public class CartServiceImpl implements CartServiceI {
 				
 		// asigna carrito
 		Cart cart = getCartOrCreate(auth);
-		cart.setUpdateDate(LocalDateTime.now());
+		cart.setUpdateDate(LocalDate.now());
 		
 		// Asigna el order y el cart
 		cart.setOrder(order);
@@ -130,8 +129,11 @@ public class CartServiceImpl implements CartServiceI {
 	 */
 	@Override
 	public Cart getCartOrCreate(Authentication auth) {
+		Cart cart = new Cart();
+		cart.setUpdateDate(LocalDate.now());
+		
 		return cartRepo.findUserCart(Long.parseLong(auth.getName()))
-				.orElse(new Cart());
+				.orElse(cart);
 	}
 
 }

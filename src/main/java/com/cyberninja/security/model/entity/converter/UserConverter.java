@@ -1,6 +1,6 @@
 package com.cyberninja.security.model.entity.converter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.UUID;
 
@@ -30,13 +30,13 @@ public class UserConverter {
 		user.setUsername(dto.getUsername());
 		user.setPassword(passwordEncoder.encode(dto.getPassword()));
 		user.setRoles(Set.of(UserRole.USER));
-		user.setCreationDate(LocalDateTime.now());
-		user.setUpdateDate(LocalDateTime.now());
-		user.setLastPasswordChange(LocalDateTime.now());
+		user.setCreationDate(LocalDate.now());
+		user.setUpdateDate(LocalDate.now());
+		user.setLastPasswordChange(LocalDate.now());
 		user.setLocked(false);
 		user.setEnabled(false);
 		user.setAuthenticationAttempts(0);
-		user.setPasswordPolicyExpDate(LocalDateTime.now().plusDays(180));
+		user.setPasswordPolicyExpDate(LocalDate.now().plusDays(180));
 		user.setConfirmationToken(UUID.randomUUID().toString());
 		
 		return user;

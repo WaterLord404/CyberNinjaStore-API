@@ -1,6 +1,6 @@
 package com.cyberninja.model.entity.converter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class ReviewConverter {
 	public Review reviewDTOToReview(ReviewDTO dto) {
 		Review review = new Review();
 
-		review.setCreationDate(LocalDateTime.now());
+		review.setCreationDate(LocalDate.now());
 		review.setDetails(dto.getDetails());
 		review.setValue(dto.getValue());
 		

@@ -1,6 +1,6 @@
 package com.cyberninja.model.entity.converter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.springframework.stereotype.Component;
 
@@ -25,7 +25,7 @@ public class ProviderConverter {
 
 		provider.setName(dto.getName());
 		provider.setContract(dto.getContract());
-		provider.setCreationDate(LocalDateTime.now());
+		provider.setCreationDate(LocalDate.now());
 		
 		return provider;
 	}

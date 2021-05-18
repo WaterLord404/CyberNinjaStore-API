@@ -1,5 +1,6 @@
 package com.cyberninja.model.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,5 +17,12 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 			"FROM ORDERS o " + 
 			"WHERE o.PURCHASE_DATE IS NULL " + 
 			"AND o.CUSTOMER_ID = ?1", nativeQuery = true)
-	Optional<Order> getUserOrder(Long id);
+	Optional<Order> getUserCartOrder(Long id);
+	
+	@Query(value = 
+			"SELECT o.* " +
+			"FROM ORDERS o " + 
+			"WHERE o.PURCHASE_DATE IS NOT NULL " + 
+			"AND o.CUSTOMER_ID = ?1", nativeQuery = true)
+	List<Order> getUserOrders(Long id);
 }

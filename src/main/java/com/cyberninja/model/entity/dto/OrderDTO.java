@@ -1,5 +1,6 @@
 package com.cyberninja.model.entity.dto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -12,9 +13,13 @@ public class OrderDTO {
 
 	private Double totalPrice;
 
-	private List<OrderDetailsDTO> orderProducts;
+	private LocalDate purchaseDate;
+
+	private List<OrderDetailsDTO> ordersDetails;
 
 	private CouponDTO coupon;
+
+	private ShippingDTO shipping;
 
 	public Long getId() {
 		return id;
@@ -32,13 +37,14 @@ public class OrderDTO {
 		this.totalPrice = totalPrice;
 	}
 
-	public List<OrderDetailsDTO> getOrderProducts() {
-		return orderProducts;
+	public LocalDate getPurchaseDate() {
+		return purchaseDate;
 	}
 
-	public void setOrderProductDTO(List<OrderDetailsDTO> orderProducts) {
-		this.orderProducts = orderProducts;
+	public void setPurchaseDate(LocalDate purchaseDate) {
+		this.purchaseDate = purchaseDate;
 	}
+
 
 	public CouponDTO getCoupon() {
 		return coupon;
@@ -48,8 +54,20 @@ public class OrderDTO {
 		this.coupon = coupon;
 	}
 
-	public void setOrderProducts(List<OrderDetailsDTO> orderProducts) {
-		this.orderProducts = orderProducts;
+	public ShippingDTO getShipping() {
+		return shipping;
+	}
+
+	public void setShipping(ShippingDTO shipping) {
+		this.shipping = shipping;
+	}
+
+	public List<OrderDetailsDTO> getOrdersDetails() {
+		return ordersDetails;
+	}
+
+	public void setOrdersDetails(List<OrderDetailsDTO> ordersDetails) {
+		this.ordersDetails = ordersDetails;
 	}
 
 }
