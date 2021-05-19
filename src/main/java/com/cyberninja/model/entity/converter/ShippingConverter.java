@@ -1,5 +1,8 @@
 package com.cyberninja.model.entity.converter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.cyberninja.model.entity.Shipping;
@@ -18,6 +21,16 @@ public class ShippingConverter {
 		dto.setStatus(shipping.getStatus());
 
 		return dto;
+	}
+	
+	public List<ShippingDTO> shippingsToShippingsDTO(List<Shipping> shippings) {
+		List<ShippingDTO> dtos = new ArrayList<>();
+
+		for (Shipping shipping : shippings) {
+			dtos.add(shippingToShippingDTO(shipping));
+		}
+		
+		return dtos;
 	}
 
 }

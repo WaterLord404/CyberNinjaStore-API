@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -28,6 +29,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.cyberninja.model.entity.Customer;
+import com.cyberninja.model.entity.Shipping;
 import com.cyberninja.security.model.entity.enumerated.UserRole;
 
 @Entity
@@ -91,6 +93,9 @@ public class User implements UserDetails {
 	@OneToOne
 	@JoinColumn(name = "CUSTOMER_ID", foreignKey = @ForeignKey(name = "FK_USERS__CUSTOMER_ID"))
 	private Customer customer;
+	
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private Shipping shipping;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -229,6 +234,14 @@ public class User implements UserDetails {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+
+	public Shipping getShipping() {
+		return shipping;
+	}
+
+	public void setShipping(Shipping shipping) {
+		this.shipping = shipping;
 	}
 
 	public static long getSerialversionuid() {

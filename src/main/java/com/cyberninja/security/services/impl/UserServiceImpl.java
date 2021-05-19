@@ -73,6 +73,15 @@ public class UserServiceImpl implements UserDetailsService, UserServiceI {
 	}
 
 	/**
+	 * Obtiene un usuario por id
+	 */
+	@Override
+	public User getUserById(Long id) {
+		return userRepo.findUserByIdAndEnabled(id, true)
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+	}
+	
+	/**
 	 * Devuelve un UserDTO
 	 */
 	@Override

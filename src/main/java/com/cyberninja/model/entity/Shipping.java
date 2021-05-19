@@ -8,13 +8,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.cyberninja.model.entity.enumerated.ShippingStatus;
+import com.cyberninja.security.model.entity.User;
 
 @Entity
 @Table(name = "SHIPPINGS")
@@ -38,6 +41,8 @@ public class Shipping implements Serializable {
 	private ShippingStatus status;
 
 	private Order order;
+
+	private User user;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -103,6 +108,16 @@ public class Shipping implements Serializable {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	@OneToOne
+	@JoinColumn(name = "USER_SHIPPER_ID", foreignKey = @ForeignKey(name = "FK_SHIPPING__USER_SHIPPER_ID"))
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public static long getSerialversionuid() {

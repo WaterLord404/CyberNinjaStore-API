@@ -11,11 +11,13 @@ import com.cyberninja.security.model.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
 
-	public Optional<User> findByUsername(String username);
+	Optional<User> findUserByIdAndEnabled(Long id, boolean enabled);
 	
-	public User findUserByUsername(String username);
-	
-	public Optional<User> findUserByConfirmationTokenAndEnabled(String token, boolean enabled);
+	Optional<User> findByUsername(String username);
+
+	User findUserByUsername(String username);
+
+	Optional<User> findUserByConfirmationTokenAndEnabled(String token, boolean enabled);
 	
 	@Query(value = 
 			"SELECT u.* " +
@@ -23,5 +25,5 @@ public interface UserRepository extends JpaRepository<User, Long>{
 			"WHERE u.CUSTOMER_ID = c.CUSTOMER_ID " +
 			"AND c.EMAIL = ?1 " +
 			"AND u.ENABLED = 1", nativeQuery = true)
-	public Optional<User> getUserByEmail(String email);
+	Optional<User> getUserByEmail(String email);
 }

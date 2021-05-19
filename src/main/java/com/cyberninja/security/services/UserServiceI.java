@@ -4,9 +4,12 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.cyberninja.security.model.entity.User;
 import com.cyberninja.security.model.entity.dto.UserDTO;
 
 public interface UserServiceI {
+
+	User getUserById(Long id);
 
 	UserDTO createUser(UserDTO dto);
 
