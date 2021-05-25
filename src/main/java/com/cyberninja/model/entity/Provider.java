@@ -27,13 +27,15 @@ public class Provider implements Serializable {
 	private static final long serialVersionUID = -7495685278131718878L;
 
 	private Long id;
-	
+
 	private String name;
-	
+
 	private LocalDate creationDate;
-	
+
 	private ProviderContract contract;
-	
+
+	private Double profits;
+
 	private List<Product> products;
 
 	@Id
@@ -75,17 +77,26 @@ public class Provider implements Serializable {
 		this.contract = contract;
 	}
 
+	@Column(name = "PROFITS", nullable = false)
+	public Double getProfits() {
+		return profits;
+	}
+
+	public void setProfits(Double profits) {
+		this.profits = profits;
+	}
+
 	@OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
-	public List<Product> getProduct() {
+	public List<Product> getProducts() {
 		return products;
 	}
 
-	public void setProduct(List<Product> products) {
+	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 }

@@ -30,6 +30,8 @@ public class Shipping implements Serializable {
 
 	private Long id;
 
+	private String uuid;
+
 	private Date updateDate;
 
 	private String village;
@@ -53,6 +55,15 @@ public class Shipping implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	@Column(name = "UUID", nullable = false)
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 	@Column(name = "UPDATE_DATE")

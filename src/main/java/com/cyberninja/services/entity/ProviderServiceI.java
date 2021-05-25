@@ -8,4 +8,6 @@ public interface ProviderServiceI {
 
 	ProviderDTO addProvider(ProviderDTO dto);
 
+	void plusProfits(Double profits, Long idProvider);
+
 }

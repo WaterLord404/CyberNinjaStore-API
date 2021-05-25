@@ -26,6 +26,7 @@ public class ProviderConverter {
 		provider.setName(dto.getName());
 		provider.setContract(dto.getContract());
 		provider.setCreationDate(LocalDate.now());
+		provider.setProfits(0.0);
 		
 		return provider;
 	}

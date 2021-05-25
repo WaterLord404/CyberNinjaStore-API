@@ -66,8 +66,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			
 			.antMatchers(POST, "/review/*").hasRole(UserRole.USER.name())
 			
-			.antMatchers(POST, "/shipping/*").hasRole(UserRole.SHIPPER.name())
+			.antMatchers(PUT, "/shipping/*").hasRole(UserRole.SHIPPER.name())
 			.antMatchers(PUT, "/shipping").hasRole(UserRole.SHIPPER.name())
+			.antMatchers(GET, "/shipping").hasRole(UserRole.SHIPPER.name())
 
 			.antMatchers("/**").permitAll()
 		.anyRequest()

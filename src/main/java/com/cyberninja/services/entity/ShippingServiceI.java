@@ -12,7 +12,9 @@ public interface ShippingServiceI {
 	
 	void addShipping(Order order) throws ParseException;
 
-	ShippingDTO updateShipping(Authentication auth, Long shippingId, ShippingDTO dto) throws ParseException;
+	ShippingDTO updateShipping(Authentication auth, String uuid, ShippingDTO dto, Boolean newShipping) throws ParseException;
 
-	List<ShippingDTO> updateShippings(Authentication auth, ShippingDTO dto);
+	List<ShippingDTO> syncShippings(Authentication auth, ShippingDTO dto);
+
+	List<ShippingDTO> getShippings(Authentication auth);
 }

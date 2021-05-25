@@ -7,21 +7,21 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class CustomerDTO {
 
 	private String name;
-	
+
 	private String surname;
-	
+
 	private String email;
-	
+
 	private String telephone;
-	
-	private String region;
-	
-	private String province;
-	
-	private String locality;
-	
+
+	private String county;
+
+	private String state;
+
+	private String village;
+
 	private String postalCode;
-	
+
 	private String address;
 
 	public String getName() {
@@ -56,28 +56,28 @@ public class CustomerDTO {
 		this.telephone = telephone;
 	}
 
-	public String getRegion() {
-		return region;
+	public String getCounty() {
+		return county;
 	}
 
-	public void setRegion(String region) {
-		this.region = region;
+	public void setCounty(String county) {
+		this.county = county;
 	}
 
-	public String getProvince() {
-		return province;
+	public String getState() {
+		return state;
 	}
 
-	public void setProvince(String province) {
-		this.province = province;
+	public void setState(String state) {
+		this.state = state;
 	}
 
-	public String getLocality() {
-		return locality;
+	public String getVillage() {
+		return village;
 	}
 
-	public void setLocality(String locality) {
-		this.locality = locality;
+	public void setVillage(String village) {
+		this.village = village;
 	}
 
 	public String getPostalCode() {
@@ -95,5 +95,5 @@ public class CustomerDTO {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
+
 }

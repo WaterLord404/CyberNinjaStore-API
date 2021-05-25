@@ -25,6 +25,7 @@ import com.cyberninja.model.repository.CustomerRepository;
 import com.cyberninja.model.repository.OrderDetailsRepository;
 import com.cyberninja.model.repository.OrderRepository;
 import com.cyberninja.services.business.OrderBusinessServiceI;
+import com.cyberninja.services.business.ProviderBusinessServiceI;
 import com.cyberninja.services.entity.CartServiceI;
 import com.cyberninja.services.entity.CouponServiceI;
 import com.cyberninja.services.entity.CustomerServiceI;
@@ -61,6 +62,8 @@ public class OrderServiceImpl implements OrderServiceI {
 	
 	@Autowired private ProductConverter productConverter;
 	
+	@Autowired private ProviderBusinessServiceI providerBService;
+	
 	/**
 	 * Añade un pedido a su correspondiente customer
 	 * 
@@ -83,9 +86,9 @@ public class OrderServiceImpl implements OrderServiceI {
 		order.setCustomer(customer);
 
 		// Asigna el cupon
-		if(couponCode != null) {
+		if (couponCode != null) {
 			couponCode = couponCode.toUpperCase();
-			order.setCoupon(couponService.getValidCouponByCode(couponCode));			
+			order.setCoupon(couponService.getValidCouponByCode(couponCode));
 		}
 		
 		// Asigna a cada order detail su order, product
@@ -106,6 +109,9 @@ public class OrderServiceImpl implements OrderServiceI {
 		// Crea el envio
 		shippingService.addShipping(order);
 
+		// Asigna el precio al proveedor
+		providerBService.calculateProfits(ordersDetails);
+		
 		orderDetailsRepo.saveAll(ordersDetails);
 
 		return orderConverter.orderToOrderDTO(order);

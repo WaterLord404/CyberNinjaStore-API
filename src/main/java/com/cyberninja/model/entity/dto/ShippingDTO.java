@@ -6,6 +6,10 @@ import com.cyberninja.model.entity.enumerated.ShippingStatus;
 
 public class ShippingDTO {
 
+	private Long id;
+
+	private String uuid;
+
 	private Date updateDate;
 
 	private String village;
@@ -15,6 +19,24 @@ public class ShippingDTO {
 	private String state;
 
 	private ShippingStatus status;
+
+	private CustomerDTO customer;
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public Date getUpdateDate() {
 		return updateDate;
@@ -54,6 +76,14 @@ public class ShippingDTO {
 
 	public void setStatus(ShippingStatus status) {
 		this.status = status;
+	}
+
+	public CustomerDTO getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(CustomerDTO customer) {
+		this.customer = customer;
 	}
 
 }

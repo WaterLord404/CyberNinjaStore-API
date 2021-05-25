@@ -1,19 +1,23 @@
 package com.cyberninja.services.entity.impl;
 
 import static com.cyberninja.model.entity.enumerated.ShippingStatus.ACCEPTED;
+import static com.cyberninja.model.entity.enumerated.ShippingStatus.INTRANSIT;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.model.entity.Order;
 import com.cyberninja.model.entity.Shipping;
+import com.cyberninja.model.entity.converter.CustomerConverter;
 import com.cyberninja.model.entity.converter.ShippingConverter;
 import com.cyberninja.model.entity.dto.ShippingDTO;
 import com.cyberninja.model.repository.ShippingRepository;
@@ -29,6 +33,33 @@ public class ShippingServiceImpl implements ShippingServiceI {
 	
 	@Autowired private UserServiceI userService;
 	
+	@Autowired private CustomerConverter customerConverter;
+	
+	/**
+	 * Obtiene los envios del transportista en camino
+	 */
+	@Override
+	public List<ShippingDTO> getShippings(Authentication auth) {
+		List<Shipping> shippings = shippingRepo.findShippingsInTransit(Long.parseLong(auth.getName()));
+		
+		if (shippings.isEmpty()) {
+			throw new ResponseStatusException(NOT_FOUND);
+		}
+		
+		List<ShippingDTO> dtos = shippingConverter.shippingsToShippingsDTO(shippings);
+		
+		for (ShippingDTO i : dtos) {
+			i.setId(shippings.get(dtos.indexOf(i)).getId());
+			
+			i.setUuid(shippings.get(dtos.indexOf(i)).getUuid());
+			
+			i.setCustomer(customerConverter.CustomerToCustomerDTO(
+					shippings.get(dtos.indexOf(i)).getUser().getCustomer()));
+		}
+		
+		return dtos;
+	}
+	
 	/**
 	 * Añade un envio
 	 * @throws ParseException 
@@ -38,8 +69,8 @@ public class ShippingServiceImpl implements ShippingServiceI {
 		Shipping shipping = new Shipping();
 		shipping.setOrder(order);
 		shipping.setStatus(ACCEPTED);
-		shipping.setUpdateDate(new Date());
-		
+		shipping.setUuid(UUID.randomUUID().toString());
+
 		order.setShipping(shipping);
 	
 		shippingRepo.save(shipping);
@@ -51,9 +82,13 @@ public class ShippingServiceImpl implements ShippingServiceI {
 	 * @throws ParseException 
 	 */
 	@Override
-	public ShippingDTO updateShipping(Authentication auth, Long shippingId, ShippingDTO dto) throws ParseException {
-		Shipping shipping = shippingRepo.findById(shippingId)
+	public ShippingDTO updateShipping(Authentication auth, String uuid, ShippingDTO dto, Boolean newShipping) throws ParseException {
+		Shipping shipping = shippingRepo.findShippingByUuid(uuid)
 				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+		
+		if(newShipping && shipping.getStatus().equals(INTRANSIT)) {
+			throw new ResponseStatusException(HttpStatus.CONFLICT);
+		}
 		
 		shipping.setUser(userService.getUserById(Long.parseLong(auth.getName())));
 		shipping.setUpdateDate(new Date());
@@ -61,17 +96,17 @@ public class ShippingServiceImpl implements ShippingServiceI {
 		shipping.setState(dto.getState());
 		shipping.setVillage(dto.getVillage());
 		shipping.setStatus(dto.getStatus());
-
+		
 		shippingRepo.save(shipping);
 
 		return shippingConverter.shippingToShippingDTO(shipping);
 	}
 
 	/**
-	 * Actualiza todos los envios que estan en 
+	 * Actualiza todos los envios que estan siendo llevados por el transportista 
 	 */
 	@Override
-	public List<ShippingDTO> updateShippings(Authentication auth, ShippingDTO dto) {
+	public List<ShippingDTO> syncShippings(Authentication auth, ShippingDTO dto) {
 		List<Shipping> shippings = shippingRepo.findShippingsInTransitForShipper(Long.parseLong(auth.getName()));
 		
 		if (shippings.isEmpty()) {
@@ -83,7 +118,6 @@ public class ShippingServiceImpl implements ShippingServiceI {
 			shipping.setCounty(dto.getCounty());
 			shipping.setState(dto.getState());
 			shipping.setVillage(dto.getVillage());
-			shipping.setStatus(dto.getStatus());
 
 			shippingRepo.save(shipping);
 		}

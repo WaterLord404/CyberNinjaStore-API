@@ -15,9 +15,9 @@ public class CustomerConverter {
 		customer.setSurname(dto.getSurname());
 		customer.setEmail(dto.getEmail());
 		customer.setTelephone(dto.getTelephone());
-		customer.setRegion(dto.getRegion());
-		customer.setProvince(dto.getProvince());
-		customer.setLocality(dto.getLocality());
+		customer.setCounty(dto.getCounty());
+		customer.setState(dto.getState());
+		customer.setVillage(dto.getVillage());
 		customer.setPostalCode(dto.getPostalCode());
 		customer.setAddress(dto.getAddress());
 		customer.setLastPurchase(null);
@@ -32,9 +32,9 @@ public class CustomerConverter {
 		dto.setSurname(customer.getSurname());
 		dto.setEmail(customer.getEmail());
 		dto.setTelephone(customer.getTelephone());
-		dto.setRegion(customer.getRegion());
-		dto.setProvince(customer.getProvince());
-		dto.setLocality(customer.getLocality());
+		dto.setCounty(customer.getCounty());
+		dto.setState(customer.getState());
+		dto.setVillage(customer.getVillage());
 		dto.setPostalCode(customer.getPostalCode());
 		dto.setAddress(customer.getAddress());
 

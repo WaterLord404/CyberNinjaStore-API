@@ -10,11 +10,12 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -29,13 +30,26 @@ public class ShippingController {
 	@Autowired
 	private ShippingServiceI shippingService;
 
-	@PostMapping(path = "/{shippingId}")
+	@GetMapping
+	public ResponseEntity<List<ShippingDTO>> getShippings(Authentication auth) {
+		try {
+			return ResponseEntity.ok(shippingService.getShippings(auth));
+
+		} catch (ResponseStatusException e) {
+			throw new ResponseStatusException(e.getStatus());
+		} catch (Exception e) {
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PutMapping(path = "/{uuid}")
 	public ResponseEntity<ShippingDTO> updateShipping(
 			Authentication auth, 
-			@PathVariable Long shippingId,
-			@RequestBody ShippingDTO dto) {
+			@PathVariable String uuid,
+			@RequestBody ShippingDTO dto,
+			@RequestParam boolean newShipping) {
 		try {
-			return ResponseEntity.ok(shippingService.updateShipping(auth, shippingId, dto));
+			return ResponseEntity.ok(shippingService.updateShipping(auth, uuid, dto, newShipping));
 
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus());
@@ -47,9 +61,9 @@ public class ShippingController {
 	}
 
 	@PutMapping
-	public ResponseEntity<List<ShippingDTO>> updateShippings(Authentication auth, @RequestBody ShippingDTO dto) {
+	public ResponseEntity<List<ShippingDTO>> syncShippings(Authentication auth, @RequestBody ShippingDTO dto) {
 		try {
-			return ResponseEntity.ok(shippingService.updateShippings(auth, dto));
+			return ResponseEntity.ok(shippingService.syncShippings(auth, dto));
 
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus());

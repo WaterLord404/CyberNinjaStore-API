@@ -1,11 +1,13 @@
 package com.cyberninja.services.entity.impl;
 
+import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -49,8 +51,15 @@ public class ReviewServiceImpl implements ReviewServiceI {
 	 * Crea una review para un producto
 	 */
 	@Override
-	public ReviewDTO addReview(Long productId, ReviewDTO dto) {
-		Review review = reviewConverter.reviewDTOToReview(dto);
+	public ReviewDTO addReview(Authentication auth, Long productId, ReviewDTO dto) {
+		// Comprueba si el usuario ya ha valorado el producto
+		Review review = reviewRepo.findCustomerReview(productId, Long.parseLong(auth.getName()));
+		
+		if (review != null) {
+			throw new ResponseStatusException(CONFLICT);
+		}
+		
+		review = reviewConverter.reviewDTOToReview(dto);
 		
 		// Valida la review
 		if (!reviewBService.isReviewValid(review)) {

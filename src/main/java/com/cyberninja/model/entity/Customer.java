@@ -35,11 +35,11 @@ public class Customer implements Serializable {
 	
 	private String telephone;
 	
-	private String region;
+	private String county;
 	
-	private String province;
+	private String state;
 	
-	private String locality;
+	private String village;
 	
 	private String postalCode;
 	
@@ -98,31 +98,31 @@ public class Customer implements Serializable {
 		this.telephone = telephone;
 	}
 
-	@Column(name = "REGION", nullable = false)
-	public String getRegion() {
-		return region;
+	@Column(name = "COUNTY", nullable = false)
+	public String getCounty() {
+		return county;
 	}
 
-	public void setRegion(String region) {
-		this.region = region;
+	public void setCounty(String county) {
+		this.county = county;
 	}
 
-	@Column(name = "PROVINCE", nullable = false)
-	public String getProvince() {
-		return province;
+	@Column(name = "STATE", nullable = false)
+	public String getState() {
+		return state;
 	}
 
-	public void setProvince(String province) {
-		this.province = province;
+	public void setState(String state) {
+		this.state = state;
 	}
 
-	@Column(name = "LOCALITY", nullable = false)
-	public String getLocality() {
-		return locality;
+	@Column(name = "VILLAGE", nullable = false)
+	public String getVillage() {
+		return village;
 	}
 
-	public void setLocality(String locality) {
-		this.locality = locality;
+	public void setVillage(String village) {
+		this.village = village;
 	}
 
 	@Column(name = "POSTAL_CODE", nullable = false)

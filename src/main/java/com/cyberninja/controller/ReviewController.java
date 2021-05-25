@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,9 +41,9 @@ public class ReviewController {
 	}
 
 	@PostMapping(path = "/{productId}")
-	public ResponseEntity<ReviewDTO> addReview(@PathVariable Long productId, @RequestBody ReviewDTO dto) {
+	public ResponseEntity<ReviewDTO> addReview(Authentication auth, @PathVariable Long productId, @RequestBody ReviewDTO dto) {
 		try {
-			return ResponseEntity.ok(reviewService.addReview(productId, dto));
+			return ResponseEntity.ok(reviewService.addReview(auth, productId, dto));
 
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus());
