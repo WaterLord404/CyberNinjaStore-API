@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(value = Include.NON_NULL)
 public class OrderDetailsDTO {
 
+	private Long id;
+
 	private Integer units;
 
 	private ProductColour colour;
@@ -17,6 +19,24 @@ public class OrderDetailsDTO {
 	private ProductDTO product;
 
 	private OrderDTO order;
+
+	private boolean returned;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public boolean isReturned() {
+		return returned;
+	}
+
+	public void setReturned(boolean returned) {
+		this.returned = returned;
+	}
 
 	public Integer getUnits() {
 		return units;

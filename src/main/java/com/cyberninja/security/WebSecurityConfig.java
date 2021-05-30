@@ -48,6 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable().authorizeRequests()
 			.antMatchers(POST, "/order").hasRole(UserRole.USER.name())
 			.antMatchers(GET, "/order").hasRole(UserRole.USER.name())
+			.antMatchers(PUT, "/order").hasRole(UserRole.USER.name())
 
 			.antMatchers(GET, "/cart").hasRole(UserRole.USER.name())
 			.antMatchers(POST, "/cart").hasRole(UserRole.USER.name())

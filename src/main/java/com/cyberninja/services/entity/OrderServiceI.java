@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import com.cyberninja.model.entity.Order;
 import com.cyberninja.model.entity.dto.OrderDTO;
 import com.cyberninja.model.entity.dto.OrderDetailsDTO;
+import com.cyberninja.model.entity.dto.ReturnDTO;
 
 public interface OrderServiceI {
 
@@ -18,5 +19,7 @@ public interface OrderServiceI {
 	Order getOrderOrCreate(Authentication auth);
 
 	List<OrderDTO> getOrdersWithShipping(Authentication auth);
+
+	OrderDetailsDTO returnProduct(ReturnDTO dto, Authentication auth);
 
 }

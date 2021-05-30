@@ -38,7 +38,8 @@ public class OrderDetails implements Serializable {
 
 	private Order order;
 
-	
+	private boolean returned;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ORDER_DETAILS_ID")
@@ -97,6 +98,15 @@ public class OrderDetails implements Serializable {
 
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+
+	@Column(name = "RETURNED", nullable = false)
+	public boolean isReturned() {
+		return returned;
+	}
+
+	public void setReturned(boolean returned) {
+		this.returned = returned;
 	}
 
 	public static long getSerialversionuid() {

@@ -14,6 +14,7 @@ public class ShippingConverter {
 	public ShippingDTO shippingToShippingDTO(Shipping shipping) {
 		ShippingDTO dto = new ShippingDTO();
 
+		dto.setId(shipping.getId());
 		dto.setUpdateDate(shipping.getUpdateDate());
 		dto.setCounty(shipping.getCounty());
 		dto.setState(shipping.getState());

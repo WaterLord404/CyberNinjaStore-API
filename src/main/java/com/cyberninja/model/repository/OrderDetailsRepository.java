@@ -27,5 +27,6 @@ public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Long
 			"AND o.CUSTOMER_ID = ?1 " +
 			"AND o.ORDER_ID = ?2", nativeQuery = true)
 	List<OrderDetails> findUserProductsOnOrder(Long idUser, Long idOrder);
+
 }
 

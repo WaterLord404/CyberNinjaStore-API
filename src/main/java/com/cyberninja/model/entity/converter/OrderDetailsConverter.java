@@ -17,6 +17,7 @@ public class OrderDetailsConverter {
 		orderDetails.setUnits(dto.getUnits());
 		orderDetails.setColour(dto.getColour());
 		orderDetails.setSize(dto.getSize());
+		orderDetails.setReturned(false);
 		
 		return orderDetails;
 	}
@@ -24,9 +25,11 @@ public class OrderDetailsConverter {
 	public OrderDetailsDTO orderDetailsToOrderDetailsDTO(OrderDetails orderDetails) {
 		OrderDetailsDTO dto = new OrderDetailsDTO();
 		
+		dto.setId(orderDetails.getId());
 		dto.setUnits(orderDetails.getUnits());
 		dto.setColour(orderDetails.getColour());
 		dto.setSize(orderDetails.getSize());
+		dto.setReturned(orderDetails.isReturned());
 		
 		return dto;
 	}

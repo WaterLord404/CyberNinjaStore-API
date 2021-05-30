@@ -2,6 +2,7 @@ package com.cyberninja.services.entity.impl;
 
 import static com.cyberninja.model.entity.enumerated.ShippingStatus.ACCEPTED;
 import static com.cyberninja.model.entity.enumerated.ShippingStatus.INTRANSIT;
+import static com.cyberninja.model.entity.enumerated.ShippingStatus.RETURNED;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.text.ParseException;
@@ -75,7 +76,20 @@ public class ShippingServiceImpl implements ShippingServiceI {
 	
 		shippingRepo.save(shipping);
 	}
-
+	
+	/**
+	 * 
+	 * @param shipping
+	 * @throws ParseException
+	 */
+	@Override
+	public void returnShipping(ShippingDTO dto) {
+		Shipping shipping = shippingRepo.findById(dto.getId())
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		
+		shipping.setStatus(RETURNED);
+		shippingRepo.save(shipping);
+	}
 
 	/**
 	 * Actualiza un envio

@@ -1,5 +1,6 @@
 package com.cyberninja.services.entity.impl;
 
+import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.text.ParseException;
@@ -21,6 +22,7 @@ import com.cyberninja.model.entity.converter.ProductConverter;
 import com.cyberninja.model.entity.converter.ShippingConverter;
 import com.cyberninja.model.entity.dto.OrderDTO;
 import com.cyberninja.model.entity.dto.OrderDetailsDTO;
+import com.cyberninja.model.entity.dto.ReturnDTO;
 import com.cyberninja.model.repository.CustomerRepository;
 import com.cyberninja.model.repository.OrderDetailsRepository;
 import com.cyberninja.model.repository.OrderRepository;
@@ -168,6 +170,24 @@ public class OrderServiceImpl implements OrderServiceI {
 		}
 		
 		return dtos;
+	}
+
+	/**
+	 * Devuelve un producto
+	 */
+	@Override
+	public OrderDetailsDTO returnProduct(ReturnDTO dto, Authentication auth) {
+		OrderDetails orderDetails = orderDetailsRepo.findById(dto.getOrderDetails().getId())
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+				
+		if(orderDetails.isReturned()) {
+			throw new ResponseStatusException(CONFLICT);
+		}
+		
+		shippingService.returnShipping(dto.getShipping());
+		orderDetails.setReturned(true);
+		
+		return orderDetailsConverter.orderDetailsToOrderDetailsDTO(orderDetailsRepo.save(orderDetails));
 	}
 
 }

@@ -17,4 +17,6 @@ public interface ShippingServiceI {
 	List<ShippingDTO> syncShippings(Authentication auth, ShippingDTO dto);
 
 	List<ShippingDTO> getShippings(Authentication auth);
+
+	void returnShipping(ShippingDTO dto);
 }
