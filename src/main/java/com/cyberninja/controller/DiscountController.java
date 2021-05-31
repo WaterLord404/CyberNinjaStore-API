@@ -35,7 +35,7 @@ public class DiscountController {
 			return ResponseEntity.ok(discountService.getDiscounts());
 
 		} catch (ResponseStatusException e) {
-			throw new ResponseStatusException(e.getStatus());
+			throw new ResponseStatusException(e.getStatus(), e.getReason());
 		} catch (Exception e) {
 			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
 		}
@@ -47,7 +47,7 @@ public class DiscountController {
 			return ResponseEntity.ok(discountService.addDiscount(dto));
 
 		} catch (ResponseStatusException e) {
-			throw new ResponseStatusException(e.getStatus());
+			throw new ResponseStatusException(e.getStatus(), e.getReason());
 		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
 			throw new ResponseStatusException(BAD_REQUEST);
 		} catch (Exception e) {
@@ -65,7 +65,7 @@ public class DiscountController {
 			return ResponseEntity.ok(discountService.updateDiscount(productId, discountId));
 
 		} catch (ResponseStatusException e) {
-			throw new ResponseStatusException(e.getStatus());
+			throw new ResponseStatusException(e.getStatus(), e.getReason());
 		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
 			throw new ResponseStatusException(BAD_REQUEST);
 		} catch (Exception e) {

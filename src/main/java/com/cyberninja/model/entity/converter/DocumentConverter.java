@@ -23,7 +23,7 @@ public class DocumentConverter {
 		try {
 			dto.setPicture(document.getPicture().getBytes(1L, (int) document.getPicture().length()));
 		}catch (SQLException e) {
-			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR, "Error getting img bytes");
 		}
 		
 		return dto;

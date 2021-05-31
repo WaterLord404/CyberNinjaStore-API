@@ -41,7 +41,7 @@ public class ReviewServiceImpl implements ReviewServiceI {
 				reviewRepo.findReviewByProduct(productService.getProduct(productId)));
 		
 		if (dtos.isEmpty()) {
-			throw new ResponseStatusException(NOT_FOUND);
+			throw new ResponseStatusException(NOT_FOUND, "Reviews not founds");
 		}
 		
 		return dtos;
@@ -56,14 +56,14 @@ public class ReviewServiceImpl implements ReviewServiceI {
 		Review review = reviewRepo.findCustomerReview(productId, Long.parseLong(auth.getName()));
 		
 		if (review != null) {
-			throw new ResponseStatusException(CONFLICT);
+			throw new ResponseStatusException(CONFLICT, "Already exists one review of this customer");
 		}
 		
 		review = reviewConverter.reviewDTOToReview(dto);
 		
 		// Valida la review
 		if (!reviewBService.isReviewValid(review)) {
-			throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+			throw new ResponseStatusException(UNPROCESSABLE_ENTITY, "Review not valid");
 		}
 		
 		Product product = productService.getProduct(productId);

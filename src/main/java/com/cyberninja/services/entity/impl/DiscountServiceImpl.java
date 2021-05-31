@@ -56,7 +56,7 @@ public class DiscountServiceImpl implements DiscountServiceI {
 
 		// Valida el descuento
 		if (!discountBService.isDiscountValid(discount)) {
-			throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+			throw new ResponseStatusException(UNPROCESSABLE_ENTITY, "Discount not valid");
 		}
 
 		discountRepo.save(discount);
@@ -70,7 +70,7 @@ public class DiscountServiceImpl implements DiscountServiceI {
 	@Override
 	public Discount getDiscount(Long id) {
 		return discountRepo.findDiscountByIdAndActive(id, true)
-				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Discount not found"));
 	}
 
 	/**

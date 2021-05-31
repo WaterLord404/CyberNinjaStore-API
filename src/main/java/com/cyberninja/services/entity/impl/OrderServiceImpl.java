@@ -143,7 +143,7 @@ public class OrderServiceImpl implements OrderServiceI {
 		List<Order> orders = orderRepo.getUserOrders(Long.parseLong(auth.getName()));
 		
 		if (orders.isEmpty()) {
-			throw new ResponseStatusException(NOT_FOUND);
+			throw new ResponseStatusException(NOT_FOUND, "Orders not founds");
 		}
 		
 		List<OrderDTO> dtos = orderConverter.ordersToOrdersDTO(orders);
@@ -178,10 +178,10 @@ public class OrderServiceImpl implements OrderServiceI {
 	@Override
 	public OrderDetailsDTO returnProduct(ReturnDTO dto, Authentication auth) {
 		OrderDetails orderDetails = orderDetailsRepo.findById(dto.getOrderDetails().getId())
-				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "OrderDetails not found"));
 				
 		if(orderDetails.isReturned()) {
-			throw new ResponseStatusException(CONFLICT);
+			throw new ResponseStatusException(CONFLICT, "Already returned");
 		}
 		
 		shippingService.returnShipping(dto.getShipping());

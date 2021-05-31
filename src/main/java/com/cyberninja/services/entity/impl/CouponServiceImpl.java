@@ -51,11 +51,11 @@ public class CouponServiceImpl implements CouponServiceI {
 	@Override
 	public Coupon getValidCouponByCode(String couponCode) {
 		Coupon coupon = couponRepo.findCouponByCodeAndActive(couponCode, true)
-				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Coupon not found"));
 		
 		if (!couponBService.isCouponValid(coupon)) {
 			deleteCoupon(coupon);
-			throw new ResponseStatusException(NOT_FOUND);
+			throw new ResponseStatusException(NOT_FOUND, "Coupon not found");
 		}
 		
 		return coupon;
@@ -72,7 +72,7 @@ public class CouponServiceImpl implements CouponServiceI {
 
 		// Valida el cupon
 		if (!couponBService.isCouponValid(coupon)) {
-			throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+			throw new ResponseStatusException(UNPROCESSABLE_ENTITY, "Coupon not valid");
 		}
 
 		// Asignacion del descuento

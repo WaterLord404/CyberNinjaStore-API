@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserDetailsService, UserServiceI {
 	public UserDTO createUser(UserDTO dto) {
 		// Verifica que no exista el usuario
 		if (userRepo.findUserByUsername(dto.getUsername()) != null) {
-			throw new ResponseStatusException(CONFLICT);
+			throw new ResponseStatusException(CONFLICT, "This username already exists");
 		}
 
 		User user = userConverter.userDTOToUser(dto);
@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserDetailsService, UserServiceI {
 	@Override
 	public User getUserById(Long id) {
 		return userRepo.findUserByIdAndEnabled(id, true)
-				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "User not found"));
 	}
 	
 	/**
@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserDetailsService, UserServiceI {
 	@Override
 	public UserDTO confirmAccount(String token) {
 		User user = userRepo.findUserByConfirmationTokenAndEnabled(token, false)
-				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Confirmation token not found"));
 
 		user.setEnabled(true);
 		user.setConfirmationToken(null);
@@ -128,12 +128,12 @@ public class UserServiceImpl implements UserDetailsService, UserServiceI {
 		GoogleIdToken.Payload payload = googleIdToken.getPayload();
 
 		if (!payload.getEmailVerified()) {
-			throw new ResponseStatusException(FORBIDDEN);
+			throw new ResponseStatusException(FORBIDDEN, "Email not verified");
 		}
 
 		// Obtiene el usuario por el email y si está activo
 		User user = userRepo.getUserByEmail(payload.getEmail())
-				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "User not found"));
 
 		// Obtiene el userDTO
 		UserDTO userDTO = getUser(userConverter.userToUserDTO(user));

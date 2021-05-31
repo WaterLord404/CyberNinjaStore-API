@@ -40,7 +40,7 @@ public class DocumentServiceImpl implements DocumentServiceI {
 									   product));
 		}
 		
-		if (documents.isEmpty()) { throw new ResponseStatusException(BAD_REQUEST); }
+		if (documents.isEmpty()) { throw new ResponseStatusException(BAD_REQUEST, "Error creating documents"); }
 		
 		documentRepo.saveAll(documents);
 

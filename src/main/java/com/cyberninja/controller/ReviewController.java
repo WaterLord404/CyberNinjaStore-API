@@ -34,7 +34,7 @@ public class ReviewController {
 			return ResponseEntity.ok(reviewService.getReviews(productId));
 
 		} catch (ResponseStatusException e) {
-			throw new ResponseStatusException(e.getStatus());
+			throw new ResponseStatusException(e.getStatus(), e.getReason());
 		} catch (Exception e) {
 			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
 		}
@@ -46,7 +46,7 @@ public class ReviewController {
 			return ResponseEntity.ok(reviewService.addReview(auth, productId, dto));
 
 		} catch (ResponseStatusException e) {
-			throw new ResponseStatusException(e.getStatus());
+			throw new ResponseStatusException(e.getStatus(), e.getReason());
 		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
 			throw new ResponseStatusException(BAD_REQUEST);
 		} catch (Exception e) {

@@ -23,7 +23,7 @@ public class ProviderServiceImpl implements ProviderServiceI {
 	public ProviderDTO getProviderOfProduct(Long idProduct) {
 		return providerConverter.productToProductDTO(
 				providerRepo.findProviderByProduct(idProduct)
-				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND)));
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Provider not found")));
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class ProviderServiceImpl implements ProviderServiceI {
 	@Override
 	public void plusProfits(Double profits, Long idProvider) {
 		Provider provider = providerRepo.findById(idProvider)
-				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Provider not found"));
 		
 		provider.setProfits(provider.getProfits() + profits);
 		

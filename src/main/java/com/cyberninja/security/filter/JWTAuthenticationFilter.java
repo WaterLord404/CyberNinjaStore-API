@@ -4,6 +4,7 @@ import static com.cyberninja.security.common.SecurityConstants.HEADER_STRING;
 import static com.cyberninja.security.common.SecurityConstants.LOG_IN;
 import static com.cyberninja.security.common.SecurityConstants.TOKEN_PREFIX;
 import static com.cyberninja.security.filter.jwt.JWTTokenProvider.generateToken;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 import java.io.IOException;
 
@@ -18,6 +19,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.security.model.entity.User;
 import com.cyberninja.security.model.entity.dto.UserDTO;
@@ -47,7 +49,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			user = new ObjectMapper().readValue(request.getInputStream(), UserDTO.class);
 			
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR, "No user identifier has been found in the request");
 		}
 		
 		return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), 

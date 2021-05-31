@@ -98,14 +98,14 @@ public class ProductServiceImpl implements ProductServiceI {
 		}
 
 		if (dtos.isEmpty()) {
-			throw new ResponseStatusException(NOT_FOUND);
+			throw new ResponseStatusException(NOT_FOUND, "Products not founds");
 		}
 
 		return dtos;
 	}
 
 	/**
-	 * Obtiene un productDTO con sus documentos
+	 * Obtiene un productDTO ACTIVO / INACTIVO con sus documentos
 	 * 
 	 * @return ProductDTO activo/inactivo
 	 * @throws SQLException
@@ -113,7 +113,7 @@ public class ProductServiceImpl implements ProductServiceI {
 	@Override
 	public ProductDTO getProductDTO(Long id) {
 		Product product = productRepo.findById(id)
-				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Product not found"));
 
 		return productConverter.productToProductDTO(product);
 	}
@@ -127,7 +127,7 @@ public class ProductServiceImpl implements ProductServiceI {
 	@Override
 	public Product getProduct(Long id) {
 		return productRepo.findProductByIdAndActive(id, true)
-				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Product not found"));
 	}
 
 	/**

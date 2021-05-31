@@ -3,6 +3,7 @@ package com.cyberninja.services.entity.impl;
 import static com.cyberninja.model.entity.enumerated.ShippingStatus.ACCEPTED;
 import static com.cyberninja.model.entity.enumerated.ShippingStatus.INTRANSIT;
 import static com.cyberninja.model.entity.enumerated.ShippingStatus.RETURNED;
+import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.text.ParseException;
@@ -11,7 +12,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -44,7 +44,7 @@ public class ShippingServiceImpl implements ShippingServiceI {
 		List<Shipping> shippings = shippingRepo.findShippingsInTransit(Long.parseLong(auth.getName()));
 		
 		if (shippings.isEmpty()) {
-			throw new ResponseStatusException(NOT_FOUND);
+			throw new ResponseStatusException(NOT_FOUND, "Shippings not founds");
 		}
 		
 		List<ShippingDTO> dtos = shippingConverter.shippingsToShippingsDTO(shippings);
@@ -85,7 +85,7 @@ public class ShippingServiceImpl implements ShippingServiceI {
 	@Override
 	public void returnShipping(ShippingDTO dto) {
 		Shipping shipping = shippingRepo.findById(dto.getId())
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Shipping not found"));
 		
 		shipping.setStatus(RETURNED);
 		shippingRepo.save(shipping);
@@ -98,10 +98,10 @@ public class ShippingServiceImpl implements ShippingServiceI {
 	@Override
 	public ShippingDTO updateShipping(Authentication auth, String uuid, ShippingDTO dto, Boolean newShipping) throws ParseException {
 		Shipping shipping = shippingRepo.findShippingByUuid(uuid)
-				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Shipping not found"));
 		
 		if(newShipping && shipping.getStatus().equals(INTRANSIT)) {
-			throw new ResponseStatusException(HttpStatus.CONFLICT);
+			throw new ResponseStatusException(CONFLICT, "This shipping is already in transit");
 		}
 		
 		shipping.setUser(userService.getUserById(Long.parseLong(auth.getName())));
@@ -124,7 +124,7 @@ public class ShippingServiceImpl implements ShippingServiceI {
 		List<Shipping> shippings = shippingRepo.findShippingsInTransitForShipper(Long.parseLong(auth.getName()));
 		
 		if (shippings.isEmpty()) {
-			throw new ResponseStatusException(NOT_FOUND);
+			throw new ResponseStatusException(NOT_FOUND, "Shippings not founds");
 		}
 		
 		for (Shipping shipping : shippings) {

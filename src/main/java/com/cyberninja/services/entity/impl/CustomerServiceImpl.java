@@ -53,6 +53,6 @@ public class CustomerServiceImpl implements CustomerServiceI {
 	@Override
 	public Customer getCustomerById(Long id) {
 		return customerRepo.findById(id)
-				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Customer not found"));
 	}
 }

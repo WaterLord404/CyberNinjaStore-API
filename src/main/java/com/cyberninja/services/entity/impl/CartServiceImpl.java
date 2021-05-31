@@ -51,7 +51,7 @@ public class CartServiceImpl implements CartServiceI {
 		dtos = orderDetailsConverter.orderDetailsToOrderDetailsDTO(ordersDetails);
 				
 		if (dtos.isEmpty()) {
-			throw new ResponseStatusException(NOT_FOUND);
+			throw new ResponseStatusException(NOT_FOUND, "Empty cart");
 		}
 		
 		// Asigna el producto a cada orderDetail
@@ -75,7 +75,7 @@ public class CartServiceImpl implements CartServiceI {
 		orderDetailsRepo.deleteAll(orderDetailsRepo.findUserProductsCart(Long.parseLong(auth.getName())));
 
 		if (dtos.isEmpty()) {
-			throw new ResponseStatusException(NOT_FOUND);
+			throw new ResponseStatusException(NOT_FOUND, "Empty cart");
 		}
 
 		// Busca el order, si no existe lo crea

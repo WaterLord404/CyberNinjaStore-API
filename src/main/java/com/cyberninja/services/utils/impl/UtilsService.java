@@ -27,7 +27,7 @@ public class UtilsService implements UtilsServiceI {
 		try {
 			return new SerialBlob(img.getInputStream().readAllBytes());
 		} catch (SQLException | IOException e) {
-			throw new ResponseStatusException(NOT_ACCEPTABLE);
+			throw new ResponseStatusException(NOT_ACCEPTABLE, "Error generating blob");
 		}
 	}
 

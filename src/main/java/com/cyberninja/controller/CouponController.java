@@ -33,7 +33,7 @@ public class CouponController {
 			return ResponseEntity.ok(couponService.getCoupon(coupon));
 
 		} catch (ResponseStatusException e) {
-			throw new ResponseStatusException(e.getStatus());
+			throw new ResponseStatusException(e.getStatus(), e.getReason());
 		} catch (Exception e) {
 			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
 		}
@@ -45,7 +45,7 @@ public class CouponController {
 			return ResponseEntity.ok(couponService.addCoupon(dto));
 
 		} catch (ResponseStatusException e) {
-			throw new ResponseStatusException(e.getStatus());
+			throw new ResponseStatusException(e.getStatus(), e.getReason());
 		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
 			throw new ResponseStatusException(BAD_REQUEST);
 		} catch (DataIntegrityViolationException e) {

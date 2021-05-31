@@ -34,7 +34,7 @@ public class UserController {
 			return ResponseEntity.ok(userService.createUser(dto));
 
 		} catch (ResponseStatusException e) {
-			throw new ResponseStatusException(e.getStatus());
+			throw new ResponseStatusException(e.getStatus(), e.getReason());
 		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
 			throw new ResponseStatusException(BAD_REQUEST);
 		} catch (Exception e) {
@@ -54,7 +54,7 @@ public class UserController {
 			return ResponseEntity.ok(userService.confirmAccount(token));
 
 		} catch (ResponseStatusException e) {
-			throw new ResponseStatusException(e.getStatus());
+			throw new ResponseStatusException(e.getStatus(), e.getReason());
 		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
 			throw new ResponseStatusException(BAD_REQUEST);
 		} catch (Exception e) {
@@ -73,7 +73,7 @@ public class UserController {
 			return ResponseEntity.ok().build();
 
 		} catch (ResponseStatusException e) {
-			throw new ResponseStatusException(e.getStatus());
+			throw new ResponseStatusException(e.getStatus(), e.getReason());
 		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
 			throw new ResponseStatusException(BAD_REQUEST);
 		} catch (Exception e) {

@@ -4,6 +4,7 @@ import static com.cyberninja.security.common.SecurityConstants.HEADER_STRING;
 import static com.cyberninja.security.common.SecurityConstants.SECRET;
 import static com.cyberninja.security.common.SecurityConstants.TOKEN_PREFIX;
 import static com.cyberninja.security.filter.jwt.JWTTokenProvider.validateToken;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 import java.io.IOException;
 
@@ -20,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.cyberninja.security.model.entity.User;
 import com.cyberninja.security.services.impl.UserServiceImpl;
@@ -53,29 +55,25 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			chain.doFilter(request, response);
 		} catch (Exception e) {
-			throw new RuntimeException("No user identifier has been found in the request");
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR, "No user identifier has been found in the request");
 		}
 
 	}
 
-	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
+	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) throws AuthenticationException {
 		String token = request.getHeader(HEADER_STRING).replace(TOKEN_PREFIX, "");
 		UsernamePasswordAuthenticationToken upat = null;
 
 		if (token != null && !token.isEmpty() && validateToken(token)) {
-			try {
-				Long idUser = Long.valueOf(Jwts.parser()
-										  .setSigningKey(Keys.hmacShaKeyFor(SECRET.getBytes()))
-										  .parseClaimsJws(token)
-										  .getBody()
-										  .getId());
+			Long idUser = Long.valueOf(Jwts.parser()
+									  .setSigningKey(Keys.hmacShaKeyFor(SECRET.getBytes()))
+									  .parseClaimsJws(token)
+									  .getBody()
+									  .getId());
 
-				User user = (User) userService.loadUserById(idUser);
-				if (idUser != null) {
-					upat = new UsernamePasswordAuthenticationToken(idUser, user.getRoles(), user.getAuthorities());
-				}
-			} catch (AuthenticationException e) {
-				throw new RuntimeException("No user identifier has been found in the request");
+			User user = (User) userService.loadUserById(idUser);
+			if (idUser != null) {
+				upat = new UsernamePasswordAuthenticationToken(idUser, user.getRoles(), user.getAuthorities());
 			}
 		}
 		return upat;
