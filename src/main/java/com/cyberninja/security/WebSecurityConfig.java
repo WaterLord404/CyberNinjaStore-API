@@ -54,6 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(POST, "/cart").hasRole(UserRole.USER.name())
 			.antMatchers(PUT, "/cart").hasRole(UserRole.USER.name())
 
+			.antMatchers(POST, "/review/*").hasRole(UserRole.USER.name())
 			
 			.antMatchers(POST, "/product").hasRole(UserRole.ADMIN.name())
 			.antMatchers(DELETE, "/product").hasRole(UserRole.ADMIN.name())
@@ -64,8 +65,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(POST, "/discount").hasRole(UserRole.ADMIN.name())
 			.antMatchers(PUT, "/discount/*").hasRole(UserRole.ADMIN.name())
 			.antMatchers(POST, "/coupon").hasRole(UserRole.ADMIN.name())
-			
-			.antMatchers(POST, "/review/*").hasRole(UserRole.USER.name())
 			
 			.antMatchers(PUT, "/shipping/*").hasRole(UserRole.SHIPPER.name())
 			.antMatchers(PUT, "/shipping").hasRole(UserRole.SHIPPER.name())
