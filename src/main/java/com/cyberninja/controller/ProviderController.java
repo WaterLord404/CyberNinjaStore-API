@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +35,20 @@ public class ProviderController {
 
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus(), e.getReason());
+		} catch (Exception e) {
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PutMapping(path = "/{idProvider}/{idProduct}")
+	public ResponseEntity<ProviderDTO> setProviderToProduct(@PathVariable Long idProvider, @PathVariable Long idProduct) {
+		try {
+			return ResponseEntity.ok(providerService.setProviderToProduct(idProvider, idProduct));
+
+		} catch (ResponseStatusException e) {
+			throw new ResponseStatusException(e.getStatus(), e.getReason());
+		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
+			throw new ResponseStatusException(BAD_REQUEST);
 		} catch (Exception e) {
 			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
 		}

@@ -10,7 +10,7 @@ import com.cyberninja.model.entity.dto.ProviderDTO;
 @Component
 public class ProviderConverter {
 	
-	public ProviderDTO productToProductDTO(Provider provider) {
+	public ProviderDTO providerToProviderDTO(Provider provider) {
 		ProviderDTO dto = new ProviderDTO();
 
 		dto.setId(provider.getId());
@@ -20,7 +20,7 @@ public class ProviderConverter {
 		return dto;
 	}
 	
-	public Provider productDTOToProduct(ProviderDTO dto) {
+	public Provider providerDTOToProvider(ProviderDTO dto) {
 		Provider provider = new Provider();
 
 		provider.setName(dto.getName());

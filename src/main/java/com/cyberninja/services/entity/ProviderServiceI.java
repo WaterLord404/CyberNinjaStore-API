@@ -10,4 +10,6 @@ public interface ProviderServiceI {
 
 	void plusProfits(Double profits, Long idProvider);
 
+	ProviderDTO setProviderToProduct(Long idProvider, Long idProduct);
+
 }
