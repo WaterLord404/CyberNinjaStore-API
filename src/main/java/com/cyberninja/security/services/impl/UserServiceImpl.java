@@ -1,6 +1,6 @@
 package com.cyberninja.security.services.impl;
 
-import static com.cyberninja.common.ApplicationConstans.GOOGLE_CLIENTID;
+import static com.cyberninja.security.common.SecurityConstants.GOOGLE_CLIENTID;
 import static com.cyberninja.security.common.SecurityConstants.HEADER_STRING;
 import static com.cyberninja.security.common.SecurityConstants.TOKEN_PREFIX;
 import static com.cyberninja.security.filter.jwt.JWTTokenProvider.generateToken;

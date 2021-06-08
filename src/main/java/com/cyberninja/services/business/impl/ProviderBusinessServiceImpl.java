@@ -52,14 +52,14 @@ public class ProviderBusinessServiceImpl implements ProviderBusinessServiceI {
 	}
 	
 	/**
-	 * Obtiene de beneficio un 50% del precio total del producto.
+	 * Obtiene de beneficio un 35% del precio total del producto.
 	 * Por cada unidad aumenta un 0.2% los beneficios
 	 * 
 	 * @param totalPrice
 	 * @param units
 	 */
 	private Double calculateFixedProfits(Double totalPrice, Integer units) {
-		Double percentage = 50.0;
+		Double percentage = 35.0;
 		
 		for (int i = 0; i < units; i++) {
 			percentage = percentage + 0.2;

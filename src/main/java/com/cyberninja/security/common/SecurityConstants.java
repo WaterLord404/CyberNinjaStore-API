@@ -11,4 +11,7 @@ public class SecurityConstants {
     public static final String 	HEADER_STRING 			= "Authorization";
     public static final String 	SIGN_UP_URL 			= "/user/sign-up";
     public static final String 	LOG_IN 					= "/user/login";
+    
+    // Google
+ 	public static final String GOOGLE_CLIENTID = "899814992698-rfm638ehb7fb39t7t52c6j44du35fg8h.apps.googleusercontent.com";
 }

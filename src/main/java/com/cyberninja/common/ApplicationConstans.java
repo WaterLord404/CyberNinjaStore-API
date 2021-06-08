@@ -9,7 +9,6 @@ public class ApplicationConstans {
 
 	public static final Integer ITEMS_ON_PAGE = 4;
 	
-	// Google
-	public static final String GOOGLE_CLIENTID = "899814992698-rfm638ehb7fb39t7t52c6j44du35fg8h.apps.googleusercontent.com";
-	public static final String GOOGLE_SECRET= "BsWtFiNc1nDos8SfPp5EooC1";
+	public static final Double FIXED_CONTRACT_MONTH_PRICE = 54.90;
+
 }
