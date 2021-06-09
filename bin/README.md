@@ -1,4 +1,4 @@
-# CiberNinjaStoreBE
+# CyberNinjaStoreBE
 
 This project was created with Spring and **JAVA SE 14**
 
