@@ -10,7 +10,7 @@ public class ApplicationConstans {
 
 	public static final String CUPON_ALPHANUM = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-	public static final Integer ITEMS_ON_PAGE = 4;
+	public static final Integer ITEMS_ON_PAGE = 6;
 	
 	public static final Double FIXED_CONTRACT_MONTH_PRICE = 54.90;
 
