@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserDetailsService, UserServiceI {
 
 		// Obtiene el usuario por el email y si está activo
 		User user = userRepo.getUserByEmail(payload.getEmail())
-				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "User not found"));
+				.orElseThrow(() -> new ResponseStatusException(FORBIDDEN, "No user identifier has been found in the request"));
 
 		// Obtiene el userDTO
 		UserDTO userDTO = getUser(userConverter.userToUserDTO(user));

@@ -4,7 +4,7 @@ import static com.cyberninja.security.common.SecurityConstants.HEADER_STRING;
 import static com.cyberninja.security.common.SecurityConstants.SECRET;
 import static com.cyberninja.security.common.SecurityConstants.TOKEN_PREFIX;
 import static com.cyberninja.security.filter.jwt.JWTTokenProvider.validateToken;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 import java.io.IOException;
 
@@ -55,7 +55,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			chain.doFilter(request, response);
 		} catch (Exception e) {
-			throw new ResponseStatusException(INTERNAL_SERVER_ERROR, "No user identifier has been found in the request");
+			throw new ResponseStatusException(FORBIDDEN, "No user identifier has been found in the request");
 		}
 
 	}
