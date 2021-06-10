@@ -58,8 +58,7 @@ public class DiscountController {
 	@PutMapping(path = "/{productId}/{discountId}")
 	public ResponseEntity<ProductDTO> setDiscount(
 			@PathVariable Long productId, 
-			@PathVariable(required = false) Long discountId,
-			@PathVariable(required = false) Boolean active
+			@PathVariable(required = false) Long discountId
 			) {
 		try {
 			return ResponseEntity.ok(discountService.updateDiscount(productId, discountId));
