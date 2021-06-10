@@ -17,6 +17,7 @@ import com.cyberninja.model.entity.OrderDetails;
 import com.cyberninja.model.entity.converter.OrderDetailsConverter;
 import com.cyberninja.model.entity.converter.ProductConverter;
 import com.cyberninja.model.entity.dto.OrderDetailsDTO;
+import com.cyberninja.model.entity.dto.ProductDTO;
 import com.cyberninja.model.repository.CartRepository;
 import com.cyberninja.model.repository.OrderDetailsRepository;
 import com.cyberninja.services.entity.CartServiceI;
@@ -42,7 +43,7 @@ public class CartServiceImpl implements CartServiceI {
 	 * Obtiene los productos del carrito que se guardará en el localstorage
 	 */
 	@Override
-	public List<OrderDetailsDTO> getCartProducts(Authentication auth) {
+	public List<OrderDetailsDTO> getCart(Authentication auth) {
 		List<OrderDetailsDTO> dtos = new ArrayList<>(); 
 
 		// Items del carrito del usuario
@@ -106,22 +107,27 @@ public class CartServiceImpl implements CartServiceI {
 
 	
 	/**
-	 * Obtiene los productos (activos e inactivos) seleccionados del carrito con las
-	 * imagenes
-	 * 
-	 * Esto sirve, para eliminar un producto que mantenga el usuario en localstorage
+	 * Envía productos (activos e inactivos) 
+	 *  
+	 * Sirve, para eliminar un producto que mantenga el usuario en localstorage
 	 * pero en BD no exista
 	 * 
 	 * @return List ProductDTO activo/inactivo
 	 */
 	@Override
-	public List<OrderDetailsDTO> getProductCart(List<OrderDetailsDTO> dtos) {
-		for (OrderDetailsDTO orderDetailDTO : dtos) {
-			dtos.get(dtos.indexOf(orderDetailDTO))
-					.setProduct(productService.getProductDTO(orderDetailDTO.getProduct().getId()));
+	public List<OrderDetailsDTO> verifyCart(List<OrderDetailsDTO> dtos) {
+		List<OrderDetailsDTO> ordersDetailsDTO = new ArrayList<>();
+		
+		for (OrderDetailsDTO i : dtos) {
+			ProductDTO productDTO = productService.getProductDTO(i.getProduct().getId());
+			
+			if(productDTO.isActive()) {
+				dtos.get(dtos.indexOf(i)).setProduct(productDTO);
+				ordersDetailsDTO.add(i);
+			}
 		}
 
-		return dtos;
+		return ordersDetailsDTO;
 	}
 	
 	/**

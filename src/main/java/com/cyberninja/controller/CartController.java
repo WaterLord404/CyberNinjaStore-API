@@ -31,7 +31,7 @@ public class CartController {
 	@GetMapping
 	public ResponseEntity<List<OrderDetailsDTO>> getCart(Authentication auth) {
 		try {
-			return ResponseEntity.ok(cartService.getCartProducts(auth));
+			return ResponseEntity.ok(cartService.getCart(auth));
 			
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus(), e.getReason());
@@ -55,9 +55,9 @@ public class CartController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<List<OrderDetailsDTO>> getProductCart(@RequestBody List<OrderDetailsDTO> dtos) {
+	public ResponseEntity<List<OrderDetailsDTO>> verifyCart(@RequestBody List<OrderDetailsDTO> dtos) {
 		try {
-			return ResponseEntity.ok(cartService.getProductCart(dtos));
+			return ResponseEntity.ok(cartService.verifyCart(dtos));
 			
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus(), e.getReason());
