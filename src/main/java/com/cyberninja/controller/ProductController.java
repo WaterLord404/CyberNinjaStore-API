@@ -137,7 +137,7 @@ public class ProductController {
 		}
 	}
 	
-	@GetMapping(path = "/color")
+	@GetMapping(path = "/colour")
 	public ResponseEntity<ProductColour[]> getColours() {
 		try {
 			return ResponseEntity.ok(productService.getColours());

@@ -78,6 +78,7 @@ public class ShippingServiceImpl implements ShippingServiceI {
 	}
 	
 	/**
+	 * Devuelve un shipping
 	 * 
 	 * @param shipping
 	 * @throws ParseException
