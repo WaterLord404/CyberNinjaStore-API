@@ -26,7 +26,7 @@ public class EmailSenderServiceImpl implements EmailSenderServiceI {
 
 		mailMessage.setTo(email);
 		mailMessage.setSubject("Complete Registration!");
-		mailMessage.setFrom("cyberninjaes@gmail.com");
+		mailMessage.setFrom("CyberNinja");
 		mailMessage.setText("To confirm your account, please click here: " +
 				"http://" + FRONT_DOMAIN + "/account/confirm-account/" + token);
 
