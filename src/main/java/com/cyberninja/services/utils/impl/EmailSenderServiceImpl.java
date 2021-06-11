@@ -215,9 +215,6 @@ public class EmailSenderServiceImpl implements EmailSenderServiceI {
 				+ " "
 				+ "</html>");
 		
-		mailMessage.setText("To confirm your account, please click here: " +
-		"http://" + FRONT_DOMAIN + "/account/confirm-account/" + token);
-
 		javaMailSender.send(mailMessage);
 	}
 }
