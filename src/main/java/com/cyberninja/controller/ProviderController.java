@@ -36,7 +36,7 @@ public class ProviderController {
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus(), e.getReason());
 		} catch (Exception e) {
-			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage());
 		}
 	}
 	
@@ -50,7 +50,7 @@ public class ProviderController {
 		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
 			throw new ResponseStatusException(BAD_REQUEST);
 		} catch (Exception e) {
-			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage());
 		}
 	}
 	
@@ -66,7 +66,7 @@ public class ProviderController {
 		} catch (DataIntegrityViolationException e) {
 			throw new ResponseStatusException(CONFLICT);
 		} catch (Exception e) {
-			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage());
 		}
 	}
 }

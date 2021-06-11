@@ -35,7 +35,7 @@ public class CouponController {
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus(), e.getReason());
 		} catch (Exception e) {
-			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage());
 		}
 	}
 	
@@ -51,7 +51,7 @@ public class CouponController {
 		} catch (DataIntegrityViolationException e) {
 			throw new ResponseStatusException(CONFLICT);
 		} catch (Exception e) {
-			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage());
 		}
 	}
 	

@@ -55,7 +55,7 @@ public class ProductController {
 		} catch (ResponseStatusException e) {
 			throw new ResponseStatusException(e.getStatus(), e.getReason());
 		} catch (Exception e) {
-			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage());
 		}
 	}
 
@@ -72,7 +72,7 @@ public class ProductController {
 					: ResponseEntity.notFound().build();
 
 		} catch (Exception e) {
-			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage());
 		}
 	}
 
@@ -103,7 +103,7 @@ public class ProductController {
 				InvalidFormatException e) {
 			throw new ResponseStatusException(BAD_REQUEST);
 		} catch (Exception e) {
-			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage());
 		}
 	}
 
@@ -122,7 +122,7 @@ public class ProductController {
 		} catch (NullPointerException | InvalidDataAccessApiUsageException e) {
 			throw new ResponseStatusException(BAD_REQUEST);
 		} catch (Exception e) {
-			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage());
 		}
 	}
 
@@ -133,7 +133,7 @@ public class ProductController {
 			return ResponseEntity.ok(productService.getSizes());
 
 		} catch (Exception e) {
-			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage());
 		}
 	}
 	
@@ -143,7 +143,7 @@ public class ProductController {
 			return ResponseEntity.ok(productService.getColours());
 
 		} catch (Exception e) {
-			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage());
 		}
 	}
 	
@@ -153,7 +153,7 @@ public class ProductController {
 			return ResponseEntity.ok(productService.getCategories());
 
 		} catch (Exception e) {
-			throw new ResponseStatusException(INTERNAL_SERVER_ERROR);
+			throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage());
 		}
 	}
 	
