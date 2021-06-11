@@ -58,11 +58,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			
 			.antMatchers(POST, "/product").hasRole(UserRole.ADMIN.name())
 			.antMatchers(DELETE, "/product").hasRole(UserRole.ADMIN.name())
+			.antMatchers(GET, "/product/size").hasRole(UserRole.ADMIN.name())
+			.antMatchers(GET, "/product/colour").hasRole(UserRole.ADMIN.name())
+			.antMatchers(GET, "/product/category").hasRole(UserRole.ADMIN.name())
+
 			
 			.antMatchers(POST, "/provider").hasRole(UserRole.ADMIN.name())
 			.antMatchers(GET, "/provider/*").hasRole(UserRole.ADMIN.name())
 			.antMatchers(PUT, "/provider/*/*").hasRole(UserRole.ADMIN.name())
 
+			.antMatchers(GET, "/discount").hasRole(UserRole.ADMIN.name())
 			.antMatchers(POST, "/discount").hasRole(UserRole.ADMIN.name())
 			.antMatchers(PUT, "/discount/*").hasRole(UserRole.ADMIN.name())
 			.antMatchers(POST, "/coupon").hasRole(UserRole.ADMIN.name())
