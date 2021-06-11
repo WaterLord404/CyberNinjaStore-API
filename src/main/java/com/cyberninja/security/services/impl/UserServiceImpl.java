@@ -11,6 +11,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 import java.io.IOException;
 import java.util.Collections;
 
+import javax.mail.MessagingException;
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletResponse;
 
@@ -55,9 +56,10 @@ public class UserServiceImpl implements UserDetailsService, UserServiceI {
 	 * 
 	 * @param dto
 	 * @return UserDTO
+	 * @throws MessagingException 
 	 */
 	@Override
-	public UserDTO createUser(UserDTO dto) {
+	public UserDTO createUser(UserDTO dto) throws MessagingException {
 		// Verifica que no exista el usuario
 		if (userRepo.findUserByUsername(dto.getUsername()) != null) {
 			throw new ResponseStatusException(CONFLICT, "This username already exists");

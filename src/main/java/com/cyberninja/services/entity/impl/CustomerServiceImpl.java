@@ -2,6 +2,8 @@ package com.cyberninja.services.entity.impl;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,9 +28,10 @@ public class CustomerServiceImpl implements CustomerServiceI {
 
 	/**
 	 * Crea un customer
+	 * @throws MessagingException 
 	 */
 	@Override
-	public Customer createCustomer(CustomerDTO dto, User user) {
+	public Customer createCustomer(CustomerDTO dto, User user) throws MessagingException {
 		Customer customer = customerConverter.customerDTOToCustomer(dto);
 	
 		customer.setUser(user);

@@ -2,6 +2,7 @@ package com.cyberninja.security.services;
 
 import java.io.IOException;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cyberninja.security.model.entity.User;
@@ -11,7 +12,7 @@ public interface UserServiceI {
 
 	User getUserById(Long id);
 
-	UserDTO createUser(UserDTO dto);
+	UserDTO createUser(UserDTO dto) throws MessagingException;
 
 	UserDTO getUser(UserDTO dto);
 
