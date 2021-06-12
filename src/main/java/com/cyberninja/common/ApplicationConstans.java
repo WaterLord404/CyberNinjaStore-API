@@ -2,8 +2,6 @@ package com.cyberninja.common;
 
 public class ApplicationConstans {
 	
-	public static final String FRONT_DOMAIN = "localhost:4200";
-	
 	public static final Double IVA = 0.21;
 
 	public static final int CUPON_CODE_LENGHT = 8;

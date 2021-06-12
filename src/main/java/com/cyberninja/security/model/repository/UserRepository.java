@@ -15,9 +15,9 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	
 	Optional<User> findByUsername(String username);
 
-	User findUserByUsername(String username);
-
 	Optional<User> findUserByConfirmationTokenAndEnabled(String token, boolean enabled);
+	
+	Optional<User> findByUsernameAndEnabled(String username, boolean enabled);
 	
 	@Query(value = 
 			"SELECT u.* " +

@@ -6,6 +6,7 @@ import static com.cyberninja.security.common.SecurityConstants.TOKEN_PREFIX;
 import static com.cyberninja.security.filter.jwt.JWTTokenProvider.generateToken;
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.IM_USED;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.io.IOException;
@@ -61,9 +62,11 @@ public class UserServiceImpl implements UserDetailsService, UserServiceI {
 	@Override
 	public UserDTO createUser(UserDTO dto) throws MessagingException {
 		// Verifica que no exista el usuario
-		if (userRepo.findUserByUsername(dto.getUsername()) != null) {
-			throw new ResponseStatusException(CONFLICT, "This username already exists");
-		}
+		userRepo.findByUsernameAndEnabled(dto.getUsername(), true)
+			.orElseThrow(() -> new ResponseStatusException(CONFLICT, "This username already exists"));
+
+		userRepo.getUserByEmail(dto.getCustomer().getEmail())
+		.orElseThrow(() -> new ResponseStatusException(IM_USED, "This email already exists"));
 
 		User user = userConverter.userDTOToUser(dto);
 		Customer customer = customerService.createCustomer(dto.getCustomer(), user);

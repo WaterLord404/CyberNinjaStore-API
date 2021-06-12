@@ -14,4 +14,6 @@ public class SecurityConstants {
     
     // Google
  	public static final String GOOGLE_CLIENTID = "899814992698-rfm638ehb7fb39t7t52c6j44du35fg8h.apps.googleusercontent.com";
+ 	
+	public static final String FRONT_DOMAIN = "http://localhost:4200";
 }
