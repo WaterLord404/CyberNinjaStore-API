@@ -62,11 +62,13 @@ public class UserServiceImpl implements UserDetailsService, UserServiceI {
 	@Override
 	public UserDTO createUser(UserDTO dto) throws MessagingException {
 		// Verifica que no exista el usuario
-		userRepo.findByUsernameAndEnabled(dto.getUsername(), true)
-			.orElseThrow(() -> new ResponseStatusException(CONFLICT, "This username already exists"));
-
-		userRepo.getUserByEmail(dto.getCustomer().getEmail())
-		.orElseThrow(() -> new ResponseStatusException(IM_USED, "This email already exists"));
+		if (!userRepo.findByUsernameAndEnabled(dto.getUsername(), true).isPresent()) {
+			throw new ResponseStatusException(CONFLICT, "This username already exists");
+		}
+		
+		if (!userRepo.getUserByEmail(dto.getCustomer().getEmail()).isPresent()) {
+			throw new ResponseStatusException(IM_USED, "This email already exists");			
+		}
 
 		User user = userConverter.userDTOToUser(dto);
 		Customer customer = customerService.createCustomer(dto.getCustomer(), user);
