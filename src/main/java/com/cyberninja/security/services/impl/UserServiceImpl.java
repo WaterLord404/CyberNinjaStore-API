@@ -63,11 +63,11 @@ public class UserServiceImpl implements UserDetailsService, UserServiceI {
 	public UserDTO createUser(UserDTO dto) throws MessagingException {
 		// Verifica que no exista el usuario
 		if (userRepo.findByUsernameAndEnabled(dto.getUsername(), true).orElse(null) != null) {
-			throw new ResponseStatusException(CONFLICT, "This username already exists");
+			throw new ResponseStatusException(CONFLICT, "Username not available");
 		}
 		
 		if (userRepo.getUserByEmail(dto.getCustomer().getEmail()).orElse(null) != null) {
-			throw new ResponseStatusException(CONFLICT, "This email already exists");			
+			throw new ResponseStatusException(CONFLICT, "Email not available");			
 		}
 
 		User user = userConverter.userDTOToUser(dto);
