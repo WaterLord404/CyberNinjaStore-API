@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserDetailsService, UserServiceI {
 		}
 		
 		if (userRepo.getUserByEmail(dto.getCustomer().getEmail()).orElse(null) != null) {
-			throw new ResponseStatusException(IM_USED, "This email already exists");			
+			throw new ResponseStatusException(CONFLICT, "This email already exists");			
 		}
 
 		User user = userConverter.userDTOToUser(dto);
