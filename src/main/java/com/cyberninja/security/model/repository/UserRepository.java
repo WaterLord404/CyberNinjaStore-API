@@ -15,6 +15,11 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	
 	Optional<User> findByUsername(String username);
 
+	@Query(value = 
+			"SELECT u.* " +
+			"FROM USERS u , CUSTOMERS c " +
+			"WHERE u.CUSTOMER_ID = c.CUSTOMER_ID " +
+			"AND c.EMAIL = ?1", nativeQuery = true)
 	Optional<User> findByEmail(String email);
 	
 	Optional<User> findUserByConfirmationTokenAndEnabled(String token, boolean enabled);
