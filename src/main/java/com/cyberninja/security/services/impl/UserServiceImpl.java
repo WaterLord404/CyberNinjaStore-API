@@ -6,7 +6,6 @@ import static com.cyberninja.security.common.SecurityConstants.TOKEN_PREFIX;
 import static com.cyberninja.security.filter.jwt.JWTTokenProvider.generateToken;
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
-import static org.springframework.http.HttpStatus.IM_USED;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.io.IOException;
@@ -62,11 +61,11 @@ public class UserServiceImpl implements UserDetailsService, UserServiceI {
 	@Override
 	public UserDTO createUser(UserDTO dto) throws MessagingException {
 		// Verifica que no exista el usuario
-		if (userRepo.findByUsernameAndEnabled(dto.getUsername(), true).orElse(null) != null) {
+		if (userRepo.findByUsername(dto.getUsername()).orElse(null) != null) {
 			throw new ResponseStatusException(CONFLICT, "Username not available");
 		}
 		
-		if (userRepo.getUserByEmail(dto.getCustomer().getEmail()).orElse(null) != null) {
+		if (userRepo.findByEmail(dto.getCustomer().getEmail()).orElse(null) != null) {
 			throw new ResponseStatusException(CONFLICT, "Email not available");			
 		}
 
