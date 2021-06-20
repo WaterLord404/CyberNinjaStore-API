@@ -21,6 +21,7 @@ import com.cyberninja.model.entity.Shipping;
 import com.cyberninja.model.entity.converter.CustomerConverter;
 import com.cyberninja.model.entity.converter.ShippingConverter;
 import com.cyberninja.model.entity.dto.ShippingDTO;
+import com.cyberninja.model.repository.CustomerRepository;
 import com.cyberninja.model.repository.ShippingRepository;
 import com.cyberninja.security.services.UserServiceI;
 import com.cyberninja.services.entity.ShippingServiceI;
@@ -35,6 +36,8 @@ public class ShippingServiceImpl implements ShippingServiceI {
 	@Autowired private UserServiceI userService;
 	
 	@Autowired private CustomerConverter customerConverter;
+
+	@Autowired private CustomerRepository customerRepo;
 	
 	/**
 	 * Obtiene los envios del transportista en camino
@@ -50,12 +53,12 @@ public class ShippingServiceImpl implements ShippingServiceI {
 		List<ShippingDTO> dtos = shippingConverter.shippingsToShippingsDTO(shippings);
 		
 		for (ShippingDTO i : dtos) {
-			i.setId(shippings.get(dtos.indexOf(i)).getId());
+			Long id = shippings.get(dtos.indexOf(i)).getId();
+			i.setId(id);
 			
 			i.setUuid(shippings.get(dtos.indexOf(i)).getUuid());
 			
-			i.setCustomer(customerConverter.CustomerToCustomerDTO(
-					shippings.get(dtos.indexOf(i)).getUser().getCustomer()));
+			i.setCustomer(customerConverter.CustomerToCustomerDTO(customerRepo.getCustomerOfShipping(id)));
 		}
 		
 		return dtos;
